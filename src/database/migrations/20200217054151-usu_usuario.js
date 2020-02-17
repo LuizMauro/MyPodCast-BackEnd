@@ -36,6 +36,11 @@ module.exports = {
          usu_premium:{
           type: Sequelize.INTEGER,
           allowNull: true,
+         },
+         tus_id:{
+           type: Sequelize.INTEGER,
+           allowNull:false,
+           references: {model: 'tus_tipo_usuario', key: 'tus_id'},
          }
         });
    

@@ -11,8 +11,8 @@ module.exports = {
 
     async store(req, resp){
 
-        const { nome, senha, email, cpf } = req.body;
-        const data = [nome, senha, email, cpf];
+        const { nome, senha, email, cpf, tus_id} = req.body;
+        const data = [nome, senha, email, cpf, tus_id];
 
         //regras de negocio
 
