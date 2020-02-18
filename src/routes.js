@@ -7,6 +7,8 @@ const Categoria = require('./controllers/CategoriaController');
 const PodCast  = require('./controllers/PodCastController');
 //final chamando os controllers
 
+const { date } = require('./utils/Date');
+
 const routes = express.Router();
 
 //rotas
@@ -21,5 +23,9 @@ routes.post('/categoria', Categoria.store);
 
 routes.get('/podcasts', PodCast.index);
 routes.post('/podcasts', PodCast.store);
+
+routes.get('/getdate', (req, resp) =>{
+    return resp.json({"data": date(Date.now()).format})
+})
 
 module.exports = routes;
