@@ -1,5 +1,12 @@
 const express = require('express');
 
+
+
+//middleware
+const upload  = require('./utils/multer');
+//middleware
+
+
 //chamando os controllers
 const UserController = require('./controllers/UserController');
 const TipoUser = require('./controllers/TipoUsuarioController');
@@ -22,7 +29,7 @@ routes.get('/categoria', Categoria.index);
 routes.post('/categoria', Categoria.store);
 
 routes.get('/podcasts', PodCast.index);
-routes.post('/podcasts', PodCast.store);
+routes.post('/podcasts', upload.single('file') , PodCast.store);
 
 routes.get('/getdate', (req, resp) =>{
     return resp.json({"data": date(Date.now()).format})
