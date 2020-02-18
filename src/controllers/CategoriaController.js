@@ -1,4 +1,5 @@
 const Categoria = require('../models/Categoria');
+const { date } = require('../utils/Date'); 
 
 module.exports = {
 	async index(req, resp) {
@@ -14,7 +15,7 @@ module.exports = {
 
 		//final regras de negocio
 
-		const data = [descricao, 1, '2019-11-24 21:36:48'];
+		const data = [descricao, 1, date(Date.now()).format];
 		const id = await Categoria.createCategoria(data);
 
 		if (!id) {
