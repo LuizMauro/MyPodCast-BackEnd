@@ -1,32 +1,25 @@
 const User = require('../models/User');
 
-
 module.exports = {
+	async index(req, resp) {
+		const users = await User.findAllUser();
 
-    async index(req, resp){
-        const users = await User.findAllUser();
+		return resp.json(users);
+	},
 
-        return resp.json(users);
-    },
+	async store(req, resp) {
+		const { nome, senha, email, cpf, tus_id } = req.body;
+		const data = [nome, senha, email, cpf, 1, 0, tus_id];
 
-    async store(req, resp){
+		//regras de negocio
 
-        const { nome, senha, email, cpf, tus_id} = req.body;
-        const data = [nome, senha, email, cpf, tus_id];
+		//final regras de negocio
 
-        //regras de negocio
+		const id = await User.createUser(data);
 
-        //final regras de negocio
-
-        const id = await User.createUser(data);
-
-        if(!id){
-            return resp.json({ "mensagem": "Erro ao criar usuario!" , "_id": id})
-        }
-        return resp.json({ "mensagem": "Usuario criado com sucesso!" , "_id": id})
-     
-
-    }
-
-    
-}
+		if (!id) {
+			return resp.json({ mensagem: 'Erro ao criar usuario!', _id: id });
+		}
+		return resp.json({ mensagem: 'Usuario criado com sucesso!', _id: id });
+	}
+};
