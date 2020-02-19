@@ -4,7 +4,9 @@ const express = require('express');
 const UserController = require('./controllers/UserController');
 const TipoUser = require('./controllers/TipoUsuarioController');
 const Categoria = require('./controllers/CategoriaController');
-const PodCast  = require('./controllers/PodCastController');
+const PodCast = require('./controllers/PodCastController');
+const PodcastCategoria = require('./controllers/PodcastCategoriaController');
+const Endereco = require('./controllers/EnderecoController');
 //final chamando os controllers
 
 const { date } = require('./utils/Date');
@@ -24,8 +26,14 @@ routes.post('/categoria', Categoria.store);
 routes.get('/podcasts', PodCast.index);
 routes.post('/podcasts', PodCast.store);
 
-routes.get('/getdate', (req, resp) =>{
-    return resp.json({"data": date(Date.now()).format})
-})
+routes.get('/podcastctg', PodcastCategoria.index);
+routes.post('/podcastctg', PodcastCategoria.store);
+
+routes.get('/endereco', Endereco.index);
+routes.post('/endereco', Endereco.store);
+
+routes.get('/getdate', (req, resp) => {
+	return resp.json({ data: date(Date.now()).format });
+});
 
 module.exports = routes;

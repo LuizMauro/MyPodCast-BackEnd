@@ -8,13 +8,34 @@ module.exports = {
 	},
 
 	async store(req, resp) {
-		const { nome, descricao, criador, anocriacao, duracao, status, permissao, destaque, usu_id } = req.body;
+		const {
+			nome,
+			descricao,
+			criador,
+			anocriacao,
+			duracao,
+			status,
+			permissao,
+			destaque,
+			usu_id
+		} = req.body;
 
 		//regras de negocio
 
 		//final regras de negocio
 
-		const data = [ nome, descricao, criador, anocriacao, duracao, "./imgs/exemplo", status, permissao, destaque, usu_id];
+		const data = [
+			nome,
+			descricao,
+			criador,
+			anocriacao,
+			duracao,
+			'./imgs/exemplo',
+			status,
+			permissao,
+			destaque,
+			usu_id
+		];
 		const id = await PodCast.createPodCast(data);
 
 		if (!id) {
@@ -23,6 +44,3 @@ module.exports = {
 		return resp.json({ mensagem: 'Podcast criado com sucesso!', _id: id });
 	}
 };
-
-
-

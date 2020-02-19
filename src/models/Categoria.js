@@ -12,7 +12,13 @@ class Categoria extends Model {
 		);
 	}
 
-	static associate(models) {}
+	static associate(models) {
+		/*this.belongsToMany(models.PodCast, {
+			through: 'pct_podcast_categoria',
+			as: 'podcasts',
+			foreignKey: 'pod_id'
+		});*/
+	}
 
 	static async createCategoria(data) {
 		try {
