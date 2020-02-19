@@ -12,7 +12,7 @@ module.exports = {
 			end_link: {
 				type: Sequelize.STRING,
 				allowNull: false,
-				unique: true
+				unique: false
 			},
 			pod_id: {
 				type: Sequelize.INTEGER,

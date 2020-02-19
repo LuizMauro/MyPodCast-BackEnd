@@ -34,6 +34,7 @@ routes.get('/endereco', Endereco.index);
 routes.post('/endereco', Endereco.store);
 
 routes.post('/criarpodcast', CriarPodcastProcedure.store);
+routes.put('/podcast/:id', CriarPodcastProcedure.update);
 
 routes.get('/getdate', (req, resp) => {
 	return resp.json({ data: date(Date.now()).format });
