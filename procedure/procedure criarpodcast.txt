@@ -1,0 +1,70 @@
+CREATE DEFINER=`root`@`localhost` PROCEDURE `CriarPodcast`(
+	in `pod_nomeP` VARCHAR(45) ,
+	in `pod_descricaoP` VARCHAR(600) ,
+	in `pod_criadorP` VARCHAR(45),
+	in `pod_anocriacaoP` INT,
+	in `pod_duracaoP` INT,
+	in `pod_endereco_imgP` VARCHAR(256),
+	in `pod_statusP` BOOLEAN ,
+    in `pod_permissaoP` INT,
+	in `pod_destaqueP` BOOLEAN ,
+	in `usu_idP` INT,
+    in `end_link1P` VARCHAR(256),
+    in `end_link2P` VARCHAR(256),
+    in `end_link3P` VARCHAR(256),
+    in `list_of_categoria` TEXT
+)
+begin
+	declare `pod_idP` int;
+    declare excessao smallint default 0;
+   
+    declare continue handler for sqlexception set excessao = 1;
+    
+    start transaction;
+    Insert into pod_podcast  values(0, pod_nomeP, pod_descricaoP, pod_criadorP, pod_anocriacaoP, pod_duracaoP, pod_endereco_imgP, pod_statusP, pod_permissaoP, pod_destaqueP, usu_idP);
+    
+    if(excessao = 0) then
+		select last_insert_id() into pod_idP;
+        
+        begin
+			DECLARE fim INT DEFAULT 0;
+            DECLARE _categoria int;
+			DECLARE c1 CURSOR FOR select ctg_id from ctg_categoria where FIND_IN_SET(ctg_id, list_of_categoria) = 0;
+			DECLARE CONTINUE HANDLER FOR NOT FOUND SET fim=1;
+            
+			SET fim = 0;
+            
+            OPEN c1;
+			ideLoop:LOOP	
+					-- varrendo registro por registro
+					FETCH c1 INTO _categoria;
+					IF fim = 1 THEN LEAVE ideLoop; END IF;
+					-- Inserindo presenca
+                    Insert into pct_podcast_categoria values(0,pod_idP,_categoria);
+			END LOOP ideLoop;
+			CLOSE c1;
+
+        end;
+        
+        
+        if(excessao = 0) then
+			Insert into end_endereco values(0,end_link1P,pod_idP);
+            Insert into end_endereco values(0,end_link2P,pod_idP);
+            Insert into end_endereco values(0,end_link3P,pod_idP);
+            if(excessao = 0) then
+				select '0' as msg;
+				commit;
+			else
+            	select '-3' as msg;
+				rollback;
+			end if;
+		else
+			select '-2' as msg;
+			rollback;
+		end if;
+	else
+		select '-1' as msg;
+		rollback;
+	end if;
+    
+end

@@ -1,0 +1,90 @@
+CREATE DEFINER=`root`@`localhost` PROCEDURE `EditarPodcast`(
+	in `pod_idP` INT,
+	in `pod_nomeP` VARCHAR(45) ,
+	in `pod_descricaoP` VARCHAR(600) ,
+	in `pod_criadorP` VARCHAR(45),
+	in `pod_anocriacaoP` INT,
+	in `pod_duracaoP` INT,
+	in `pod_statusP` BOOLEAN ,
+    in `pod_permissaoP` INT,
+	in `pod_destaqueP` BOOLEAN ,
+    in `end_link1P` VARCHAR(256),
+    in `end_link2P` VARCHAR(256),
+    in `end_link3P` VARCHAR(256),
+    in `list_of_categoria` TEXT
+)
+begin
+    declare excessao smallint default 0;
+   
+    declare continue handler for sqlexception set excessao = 1;
+    
+    start transaction;
+    update pod_podcast set pod_nome = pod_nomeP, pod_descricao = pod_descricaoP, pod_criador = pod_criadorP, pod_anocriacao = pod_anocriacaoP, pod_duracao = pod_duracaoP, pod_status = pod_statusP, pod_permissao = pod_permissaoP, pod_destaque = pod_destaqueP where pod_id = pod_idP;
+    
+    if(excessao = 0) then
+		
+        delete from pct_podcast_categoria where pod_id = pod_idP;
+        
+        begin
+			DECLARE fim INT DEFAULT 0;
+            DECLARE _categoria int;
+			DECLARE c1 CURSOR FOR select ctg_id from ctg_categoria where FIND_IN_SET(ctg_id, list_of_categoria) = 0;
+			DECLARE CONTINUE HANDLER FOR NOT FOUND SET fim=1;
+            
+			SET fim = 0;
+            
+            OPEN c1;
+			ideLoop:LOOP	
+					-- varrendo registro por registro
+					FETCH c1 INTO _categoria;
+					IF fim = 1 THEN LEAVE ideLoop; END IF;
+					-- Inserindo presenca
+                    Insert into pct_podcast_categoria values(0,pod_idP,_categoria);
+			END LOOP ideLoop;
+			CLOSE c1;
+
+        end;
+        
+        
+        if(excessao = 0) then
+        
+			 begin
+				DECLARE fim INT DEFAULT 0;
+				DECLARE _endereco int;
+				DECLARE c2 CURSOR FOR select end_id from end_endereco where pod_id = pod_idP;
+				DECLARE CONTINUE HANDLER FOR NOT FOUND SET fim=1;
+				
+				SET fim = 0;
+				
+				OPEN c2;
+				FETCH c2 INTO _endereco;
+				update end_endereco set end_link = end_link1P where end_id = _endereco;
+                
+                FETCH c2 INTO _endereco;
+				update end_endereco set end_link = end_link2P where end_id = _endereco;
+                
+                FETCH c2 INTO _endereco;
+				update end_endereco set end_link = end_link3P where end_id = _endereco;
+		
+				CLOSE c2;
+
+			end;
+                
+			
+            if(excessao = 0) then
+				select '0' as msg;
+				commit;
+			else
+            	select '-3' as msg;
+				rollback;
+			end if;
+		else
+			select '-2' as msg;
+			rollback;
+		end if;
+	else
+		select '-1' as msg;
+		rollback;
+	end if;
+    
+end
