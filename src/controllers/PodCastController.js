@@ -30,7 +30,7 @@ module.exports = {
 			criador,
 			anocriacao,
 			duracao,
-			'./imgs/exemplo',
+			'./imgs/exemplo1',
 			status,
 			permissao,
 			destaque,

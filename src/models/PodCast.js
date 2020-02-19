@@ -44,12 +44,27 @@ class PodCast extends Model {
 		}
 	}
 
-	static async callProcedure(data) {
+	static async callInsertProcedure(
+		nome,
+		descricao,
+		criador,
+		anocriacao,
+		duracao,
+		endereco_img,
+		status,
+		permissao,
+		destaque,
+		usuid,
+		link1,
+		link2,
+		link3,
+		categoria_array
+	) {
 		try {
 			const [result] = await this.sequelize.query(
-				'call CriarPodcast(pod_nome, pod_descricao, pod_criador, pod_anocriacao, pod_duracao, pod_endereco_img, pod_status, pod_permissao, pod_destaque, usu_id, end_link1, end_link2, end_link3, list_of_categoria)',
+				'call CriarPodcast(:pod_nome, :pod_descricao, :pod_criador, :pod_anocriacao, :pod_duracao, :pod_endereco_img, :pod_status, :pod_permissao, :pod_destaque, :usu_id, :end_link1, :end_link2, :end_link3, :list_of_categoria)',
 				{
-					replacements: [data],
+					replacements: {pod_nome:nome, pod_descricao:descricao, pod_criador:criador, pod_anocriacao:anocriacao, pod_duracao:duracao, pod_endereco_img:endereco_img, pod_status:status, pod_permissao:permissao, pod_destaque:destaque, usu_id:usuid, end_link1:link1, end_link2:link2, end_link3:link3, list_of_categoria:categoria_array},
 					type: QueryTypes.INSERT,
 					nest: true
 				}
