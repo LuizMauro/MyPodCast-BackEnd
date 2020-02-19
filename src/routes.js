@@ -7,7 +7,7 @@ const Categoria = require('./controllers/CategoriaController');
 const PodCast = require('./controllers/PodCastController');
 const PodcastCategoria = require('./controllers/PodcastCategoriaController');
 const Endereco = require('./controllers/EnderecoController');
-const CriarPodcastProcedure = require('./controllers/CriarPodcastProcedureController');
+const PodcastProcedure = require('./controllers/PodcastProcedureController');
 //final chamando os controllers
 
 const { date } = require('./utils/Date');
@@ -33,8 +33,8 @@ routes.post('/podcastctg', PodcastCategoria.store);
 routes.get('/endereco', Endereco.index);
 routes.post('/endereco', Endereco.store);
 
-routes.post('/criarpodcast', CriarPodcastProcedure.store);
-routes.put('/podcast/:id', CriarPodcastProcedure.update);
+routes.post('/criarpodcast', PodcastProcedure.store);
+routes.put('/podcast/:id', PodcastProcedure.update);
 
 routes.get('/getdate', (req, resp) => {
 	return resp.json({ data: date(Date.now()).format });
