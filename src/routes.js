@@ -21,6 +21,7 @@ const routes = express.Router();
 
 //rotas
 routes.get('/users', UserController.index);
+routes.get('/users/:usu_id', UserController.read);
 routes.post('/users', UserController.store);
 
 routes.get('/tipouser', TipoUser.index);
@@ -39,7 +40,7 @@ routes.get('/endereco', Endereco.index);
 routes.post('/endereco', Endereco.store);
 
 routes.post('/criarpodcast', PodcastProcedure.store);
-routes.put('/podcast/:id', PodcastProcedure.update);
+routes.put('/podcast/:pod_id', PodcastProcedure.update);
 
 routes.get('/getdate', (req, resp) => {
 	return resp.json({ data: date(Date.now()).format });

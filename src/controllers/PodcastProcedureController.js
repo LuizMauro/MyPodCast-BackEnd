@@ -56,7 +56,6 @@ module.exports = {
 	//Procedure de Update
 	async update(req, resp) {
 		const {
-			pod_id,
 			pod_nome,
 			pod_descricao,
 			pod_criador,
@@ -70,6 +69,8 @@ module.exports = {
 			end_link3,
 			list_of_categoria
 		} = req.body;
+
+		const { pod_id } = req.params;
 
 		//regras de negocio
 
