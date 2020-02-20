@@ -9,7 +9,6 @@ module.exports = {
 			pod_criador,
 			pod_anocriacao,
 			pod_duracao,
-			pod_endereco_img,
 			pod_status,
 			pod_permissao,
 			pod_destaque,
@@ -19,6 +18,12 @@ module.exports = {
 			end_link3,
 			list_of_categoria
 		} = req.body;
+
+		if (req.file.length == 0) {
+			return resp.json({ mensagem: 'Por favor escolha uma imagem' });
+		}
+
+		const { originalname, filename, path } = req.file;
 
 		//regras de negocio
 
@@ -30,7 +35,7 @@ module.exports = {
 			pod_criador,
 			pod_anocriacao,
 			pod_duracao,
-			pod_endereco_img,
+			filename,
 			pod_status,
 			pod_permissao,
 			pod_destaque,
