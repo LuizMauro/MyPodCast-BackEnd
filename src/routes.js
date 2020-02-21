@@ -40,11 +40,18 @@ routes.put('/categoria/:ctg_id/:ctg_status', Categoria.updateCtgStatus);
 routes.get('/podcasts', PodCast.index);
 routes.post('/podcast', upload.single('file'), PodcastProcedure.store);
 routes.put('/podcast/:pod_id', PodcastProcedure.update);
-routes.put('/podcastimg/:pod_id',upload.single('file'),PodCast.updatePodcastImg);
+routes.put(
+	'/podcastimg/:pod_id',
+	upload.single('file'),
+	PodCast.updatePodcastImg
+);
 routes.put('/podcast/:pod_id/:pod_status', PodCast.updatePodcastStatus);
 
 routes.get('/podcasts/solicitacao', SolicitacaoCadastro.index);
-routes.put('/podcasts/solicitacao/:pod_id/:pod_permissao',SolicitacaoCadastro.update);
+routes.put(
+	'/podcasts/solicitacao/:pod_id/:pod_permissao',
+	SolicitacaoCadastro.update
+);
 
 routes.get('/podcastctg/:pod_id', PodcastCategoria.indexCtgByPodcastID);
 routes.get('/pesquisar/:ctg_id', PodcastCategoria.indexPodcastByCtgID);
@@ -56,6 +63,8 @@ routes.post('/endereco', Endereco.store);
 
 routes.get('/tag', Tag.index);
 routes.post('/tag', Tag.store);
+routes.put('/tag/:tag_id', Tag.updateTag);
+routes.put('/tag/:tag_id/:tag_status', Tag.updateTagStatus);
 
 routes.get('/getdate', (req, resp) => {
 	return resp.json({ data: date(Date.now()).format });
