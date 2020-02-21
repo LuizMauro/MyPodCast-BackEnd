@@ -1,0 +1,112 @@
+[33mcommit bd4588ed20454f0ada9ac71b0d92b116cc94ff81[m[33m ([m[1;36mHEAD -> [m[1;32mfeature/bd-schemas[m[33m)[m
+Author: Guilherme Orcezi <guilhermeorcezi@gmail.com>
+Date:   Thu Feb 20 16:30:49 2020 -0300
+
+    metodos de busca/update funcionando para Usuario e Podcast (com solicitacao de cadastro)
+
+[33mcommit f4b09258117780433f5ae0d3603c9e2fb95593d6[m[33m ([m[1;31morigin/master[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mmaster[m[33m)[m
+Author: Guilherme Orcezi <guilhermeorcezi@gmail.com>
+Date:   Wed Feb 19 21:10:05 2020 -0300
+
+    Model Usuario com Metodos de Select
+
+[33mcommit a0fdb4de026e9e8586b0cff42bf13c88b0c4feda[m
+Merge: f4788c8 3adb4bc
+Author: Guilherme Orcezi <guilhermeorcezi@gmail.com>
+Date:   Wed Feb 19 20:56:05 2020 -0300
+
+    Merge branch 'master' into feature/bd-schemas
+
+[33mcommit 3adb4bc75b0a198913b0dc44fc542292c4b1f22b[m
+Merge: 40ee28c c5a2d47
+Author: Luiz Mauro da Rocha <luizmetec@hotmail.com>
+Date:   Wed Feb 19 13:53:49 2020 -0300
+
+    Merge pull request #3 from LuizMauro/feature/bd-schemas
+    
+    Luiz Mauro
+
+[33mcommit c5a2d475c335a93df505b89cc7dd26759d74f68b[m
+Merge: 7473e0e 40ee28c
+Author: Luiz Mauro da Rocha <luizmetec@hotmail.com>
+Date:   Wed Feb 19 13:48:45 2020 -0300
+
+    Merge pull request #2 from LuizMauro/master
+    
+    Merge pull request #1 from LuizMauro/feature/bd-schemas
+
+[33mcommit f4788c840ea46b6fa6dd2e1a06ca85501ab65b0f[m[33m ([m[1;31morigin/feature/bd-schemas[m[33m)[m
+Author: Guilherme Orcezi <guilhermeorcezi@gmail.com>
+Date:   Wed Feb 19 11:46:12 2020 -0300
+
+    procedures adicionadas
+
+[33mcommit 71d24aaeb55b8ca4f77dd29660db404a2da2ce56[m
+Author: Guilherme Orcezi <guilhermeorcezi@gmail.com>
+Date:   Wed Feb 19 11:37:39 2020 -0300
+
+    BD Procedure EditarPodcast adicionado
+
+[33mcommit 327863c0568b6a1039bc5075ff0e89c1597a7d40[m
+Author: Guilherme Orcezi <guilhermeorcezi@gmail.com>
+Date:   Wed Feb 19 11:07:06 2020 -0300
+
+    BD procedure CriarPodcast adicionado
+
+[33mcommit 40ee28c1f3fb944150d6d4a461121fe0f5e4047e[m
+Merge: 3e0ce16 7473e0e
+Author: Luiz Mauro da Rocha <luizmetec@hotmail.com>
+Date:   Wed Feb 19 00:14:39 2020 -0300
+
+    Merge pull request #1 from LuizMauro/feature/bd-schemas
+    
+    SchemasDB endereco e PodcastCategoria adicionado
+
+[33mcommit 7473e0e7f3433b824fffdd79098735b10f6a4c7f[m
+Merge: b37fd9e 3e0ce16
+Author: Luiz Mauro da Rocha <luizmetec@hotmail.com>
+Date:   Wed Feb 19 00:14:12 2020 -0300
+
+    Merge branch 'master' into feature/bd-schemas
+
+[33mcommit b37fd9ea67820f6e717f4abcef17a882d69e33b7[m
+Author: Guilherme Orcezi <guilhermeorcezi@gmail.com>
+Date:   Tue Feb 18 21:21:16 2020 -0300
+
+    db endereco e podcastCategoria adicionado
+
+[33mcommit 3e0ce166d354b48af132c1f8ad09b18cd8eb1b3c[m
+Author: Luiz Mauro da Rocha <luizmetec@hotmail.com>
+Date:   Tue Feb 18 17:41:06 2020 -0300
+
+    18-02-2020 upload imagem
+
+[33mcommit 026042b512dad04a1a47ffc094836ffb2f0c2960[m
+Author: Luiz Mauro da Rocha <luizmetec@hotmail.com>
+Date:   Tue Feb 18 16:09:12 2020 -0300
+
+    18-02-2020 upload imagem
+
+[33mcommit 6c5190d99fad5622ede0382be732bf2ece00a1a1[m
+Author: Luiz Mauro da Rocha <luizmetec@hotmail.com>
+Date:   Tue Feb 18 03:19:21 2020 -0300
+
+    18-02-2020
+
+[33mcommit 9bfd3cc075c941aa38187e63fbbc53359c58369d[m
+Author: Luiz Mauro da Rocha <luizmetec@hotmail.com>
+Date:   Tue Feb 18 03:06:38 2020 -0300
+
+    Upload 18-02-2020
+
+[33mcommit 2f31af5dd3d0a07defb401f16d42e438548309c4[m
+Author: Luiz Mauro da Rocha <luizmetec@hotmail.com>
+Date:   Mon Feb 17 03:15:31 2020 -0300
+
+    Segundo commit - 17-02-2020
+
+[33mcommit e7192cc74dda49ad67c693dfd863ae4b4d8c8bbd[m
+Author: Luiz Mauro da Rocha <luizmetec@hotmail.com>
+Date:   Sun Feb 16 02:36:04 2020 -0300
+
+    Upload-primeiro-16-02-2020

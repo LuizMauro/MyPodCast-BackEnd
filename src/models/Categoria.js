@@ -41,6 +41,40 @@ class Categoria extends Model {
 
 		return results;
 	}
+
+	//Editar categoria (descricao)
+	static async updateCtgDescricao(ctgdescricao, ctgid) {
+		try {
+			const [result] = await this.sequelize.query(
+				'update ctg_categoria set ctg_descricao = :ctg_descricao where ctg_id = :ctg_id',
+				{
+					replacements: { ctg_descricao: ctgdescricao, ctg_id: ctgid },
+					type: QueryTypes.UPDATE,
+					nest: true
+				}
+			);
+			return true;
+		} catch (err) {
+			return false;
+		}
+	}
+
+	//Ativar/Desativar Categoria
+	static async updateCtgStatus(ctgid, ctgstatus) {
+		try {
+			const [result] = await this.sequelize.query(
+				'update ctg_categoria set ctg_status = :ctg_status where ctg_id = :ctg_id',
+				{
+					replacements: { ctg_status: ctgstatus, ctg_id: ctgid },
+					type: QueryTypes.UPDATE,
+					nest: true
+				}
+			);
+			return true;
+		} catch (err) {
+			return false;
+		}
+	}
 }
 
 module.exports = Categoria;

@@ -11,6 +11,7 @@ const Categoria = require('./controllers/CategoriaController');
 const PodCast = require('./controllers/PodCastController');
 const PodcastCategoria = require('./controllers/PodcastCategoriaController');
 const Endereco = require('./controllers/EnderecoController');
+const Tag = require('./controllers/TagController');
 const PodcastProcedure = require('./controllers/PodcastProcedureController');
 const SolicitacaoCadastro = require('./controllers/SolicitacaoCadastroController');
 //final chamando os controllers
@@ -33,21 +34,33 @@ routes.post('/tipouser', TipoUser.store);
 
 routes.get('/categoria', Categoria.index);
 routes.post('/categoria', Categoria.store);
+routes.put('/categoria/:ctg_id', Categoria.updateCtgDescricao);
+routes.put('/categoria/:ctg_id/:ctg_status', Categoria.updateCtgStatus);
 
 routes.get('/podcasts', PodCast.index);
 routes.post('/podcast', upload.single('file'), PodcastProcedure.store);
 routes.put('/podcast/:pod_id', PodcastProcedure.update);
-routes.put('/podcastimg/:pod_id',upload.single('file'),PodCast.updatePodcastImg);
+routes.put(
+	'/podcastimg/:pod_id',
+	upload.single('file'),
+	PodCast.updatePodcastImg
+);
 routes.put('/podcast/:pod_id/:pod_status', PodCast.updatePodcastStatus);
 
 routes.get('/podcasts/solicitacao', SolicitacaoCadastro.index);
-routes.put('/podcasts/solicitacao/:pod_id/:pod_permissao',SolicitacaoCadastro.update);
+routes.put(
+	'/podcasts/solicitacao/:pod_id/:pod_permissao',
+	SolicitacaoCadastro.update
+);
 
 routes.get('/podcastctg', PodcastCategoria.index);
 routes.post('/podcastctg', PodcastCategoria.store);
 
 routes.get('/endereco', Endereco.index);
 routes.post('/endereco', Endereco.store);
+
+routes.get('/tag', Tag.index);
+routes.post('/tag', Tag.store);
 
 routes.get('/getdate', (req, resp) => {
 	return resp.json({ data: date(Date.now()).format });

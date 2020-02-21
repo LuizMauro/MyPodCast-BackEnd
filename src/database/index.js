@@ -8,6 +8,7 @@ const Categoria = require('../models/Categoria');
 const PodCast = require('../models/PodCast');
 const Endereco = require('../models/Endereco');
 const PodcastCategoria = require('../models/PodcastCategoria');
+const Tag = require('../models/Tag');
 // final models import
 
 const connection = new Sequelize(dbConfig);
@@ -19,6 +20,7 @@ Categoria.init(connection);
 PodCast.init(connection);
 Endereco.init(connection);
 PodcastCategoria.init(connection);
+Tag.init(connection);
 //final inicialização dos models
 
 //associate dos models
