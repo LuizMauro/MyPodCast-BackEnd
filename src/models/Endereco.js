@@ -30,8 +30,10 @@ class Endereco extends Model {
 		}
 	}
 
-	static async findAllEndereco() {
-		const [results] = await this.sequelize.query('SELECT * FROM end_endereco');
+	static async findEndereco(podid) {
+		const [results] = await this.sequelize.query(
+			'Select * from end_endereco'
+		);
 
 		return results;
 	}

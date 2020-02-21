@@ -1,12 +1,36 @@
 const PodcastCategoria = require('../models/PodcastCategoria');
 
 module.exports = {
-	async index(req, resp) {
-		const podcast_ctg = await PodcastCategoria.findAllPodcastCategoria();
+	//SELECT
+	async indexCtgByPodcastID(req, resp) {
+		const { pod_id } = req.params;
+
+		const podcast_ctg = await PodcastCategoria.findCtgByPodcastID(pod_id);
 
 		return resp.json(podcast_ctg);
 	},
 
+	async indexPodcastByCtgID(req, resp) {
+		const { ctg_id } = req.params;
+
+		const podcast_ctg = await PodcastCategoria.findPodcastsByCtgID(ctg_id);
+
+		return resp.json(podcast_ctg);
+	},
+
+	async indexPodcastByCtgNome(req, resp) {
+		const { ctg_id } = req.params;
+		const { pod_nome } = req.body;
+
+		const podcast_ctg = await PodcastCategoria.findPodcastsByCtgNome(
+			ctg_id,
+			pod_nome
+		);
+
+		return resp.json(podcast_ctg);
+	},
+
+	//CREATE
 	async store(req, resp) {
 		const { pod_id, ctg_id } = req.body;
 

@@ -2,7 +2,7 @@ const Endereco = require('../models/Endereco');
 
 module.exports = {
 	async index(req, resp) {
-		const endereco = await Endereco.findAllEndereco();
+		const endereco = await Endereco.findEndereco();
 
 		return resp.json(endereco);
 	},
