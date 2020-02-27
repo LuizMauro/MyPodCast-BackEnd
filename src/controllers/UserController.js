@@ -1,4 +1,5 @@
 const User = require('../models/User');
+const { hash } = require('bcryptjs');
 
 module.exports = {
 	//SELECTS
@@ -13,22 +14,23 @@ module.exports = {
 		const user = await User.findOneUser(usu_id);
 		return resp.json(user);
 	},
-
 	//CADASTROS
 	async store(req, resp) {
 		const { nome, senha, email, cpf, tus_id } = req.body;
-		const data = [nome, senha, email, cpf, 1, 0, tus_id];
-
-		//regras de negocio
-
-		//final regras de negocio
-
-		const id = await User.createUser(data);
-
-		if (!id) {
+		
+		if(senha){
+			const criptSenha = await hash(senha, 8);
+			const data = [nome, criptSenha, email, cpf, 1, 0, tus_id];
+			const id = await User.createUser(data);
+			
+			if (!id) {
+				return resp.json({ mensagem: 'Erro ao criar usuario!', _id: id });
+			}
+			return resp.json({ mensagem: 'Usuario criado com sucesso!', _id: id });
+		}else{
 			return resp.json({ mensagem: 'Erro ao criar usuario!', _id: id });
 		}
-		return resp.json({ mensagem: 'Usuario criado com sucesso!', _id: id });
+
 	},
 
 	//UPDATES
@@ -65,18 +67,28 @@ module.exports = {
 	},
 
 	async updateUserSenha(req, res) {
-		const { usu_id } = req.params;
 		const { usu_senha } = req.body;
+		const { userId } = req;
 
-		const userUpdate = await User.updateUserSenha(usu_id, usu_senha);
 
-		if (!userUpdate) {
+		if(usu_senha){
+			const criptSenha = await hash(usu_senha, 8);
+
+			const userUpdate = await User.updateUserSenha(userId, criptSenha);
+
+			if (!userUpdate) {
+				return res.json({ mensagem: 'Erro ao mudar senha!', _id: userUpdate });
+			}
+			return res.json({
+				mensagem: 'senha alterada!',
+				_id: userUpdate
+			});
+		}else{
 			return res.json({ mensagem: 'Erro ao mudar senha!', _id: userUpdate });
 		}
-		return res.json({
-			mensagem: 'senha alterada!',
-			_id: userUpdate
-		});
+
+
+		
 	},
 
 	async updateUsuarioTipo(req, res) {
