@@ -30,11 +30,9 @@ const { date } = require('./utils/Date');
 
 const routes = express.Router();
 
-
-
-
 //GERAL
 routes.post('/sessions', SessionController.store);
+
 routes.get('/categoria', Categoria.index); 
 routes.get('/podcasts', PodCast.index);
 routes.get('/podcastctg/:pod_id', PodcastCategoria.indexCtgByPodcastID); 
@@ -97,8 +95,6 @@ routes.get('/getdate', (req, resp) => {
 	return resp.json({ data: date(Date.now()).format });
 });
 //FIM TESTES
-
-
 
 
 
