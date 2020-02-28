@@ -15,7 +15,9 @@ module.exports = async (req, resp, next) =>{
     try{
         const decoded = await promisify(jwt.verify)(token, authConfig.secret);
 
-        req.userId = decoded.usu_id; 
+        req.userId = decoded.usu_id;
+        req.tipoUsuario = decoded.tus_id;
+        console.log(decoded.tus_id);
         // quando o usuario loga automaticamente todas as rotas que contem esse middleware recebe o userId como parametro e nao precisa passar pela URL mais
        
         return next();

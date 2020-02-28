@@ -19,12 +19,13 @@ module.exports = {
         if(!(await compare(senha, usu_senha))){
             return resp.status(401).json({ error: 'Usuario ou senha invalidos!'});
         }
+        console.log(user)
 
-        const { usu_id, usu_nome } = user;
+        const { usu_id, usu_nome, tus_id, tus_descricao } = user;
              
         return resp.json({
-            user: {usu_id, usu_nome},
-            token: jwt.sign({ usu_id }, authConfig.secret,{
+            user: {usu_id, usu_nome, tus_id, tus_descricao},
+            token: jwt.sign({ usu_id, tus_id, tus_descricao }, authConfig.secret,{
                 expiresIn: authConfig.expiresIn,
             }),
         })
