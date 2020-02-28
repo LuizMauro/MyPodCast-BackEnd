@@ -33,8 +33,8 @@ routes.get('/users/:usu_id', UserController.read);
 routes.post('/users', UserStoreValidate ,UserController.store);
 routes.put('/users/:usu_id/:usu_status', UserController.updateUserStatus);// MODERADOR/ADM
 routes.put('/users/tipo/:usu_id/:tus_id', UserController.updateUsuarioTipo);// MODERADOR/ADM
-routes.put('/edituser/:usu_id/', UserController.updateUserPerfil);// QUALQUER USUARIO (EDITA O PROPRIO PERFIL)
-routes.put('/usersenha/:usu_id', authMiddleware ,UserController.updateUserSenha);// QUALQUER USUARIO (EDITA O PROPRIO PERFIL)
+routes.put('/edituser/', authMiddleware, UserController.updateUserPerfil);// QUALQUER USUARIO (EDITA O PROPRIO PERFIL)
+routes.put('/usersenha/', authMiddleware ,UserController.updateUserSenha);// QUALQUER USUARIO (EDITA O PROPRIO PERFIL)
 
 // ou utilizar routes.use(authMiddleware);
 
