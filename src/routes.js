@@ -3,6 +3,9 @@ const express = require('express');
 //middleware
 const upload = require('./utils/multer');
 const authMiddleware  = require('./middlewares/auth');
+const authMiddlewareAdm = require('./middlewares/authAdm');
+const authMiddlewareMod = require('./middlewares/authMod');
+const authMiddlewarePodcaster = require('./middlewares/authPodcaster');
 //middleware
 
 //chamando os controllers
@@ -27,62 +30,76 @@ const { date } = require('./utils/Date');
 
 const routes = express.Router();
 
-//rotas
+
+
+
+//GERAL
+routes.post('/sessions', SessionController.store);
+routes.get('/categoria', Categoria.index); 
+routes.get('/podcasts', PodCast.index);
+routes.get('/podcastctg/:pod_id', PodcastCategoria.indexCtgByPodcastID); 
+routes.get('/pesquisar/:ctg_id', PodcastCategoria.indexPodcastByCtgID); 
+routes.get('/pesquisar/nome/:ctg_id', PodcastCategoria.indexPodcastByCtgNome); 
+routes.post('/podcastctg', PodcastCategoria.store); 
+routes.get('/endereco', Endereco.index); 
+routes.post('/endereco', Endereco.store); 
+routes.get('/tag', Tag.index); 
+routes.post('/tag', Tag.store); 
+routes.put('/edituser/', authMiddleware, UserController.updateUserPerfil);
+routes.put('/usersenha/', authMiddleware ,UserController.updateUserSenha);
+
 routes.get('/users', UserController.index);
 routes.get('/users/:usu_id', UserController.read);
 routes.post('/users', UserStoreValidate ,UserController.store);
-routes.put('/users/:usu_id/:usu_status', UserController.updateUserStatus);// precisa estar logado!?
-routes.put('/users/tipo/:usu_id/:tus_id', UserController.updateUsuarioTipo);// precisa estar logado!?
-routes.put('/edituser/:usu_id/', UserController.updateUserPerfil);// precisa estar logado!?
-routes.put('/usersenha/', authMiddleware ,UserController.updateUserSenha);// precisa estar logado!?
+//FIM GERAL
 
-// ou utilizar routes.use(authMiddleware);
+//PODCASTER
+routes.post('/podcast', upload.single('file'), PodcastProcedure.store); 
+routes.put('/podcast/:pod_id', PodcastProcedure.update);
+routes.put('/podcastimg/:pod_id',upload.single('file'),PodCast.updatePodcastImg); 
+//FIM PODCASTER
+
+//ADM
+routes.post('/adm/categoria', Categoria.store); 
+routes.put('/adm/categoria/:ctg_id', Categoria.updateCtgDescricao); 
+routes.post('/adm/podcast', upload.single('file'), PodcastProcedure.store); 
+routes.put('/adm/podcast/:pod_id', PodcastProcedure.update);
+routes.put('/adm/podcastimg/:pod_id',upload.single('file'),PodCast.updatePodcastImg); 
+routes.put('/adm/podcast/:pod_id/:pod_status', PodCast.updatePodcastStatus);
+routes.get('/adm/podcasts/solicitacao', SolicitacaoCadastro.index); 
+routes.put('/adm/podcasts/solicitacao/:pod_id/:pod_permissao',SolicitacaoCadastro.update); 
+routes.put('/adm/tag/:tag_id', Tag.updateTag);
+routes.put('/adm/tag/:tag_id/:tag_status', Tag.updateTagStatus); 
+routes.put('/adm/users/:usu_id/:usu_status', UserController.updateUserStatus);
+routes.put('/adm/users/tipo/:usu_id/:tus_id', UserController.updateUsuarioTipo);
+//FIM ADM
+
+//MOD
+routes.post('/mod/categoria', Categoria.store); 
+routes.put('/mod/categoria/:ctg_id', Categoria.updateCtgDescricao); 
+routes.put('/mod/podcast/:pod_id', PodcastProcedure.update);
+routes.put('/mod/podcastimg/:pod_id',upload.single('file'),PodCast.updatePodcastImg); 
+routes.put('/mod/podcast/:pod_id/:pod_status', PodCast.updatePodcastStatus);
+routes.get('/mod/podcasts/solicitacao', SolicitacaoCadastro.index); 
+routes.put('/mod/podcasts/solicitacao/:pod_id/:pod_permissao',SolicitacaoCadastro.update); 
+routes.put('/mod/users/:usu_id/:usu_status', UserController.updateUserStatus);
+routes.put('/mod/users/tipo/:usu_id/:tus_id', UserController.updateUsuarioTipo);
+//FIM MOD
 
 
-routes.post('/sessions', SessionController.store);
-
-routes.get('/tipouser', TipoUser.index);// // precisa estar logado!?
-routes.post('/tipouser', TipoUser.store);// // precisa estar logado!?
-
-routes.get('/categoria', Categoria.index); 
-routes.post('/categoria', Categoria.store); // precisa estar logado!?
-routes.put('/categoria/:ctg_id', Categoria.updateCtgDescricao); // precisa estar logado!?
-routes.put('/categoria/:ctg_id/:ctg_status', Categoria.updateCtgStatus); // precisa estar logado!?
-
-routes.get('/podcasts', PodCast.index);
-routes.post('/podcast', upload.single('file'), PodcastProcedure.store); // precisa estar logado!?
-routes.put('/podcast/:pod_id', PodcastProcedure.update); // precisa estar logado!?
-routes.put(
-	'/podcastimg/:pod_id',
-	upload.single('file'),
-	PodCast.updatePodcastImg
-); // precisa estar logado!?
-
-
-routes.put('/podcast/:pod_id/:pod_status', PodCast.updatePodcastStatus); // precisa estar logado!?
-
-routes.get('/podcasts/solicitacao', SolicitacaoCadastro.index);
-routes.put(
-	'/podcasts/solicitacao/:pod_id/:pod_permissao',
-	SolicitacaoCadastro.update
-);
-
-routes.get('/podcastctg/:pod_id', PodcastCategoria.indexCtgByPodcastID);
-routes.get('/pesquisar/:ctg_id', PodcastCategoria.indexPodcastByCtgID);
-routes.get('/pesquisar/nome/:ctg_id', PodcastCategoria.indexPodcastByCtgNome);
-routes.post('/podcastctg', PodcastCategoria.store);
-
-routes.get('/endereco', Endereco.index);
-routes.post('/endereco', Endereco.store);
-
-routes.get('/tag', Tag.index);
-routes.post('/tag', Tag.store);
-routes.put('/tag/:tag_id', Tag.updateTag);
-routes.put('/tag/:tag_id/:tag_status', Tag.updateTagStatus);
+//TESTES
+routes.get('/adm/', authMiddlewareAdm, (req, resp) =>{
+	return resp.json({msg: "LOGADO COMO ADM"})
+})
 
 
 routes.get('/getdate', (req, resp) => {
 	return resp.json({ data: date(Date.now()).format });
 });
+//FIM TESTES
+
+
+
+
 
 module.exports = routes;
