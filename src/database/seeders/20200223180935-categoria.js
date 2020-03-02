@@ -8,22 +8,22 @@ module.exports = {
         {
           ctg_descricao: "Games",
           ctg_status: 1,
-          ctg_datacraicao:"21/02/2020"
+          ctg_datacriacao:"21/02/2020"
         },
         {
           ctg_descricao: "RPG",
           ctg_status: 1,
-          ctg_datacraicao:"23/02/2020"
+          ctg_datacriacao:"23/02/2020"
         },
         {
           ctg_descricao: "Moda",
           ctg_status: 1,
-          ctg_datacraicao:"23/02/2020"
+          ctg_datacriacao:"23/02/2020"
         },
         {
           ctg_descricao: "Geek",
           ctg_status: 1,
-          ctg_datacraicao:"23/02/2020"
+          ctg_datacriacao:"23/02/2020"
         },
        
 
