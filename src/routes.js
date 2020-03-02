@@ -18,6 +18,7 @@ const Endereco = require('./controllers/EnderecoController');
 const Tag = require('./controllers/TagController');
 const PodcastProcedure = require('./controllers/PodcastProcedureController');
 const SolicitacaoCadastro = require('./controllers/SolicitacaoCadastroController');
+const TipoFeedbackController = require('./controllers/TipoFeedbackController');
 const SessionController = require('./controllers/SessionController');
 //final chamando os controllers
 
@@ -119,6 +120,8 @@ routes.put(
 );
 routes.get('/adm/users', authMiddlewareAdm, UserController.index);
 routes.get('/adm/users/:usu_id', authMiddlewareAdm, UserController.read);
+routes.post('/adm/tfb', authMiddlewareAdm, TipoFeedbackController.store);
+routes.get('/adm/tfb', authMiddlewareAdm, TipoFeedbackController.index);
 //FIM ADM
 
 //MOD
