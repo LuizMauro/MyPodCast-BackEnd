@@ -8,6 +8,13 @@ module.exports = {
 		return resp.json(fav);
 	},
 
+	async read(req, resp) {
+		const { userId } = req;
+		const fav = await Favoritar.findFeedbackUser(userId);
+
+		return resp.json(fav);
+	},
+
 	//CREATE
 	async store(req, resp) {
 		const { pod_id } = req.params;
@@ -27,5 +34,31 @@ module.exports = {
 			});
 		}
 		return resp.json({ mensagem: 'Podcast favoritado!', _id: fav });
+	},
+
+	//UPDATE
+	async update(req, res) {
+        const { pod_id } = req.params;
+        const { userId } = req;
+
+		const favorito = await Favoritar.findFeedback(pod_id);
+
+		if (favorito) {
+			const { fbk_id, fbk_status } = favorito;
+
+			const update = await Favoritar.updateFeedback(fbk_id, fbk_status ? 0 : 1, userId);
+			console.log(fbk_id, fbk_status);
+
+			if (!update) {
+				return res.json({
+					mensagem: 'Não foi possível desfavoritar!',
+					_id: update
+				});
+			}
+			return res.json({
+				mensagem: 'Podcast desfavoritado!',
+				_id: update
+			});
+		}
 	}
 };

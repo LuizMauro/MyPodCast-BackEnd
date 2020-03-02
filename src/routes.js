@@ -50,7 +50,9 @@ routes.post('/users', UserStoreValidate, UserController.store);
 routes.put('/edituser/', authMiddleware, UserController.updateUserPerfil);
 routes.put('/usersenha/', authMiddleware, UserController.updateUserSenha);
 routes.post('/:pod_id/favoritar', authMiddleware, FavoritarController.store);
-routes.get('/profile', authMiddleware, FavoritarController.index);
+routes.get('/feedbacks', authMiddleware, FavoritarController.index);
+routes.get('/profile', authMiddleware, FavoritarController.read);
+routes.put('/profile/:pod_id', authMiddleware, FavoritarController.update);
 //FIM USUARIO LOGADO
 
 //PODCASTER
