@@ -1,0 +1,50 @@
+const { Model, DataTypes, QueryTypes } = require('sequelize');
+
+class Feedback extends Model {
+	static init(sequelize) {
+		super.init(
+			{
+				fbk_datacriacao: DataTypes.DATE,
+				fbk_status: DataTypes.BOOLEAN,
+				fbk_valor: DataTypes.INTEGER,
+				tag_valor_boolean: DataTypes.BOOLEAN
+			},
+			{ sequelize }
+		);
+	}
+
+	static associate(models) {
+		this.belongsTo(models.User, { foreignKey: 'usu_id' });
+		this.belongsTo(models.PodCast, { foreignKey: 'pod_id' });
+		this.belongsTo(models.TipoFeedback, { foreignKey: 'tfb_id' });
+	}
+
+	//Cadastra os tipos de Feedback - Favoritar/Marcar como Pretendo Acompanhar/Acompanhando/Nota
+	static async createFeedback(data) {
+		try {
+			const [result] = await this.sequelize.query(
+				'INSERT INTO fbk_feedback (fbk_datacriacao, fbk_status, fbk_valor, fbk_valor_status, usu_id, pod_id, tfb_id) values (?)',
+				{
+					replacements: [data],
+					type: QueryTypes.INSERT,
+					nest: true
+				}
+			);
+			return result;
+		} catch (err) {
+			console.log(err);
+			return false;
+		}
+	}
+
+	//Visualiza todos os feedbacks feitos
+	static async findAllFeedback() {
+		const [results] = await this.sequelize.query(
+			' select a.usu_nome, b.pod_nome, c.tfb_descricao, d.fbk_status from usu_usuario a join fbk_feedback d on a.usu_id  = d.usu_id join pod_podcast b on b.pod_id = d.pod_id join tfb_tipo_feedback c on c.tfb_id = d.tfb_id'
+		);
+
+		return results;
+	}
+}
+
+module.exports = Feedback;

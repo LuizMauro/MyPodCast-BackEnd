@@ -14,6 +14,7 @@ module.exports = {
 		const user = await User.findOneUser(usu_id);
 		return resp.json(user);
 	},
+	
 	//CADASTROS
 	async store(req, resp) {
 		const { nome, senha, email, cpf, tus_id } = req.body;

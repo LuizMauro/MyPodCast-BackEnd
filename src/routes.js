@@ -19,6 +19,7 @@ const Tag = require('./controllers/TagController');
 const PodcastProcedure = require('./controllers/PodcastProcedureController');
 const SolicitacaoCadastro = require('./controllers/SolicitacaoCadastroController');
 const TipoFeedbackController = require('./controllers/TipoFeedbackController');
+const FavoritarController = require('./controllers/FavoritarController');
 const SessionController = require('./controllers/SessionController');
 //final chamando os controllers
 
@@ -48,6 +49,8 @@ routes.post('/users', UserStoreValidate, UserController.store);
 //USUÁRIO LOGADO
 routes.put('/edituser/', authMiddleware, UserController.updateUserPerfil);
 routes.put('/usersenha/', authMiddleware, UserController.updateUserSenha);
+routes.post('/:pod_id/favoritar', authMiddleware, FavoritarController.store);
+routes.get('/profile', authMiddleware, FavoritarController.index);
 //FIM USUARIO LOGADO
 
 //PODCASTER
