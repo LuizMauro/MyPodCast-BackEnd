@@ -77,10 +77,10 @@ class Feedback extends Model {
 		return results;
 	}
 
-	//Visualiza todos os Acompanhando feitos para um podcast
+	//Visualiza todos os Acompanhando/PretendoAcompanhar feitos para um podcast
 	static async findAcompanhando(podid) {
 		const [results] = await this.sequelize.query(
-			'select a.usu_nome, b.pod_nome, c.tfb_descricao, d.fbk_id, d.fbk_status from usu_usuario a join fbk_feedback d on a.usu_id  = d.usu_id join pod_podcast b on b.pod_id = d.pod_id join tfb_tipo_feedback c on c.tfb_id = d.tfb_id where b.pod_id = ? and d.fbk_id = 3',
+			'select a.usu_nome, b.pod_nome, c.tfb_descricao, d.fbk_id, d.fbk_status from usu_usuario a join fbk_feedback d on a.usu_id  = d.usu_id join pod_podcast b on b.pod_id = d.pod_id join tfb_tipo_feedback c on c.tfb_id = d.tfb_id where b.pod_id = ? and d.tfb_id = 2',
 			{
 				replacements: [podid],
 				type: QueryTypes.SELECT,

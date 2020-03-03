@@ -36,17 +36,17 @@ module.exports = {
 		return resp.json({ mensagem: 'Podcast marcado como Acompanhando!', _id: marcar });
 	},
 
-	//UPDATE
+	//UPDATE - Muda de Acompanhando para Pretendo Acompanhar ou cancela (pelo valor do fbk_status).
 	async update(req, res) {
-        const { pod_id } = req.params;
+        const { pod_id, fbk_status } = req.params;
         const { userId } = req;
 
-		const desacompanhar = await Acompanhando.findAcompanhando(pod_id);
+		const alterar = await Acompanhando.findAcompanhando(pod_id);
 
-		if (desacompanhar) {
-			const { fbk_id, fbk_status } = desacompanhar;
+		if (alterar) {
+			const { fbk_id } = alterar;
 
-			const update = await Acompanhando.updateFeedback(fbk_id, fbk_status ? 0 : 1, userId);
+			const update = await Acompanhando.updateFeedback(fbk_id, fbk_status, userId);
 			console.log(fbk_id, fbk_status);
 
 			if (!update) {
@@ -56,7 +56,7 @@ module.exports = {
 				});
 			}
 			return res.json({
-				mensagem: 'Você não está mais acompanhando o Podcast/Está Acompanhando!',
+				mensagem: 'Voce mudou a marcação do podcast!',
 				_id: update
 			});
 		}
