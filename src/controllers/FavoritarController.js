@@ -41,7 +41,7 @@ module.exports = {
         const { pod_id } = req.params;
         const { userId } = req;
 
-		const favorito = await Favoritar.findFeedback(pod_id);
+		const favorito = await Favoritar.findFavorito(pod_id);
 
 		if (favorito) {
 			const { fbk_id, fbk_status } = favorito;
@@ -56,7 +56,7 @@ module.exports = {
 				});
 			}
 			return res.json({
-				mensagem: 'Podcast desfavoritado!',
+				mensagem: 'Podcast desfavoritado/favoritado!',
 				_id: update
 			});
 		}

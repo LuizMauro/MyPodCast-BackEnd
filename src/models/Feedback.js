@@ -56,17 +56,31 @@ class Feedback extends Model {
 
 	//Visualiza todos os feedbacks feitos
 	static async findAllFeedback() {
-		const [results] = await this.sequelize.query(
+		const results = await this.sequelize.query(
 			' select a.usu_nome, b.pod_nome, b.pod_id, c.tfb_descricao, d.fbk_status from usu_usuario a join fbk_feedback d on a.usu_id  = d.usu_id join pod_podcast b on b.pod_id = d.pod_id join tfb_tipo_feedback c on c.tfb_id = d.tfb_id'
 		);
 
 		return results;
 	}
 
-	//Visualiza todos os feedbacks feitos para um podcast
-	static async findFeedback(podid) {
+	//Visualiza todos os Favoritos feitos para um podcast
+	static async findFavorito(podid) {
 		const [results] = await this.sequelize.query(
-			' select a.usu_nome, b.pod_nome, c.tfb_descricao, d.fbk_id, d.fbk_status from usu_usuario a join fbk_feedback d on a.usu_id  = d.usu_id join pod_podcast b on b.pod_id = d.pod_id join tfb_tipo_feedback c on c.tfb_id = d.tfb_id where b.pod_id = ?',
+			'select a.usu_nome, b.pod_nome, c.tfb_descricao, d.fbk_id, d.fbk_status from usu_usuario a join fbk_feedback d on a.usu_id  = d.usu_id join pod_podcast b on b.pod_id = d.pod_id join tfb_tipo_feedback c on c.tfb_id = d.tfb_id where b.pod_id = ? and d.fbk_id = 1',
+			{
+				replacements: [podid],
+				type: QueryTypes.SELECT,
+				nest: true
+			}
+		);
+
+		return results;
+	}
+
+	//Visualiza todos os Acompanhando feitos para um podcast
+	static async findAcompanhando(podid) {
+		const [results] = await this.sequelize.query(
+			'select a.usu_nome, b.pod_nome, c.tfb_descricao, d.fbk_id, d.fbk_status from usu_usuario a join fbk_feedback d on a.usu_id  = d.usu_id join pod_podcast b on b.pod_id = d.pod_id join tfb_tipo_feedback c on c.tfb_id = d.tfb_id where b.pod_id = ? and d.fbk_id = 3',
 			{
 				replacements: [podid],
 				type: QueryTypes.SELECT,
@@ -79,7 +93,7 @@ class Feedback extends Model {
 
 	//Visualiza todos os feedbacks feitos por um usuario
 	static async findFeedbackUser(usuid) {
-		const [results] = await this.sequelize.query(
+		const results = await this.sequelize.query(
 			' select a.usu_nome, b.pod_nome, c.tfb_descricao, d.fbk_status from usu_usuario a join fbk_feedback d on a.usu_id  = d.usu_id join pod_podcast b on b.pod_id = d.pod_id join tfb_tipo_feedback c on c.tfb_id = d.tfb_id where a.usu_id = ?',
 			{
 				replacements: [usuid],

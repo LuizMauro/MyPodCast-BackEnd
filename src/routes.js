@@ -20,6 +20,7 @@ const PodcastProcedure = require('./controllers/PodcastProcedureController');
 const SolicitacaoCadastro = require('./controllers/SolicitacaoCadastroController');
 const TipoFeedbackController = require('./controllers/TipoFeedbackController');
 const FavoritarController = require('./controllers/FavoritarController');
+const AcompanhandoController = require('./controllers/AcompanhandoController');
 const SessionController = require('./controllers/SessionController');
 //final chamando os controllers
 
@@ -52,7 +53,13 @@ routes.put('/usersenha/', authMiddleware, UserController.updateUserSenha);
 routes.post('/:pod_id/favoritar', authMiddleware, FavoritarController.store);
 routes.get('/feedbacks', authMiddleware, FavoritarController.index);
 routes.get('/profile', authMiddleware, FavoritarController.read);
-routes.put('/profile/:pod_id', authMiddleware, FavoritarController.update);
+routes.put('/profile/favoritar/:pod_id', authMiddleware, FavoritarController.update);
+routes.post(
+	'/:pod_id/acompanhando',
+	authMiddleware,
+	AcompanhandoController.store
+);
+routes.put('/profile/acompanhando/:pod_id', authMiddleware, AcompanhandoController.update);
 //FIM USUARIO LOGADO
 
 //PODCASTER
