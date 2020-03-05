@@ -17,9 +17,6 @@ module.exports = async (req, resp, next) => {
 		req.userId = decoded.usu_id;
 		req.tipoUsuario = decoded.tus_id;
 
-		if(!decoded.usu_status !== 1){
-			return resp.status(401).json({ error: 'Token invalid' });
-		}
 		req.userStatus = decoded.usu_status;
 		console.log(decoded);
 		// quando o usuario loga automaticamente todas as rotas que contem esse middleware recebe o userId como parametro e nao precisa passar pela URL mais
