@@ -23,10 +23,17 @@ module.exports = {
 		}
 		console.log(user);
 
-		const { usu_id, usu_nome, tus_id, tus_descricao } = user;
+		const {
+			usu_id,
+			usu_nome,
+			tus_id,
+			tus_descricao,
+			usu_email,
+			usu_cpf,
+		} = user;
 
 		return resp.json({
-			user: { usu_id, usu_nome, tus_id, tus_descricao },
+			user: { usu_id, usu_nome, tus_id, tus_descricao, usu_email, usu_cpf },
 			token: jwt.sign({ usu_id, tus_id, tus_descricao }, authConfig.secret, {
 				expiresIn: authConfig.expiresIn
 			})
