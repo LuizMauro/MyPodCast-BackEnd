@@ -14,24 +14,23 @@ module.exports = {
 		const user = await User.findOneUser(usu_id);
 		return resp.json(user);
 	},
-	
+
 	//CADASTROS
 	async store(req, resp) {
 		const { nome, senha, email, cpf, tus_id } = req.body;
-		
-		if(senha){
+
+		if (senha) {
 			const criptSenha = await hash(senha, 8);
 			const data = [nome, criptSenha, email, cpf, 1, 0, tus_id];
 			const id = await User.createUser(data);
-			
+
 			if (!id) {
 				return resp.json({ mensagem: 'Erro ao criar usuario!', _id: id });
 			}
 			return resp.json({ mensagem: 'Usuario criado com sucesso!', _id: id });
-		}else{
+		} else {
 			return resp.json({ mensagem: 'Erro ao criar usuario!', _id: id });
 		}
-
 	},
 
 	//UPDATES
@@ -53,10 +52,17 @@ module.exports = {
 	},
 
 	async updateUserPerfil(req, res) {
-		const { usu_id } = req.params;
-		const { usu_nome, usu_email } = req.body;
+		const { userId } = req;
+		const { usu_nome, usu_email, usu_senha } = req.body;
 
-		const userUpdate = await User.updateUserPerfil(usu_id, usu_nome, usu_email);
+		const criptSenha = await hash(usu_senha, 8);
+
+		const userUpdate = await User.updateUserPerfil(
+			userId,
+			usu_nome,
+			usu_email,
+			criptSenha
+		);
 
 		if (!userUpdate) {
 			return res.json({ mensagem: 'Erro ao editar perfil!', _id: userUpdate });
@@ -71,8 +77,7 @@ module.exports = {
 		const { usu_senha } = req.body;
 		const { userId } = req;
 
-
-		if(usu_senha){
+		if (usu_senha) {
 			const criptSenha = await hash(usu_senha, 8);
 
 			const userUpdate = await User.updateUserSenha(userId, criptSenha);
@@ -84,12 +89,9 @@ module.exports = {
 				mensagem: 'senha alterada!',
 				_id: userUpdate
 			});
-		}else{
+		} else {
 			return res.json({ mensagem: 'Erro ao mudar senha!', _id: userUpdate });
 		}
-
-
-		
 	},
 
 	async updateUsuarioTipo(req, res) {

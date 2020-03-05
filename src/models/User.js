@@ -1,6 +1,5 @@
 const { Model, DataTypes, QueryTypes } = require('sequelize');
 
-
 class User extends Model {
 	static init(sequelize) {
 		super.init(
@@ -11,10 +10,9 @@ class User extends Model {
 				usu_cpf: DataTypes.STRING
 			},
 			{ sequelize }
-		);	
+		);
 	}
 
-	
 	static associate(models) {
 		this.belongsTo(models.TipoUsuario, { foreignKey: 'tus_id' });
 	}
@@ -22,8 +20,7 @@ class User extends Model {
 	//Criar usuário
 	static async createUser(data) {
 		try {
-
-			console.log("Terceiro", data);
+			console.log('Terceiro', data);
 
 			const [result] = await this.sequelize.query(
 				'INSERT INTO usu_usuario (usu_nome, usu_senha, usu_email, usu_cpf, usu_status, usu_premium , tus_id) values (?)',
@@ -34,14 +31,11 @@ class User extends Model {
 				}
 			);
 
-		
 			return result;
 		} catch (err) {
-			console.log(err)
+			console.log(err);
 			return false;
 		}
-
-		
 	}
 
 	// Exibe todos OUVINTES por ordem alfabética com seu tipo de usuario
@@ -67,19 +61,19 @@ class User extends Model {
 		return results;
 	}
 
-		// Select para exibir informações de por email
-		static async findOneUserEmail(email) {
-			const [results] = await this.sequelize.query(
-				'select distinct a.usu_nome, a.usu_id, a.usu_email, a.usu_senha, a.usu_cpf, a.usu_status, a.usu_premium, b.tus_id, b.tus_descricao from usu_usuario a join tus_tipo_usuario b on a.tus_id = b.tus_id where a.usu_email = ?',
-				{
-					replacements: [email],
-					type: QueryTypes.SELECT,
-					nest: true
-				}
-			);
-	
-			return results;
-		}
+	// Select para exibir informações de por email
+	static async findOneUserEmail(email) {
+		const [results] = await this.sequelize.query(
+			'select distinct a.usu_nome, a.usu_id, a.usu_email, a.usu_senha, a.usu_cpf, a.usu_status, a.usu_premium, b.tus_id, b.tus_descricao from usu_usuario a join tus_tipo_usuario b on a.tus_id = b.tus_id where a.usu_email = ?',
+			{
+				replacements: [email],
+				type: QueryTypes.SELECT,
+				nest: true
+			}
+		);
+
+		return results;
+	}
 
 	// Select para verificação na edição de perfil
 	static async findEditValidation(data) {
@@ -100,12 +94,12 @@ class User extends Model {
 		const [results] = await this.sequelize.query(
 			'Select * from usu_usuario where usu_email = :email and usu_senha = :senha and usu_status = true',
 			{
-				replacements: {email: email, senha: senha },
+				replacements: { email: email, senha: senha },
 				type: QueryTypes.SELECT,
 				nest: true
 			}
 		);
-	
+
 		return results;
 	}
 
@@ -127,15 +121,16 @@ class User extends Model {
 	}
 
 	//Update Perfil
-	static async updateUserPerfil(usuid, usunome, usuemail) {
+	static async updateUserPerfil(usuid, usunome, usuemail, ususenha) {
 		try {
 			const [result] = await this.sequelize.query(
-				'update usu_usuario set usu_nome = :usu_nome, usu_email = :usu_email where usu_id = :usu_id',
+				'update usu_usuario set usu_nome = :usu_nome, usu_email = :usu_email, usu_senha = :usu_senha where usu_id = :usu_id',
 				{
 					replacements: {
 						usu_nome: usunome,
 						usu_email: usuemail,
-						usu_id: usuid
+						usu_id: usuid,
+						usu_senha: ususenha
 					},
 					type: QueryTypes.UPDATE,
 					nest: true
@@ -143,6 +138,7 @@ class User extends Model {
 			);
 			return true;
 		} catch (err) {
+			console.log(err);
 			return false;
 		}
 	}
