@@ -51,6 +51,7 @@ routes.post('/users', UserStoreValidate, UserController.store);
 //USUÁRIO LOGADO
 routes.put('/edituser/', authMiddleware, UserController.updateUserPerfil);
 routes.put('/usersenha/', authMiddleware, UserController.updateUserSenha);
+
 routes.post('/:pod_id/favoritar', authMiddleware, FavoritarController.store);
 routes.get('/feedbacks', authMiddleware, FavoritarController.index);
 routes.get('/profile', authMiddleware, FavoritarController.read);
@@ -74,6 +75,7 @@ routes.put(
 	authMiddleware,
 	AcompanhandoController.update
 );
+
 //FIM USUARIO LOGADO
 
 //PODCASTER
@@ -203,4 +205,6 @@ routes.get('/getdate', (req, resp) => {
 });
 //FIM TESTES
 
+
 module.exports = routes;
+
