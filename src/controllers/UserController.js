@@ -64,12 +64,15 @@ module.exports = {
 		const atual = await User.findOneUser(userId);
 
 		const verifica = await User.findEditValidation(userId);
-		console.log(verifica.some((usuario) => usuario.usu_email === usu_email));
 
 		if (verifica.some((usuario) => usuario.usu_nome === usu_nome)) {
-			return res.json({ mensagem: 'Nome de usuário já existe' });
+			console.log('nome ja existe');
+			return res.json({
+				mensagem: 'Nome de usuário já existe',
+				usuNomeExists: true
+			});
 		} else if (verifica.some((usuario) => usuario.usu_email === usu_email)) {
-			return res.json({ mensagem: 'email já existe' });
+			return res.json({ mensagem: 'email já existe', usuEmailExists: true });
 		}
 
 		const userUpdate = await User.updateUserPerfil(
@@ -83,8 +86,8 @@ module.exports = {
 			return res.json({ mensagem: 'Erro ao editar perfil!', _id: userUpdate });
 		}
 		return res.json({
-			mensagem: 'perfil editado com sucesso!',
-			_id: userUpdate
+			usu_nome: usu_nome,
+			usu_email: usu_email
 		});
 	},
 

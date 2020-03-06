@@ -24,7 +24,7 @@ module.exports = {
 
 		//final regras de negocio
 
-		const data = ['2019-11-24 21:36:48', 2, 0, 0, userId, pod_id, 3];
+		const data = ['2019-11-24 21:36:48', 2, 0, 0, userId, pod_id, 2];
 		const marcar = await PretendoAcompanhar.createFeedback(data);
 
 		if (!marcar) {
@@ -33,6 +33,9 @@ module.exports = {
 				_id: marcar
 			});
 		}
-		return resp.json({ mensagem: 'Podcast marcado como PretendoAcompanhar!', _id: marcar });
-	},
+		return resp.json({
+			mensagem: 'Podcast marcado como PretendoAcompanhar!',
+			_id: marcar
+		});
+	}
 };

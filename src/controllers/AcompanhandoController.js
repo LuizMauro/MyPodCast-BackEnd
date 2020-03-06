@@ -24,7 +24,7 @@ module.exports = {
 
 		//final regras de negocio
 
-		const data = ['2019-11-24 21:36:48', 1, 0, 0, userId, pod_id, 3];
+		const data = ['2019-11-24 21:36:48', 1, 0, 0, userId, pod_id, 2];
 		const marcar = await Acompanhando.createFeedback(data);
 
 		if (!marcar) {
@@ -33,20 +33,27 @@ module.exports = {
 				_id: marcar
 			});
 		}
-		return resp.json({ mensagem: 'Podcast marcado como Acompanhando!', _id: marcar });
+		return resp.json({
+			mensagem: 'Podcast marcado como Acompanhando!',
+			_id: marcar
+		});
 	},
 
 	//UPDATE - Muda de Acompanhando para Pretendo Acompanhar ou cancela (pelo valor do fbk_status).
 	async update(req, res) {
-        const { pod_id, fbk_status } = req.params;
-        const { userId } = req;
+		const { pod_id, fbk_status } = req.params;
+		const { userId } = req;
 
 		const alterar = await Acompanhando.findAcompanhando(pod_id);
 
 		if (alterar) {
 			const { fbk_id } = alterar;
 
-			const update = await Acompanhando.updateFeedback(fbk_id, fbk_status, userId);
+			const update = await Acompanhando.updateFeedback(
+				fbk_id,
+				fbk_status,
+				userId
+			);
 			console.log(fbk_id, fbk_status);
 
 			if (!update) {
