@@ -87,7 +87,8 @@ module.exports = {
 		}
 		return res.json({
 			usu_nome: usu_nome,
-			usu_email: usu_email
+			usu_email: usu_email,
+			usu_cpf: usu_cpf
 		});
 	},
 
