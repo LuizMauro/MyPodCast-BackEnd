@@ -55,13 +55,28 @@ module.exports = {
 		const { userId } = req;
 		const { usu_nome, usu_email, usu_senha } = req.body;
 
-		const criptSenha = await hash(usu_senha, 8);
+		let criptSenha = null;
+
+		if (usu_senha) {
+			criptSenha = await hash(usu_senha, 8);
+		}
+
+		const atual = await User.findOneUser(userId);
+
+		const verifica = await User.findEditValidation(userId);
+		console.log(verifica.some((usuario) => usuario.usu_email === usu_email));
+
+		if (verifica.some((usuario) => usuario.usu_nome === usu_nome)) {
+			return res.json({ mensagem: 'Nome de usuário já existe' });
+		} else if (verifica.some((usuario) => usuario.usu_email === usu_email)) {
+			return res.json({ mensagem: 'email já existe' });
+		}
 
 		const userUpdate = await User.updateUserPerfil(
 			userId,
 			usu_nome,
 			usu_email,
-			criptSenha
+			usu_senha ? criptSenha : atual.usu_senha
 		);
 
 		if (!userUpdate) {
