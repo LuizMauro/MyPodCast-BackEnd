@@ -35,12 +35,14 @@ const routes = express.Router();
 
 //GERAL
 routes.post('/sessions', SessionController.store);
-
 routes.get('/categoria', Categoria.index);
-routes.get('/podcasts', PodCast.index);
 routes.get('/podcastctg/:pod_id', PodcastCategoria.indexCtgByPodcastID);
+
+routes.get('/podcasts', PodCast.index);
+
 routes.get('/pesquisar/:ctg_id', PodcastCategoria.indexPodcastByCtgID);
 routes.get('/pesquisar/nome/:ctg_id', PodcastCategoria.indexPodcastByCtgNome);
+
 //routes.post('/podcastctg', PodcastCategoria.store);
 routes.get('/endereco', Endereco.index);
 //routes.post('/endereco', Endereco.store);
