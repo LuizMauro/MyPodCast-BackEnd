@@ -10,8 +10,8 @@ module.exports = {
 	},
 
 	async read(req, resp) {
-		const { usu_id } = req.params;
-		const user = await User.findOneUser(usu_id);
+		const { userId } = req;
+		const user = await User.findOneUser(userId);
 		return resp.json(user);
 	},
 
@@ -61,9 +61,10 @@ module.exports = {
 			criptSenha = await hash(usu_senha, 8);
 		}
 
-		const atual = await User.findOneUser(userId);
-
+		const atual = await User.findUser(userId);
 		const verifica = await User.findEditValidation(userId);
+		console.log('atual é',atual);
+		const { usu_cpf } = atual;
 
 		if (verifica.some((usuario) => usuario.usu_nome === usu_nome)) {
 			console.log('nome ja existe');
@@ -83,7 +84,9 @@ module.exports = {
 		);
 
 		if (!userUpdate) {
-			return res.json({ mensagem: 'Erro ao editar perfil!', _id: userUpdate });
+			return res.json({
+			mensagem: 'não foi possível editar perfil'
+			});
 		}
 		return res.json({
 			usu_nome: usu_nome,

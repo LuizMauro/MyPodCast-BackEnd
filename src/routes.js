@@ -51,7 +51,7 @@ routes.post('/users', UserStoreValidate, UserController.store);
 //USUÁRIO LOGADO
 routes.put('/edituser/', authMiddleware, UserController.updateUserPerfil);
 routes.put('/usersenha/', authMiddleware, UserController.updateUserSenha);
-
+routes.get('/user', authMiddleware, UserController.read);
 routes.post('/:pod_id/favoritar', authMiddleware, FavoritarController.store);
 routes.get('/feedbacks', authMiddleware, FavoritarController.index);
 routes.get('/profile', authMiddleware, FavoritarController.read);
@@ -147,7 +147,7 @@ routes.put(
 	UserController.updateUsuarioTipo
 );
 routes.get('/adm/users', authMiddlewareAdm, UserController.index);
-routes.get('/adm/users/:usu_id', authMiddlewareAdm, UserController.read);
+routes.get('/adm/user', authMiddlewareAdm, UserController.read);
 routes.post('/adm/tfb', authMiddlewareAdm, TipoFeedbackController.store);
 routes.get('/adm/tfb', authMiddlewareAdm, TipoFeedbackController.index);
 //FIM ADM
@@ -205,6 +205,4 @@ routes.get('/getdate', (req, resp) => {
 });
 //FIM TESTES
 
-
 module.exports = routes;
-

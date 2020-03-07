@@ -50,6 +50,21 @@ class User extends Model {
 	// Select para exibir informações de Perfil
 	static async findOneUser(data) {
 		const [results] = await this.sequelize.query(
+			'select distinct a.usu_nome, a.usu_id, a.usu_email, a.usu_cpf, a.usu_status, a.usu_premium, b.tus_id, b.tus_descricao from usu_usuario a join tus_tipo_usuario b on a.tus_id = b.tus_id where a.usu_id = ?',
+			{
+				replacements: [data],
+				type: QueryTypes.SELECT,
+				nest: true
+			}
+		);
+
+		return results;
+	}
+
+	//PARA VERIFICAÇÃO DE USUARIO - NAO VAI PRO FRONT
+	// Select para exibir informações de Perfil
+	static async findUser(data) {
+		const [results] = await this.sequelize.query(
 			'select distinct a.usu_nome, a.usu_id, a.usu_senha, a.usu_email, a.usu_cpf, a.usu_status, a.usu_premium, b.tus_id, b.tus_descricao from usu_usuario a join tus_tipo_usuario b on a.tus_id = b.tus_id where a.usu_id = ?',
 			{
 				replacements: [data],
