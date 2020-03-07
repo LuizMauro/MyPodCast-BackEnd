@@ -41,6 +41,7 @@ routes.get('/podcasts', PodCast.index);
 routes.get('/podcastctg/:pod_id', PodcastCategoria.indexCtgByPodcastID);
 routes.get('/pesquisar/:ctg_id', PodcastCategoria.indexPodcastByCtgID);
 routes.get('/pesquisar/nome/:ctg_id', PodcastCategoria.indexPodcastByCtgNome);
+routes.get('/pesquisarnome', PodcastCategoria.indexPodcastByNome);
 //routes.post('/podcastctg', PodcastCategoria.store);
 routes.get('/endereco', Endereco.index);
 //routes.post('/endereco', Endereco.store);
