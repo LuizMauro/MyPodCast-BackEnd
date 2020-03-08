@@ -36,14 +36,18 @@ const routes = express.Router();
 //GERAL
 routes.post('/sessions', SessionController.store);
 routes.get('/categoria', Categoria.index);
+routes.get('/podcasts', PodCast.index);
+routes.get('/allpodcasts', PodcastCategoria.indexAllPodcast);
 routes.get('/podcastctg/:pod_id', PodcastCategoria.indexCtgByPodcastID);
+
+routes.get('/podcast/:pod_id', PodcastCategoria.indexPodcastByID);
 
 routes.get('/podcasts', PodCast.index);
 
 routes.get('/pesquisar/:ctg_id', PodcastCategoria.indexPodcastByCtgID);
-routes.get('/pesquisar/nome/:ctg_id', PodcastCategoria.indexPodcastByCtgNome);
+routes.get('/pesquisar/nome/:ctg_id/:nome', PodcastCategoria.indexPodcastByCtgNome);
 
-routes.get('/pesquisarnome', PodcastCategoria.indexPodcastByNome);
+routes.get('/pesquisarnome/:nome', PodcastCategoria.indexPodcastByNome);
 //routes.post('/podcastctg', PodcastCategoria.store);
 routes.get('/endereco', Endereco.index);
 //routes.post('/endereco', Endereco.store);
@@ -83,18 +87,18 @@ routes.put(
 
 //PODCASTER
 routes.post(
-	'/podcast',
+	'/podcaster/criarpodcast',
 	authMiddlewarePodcaster,
 	upload.single('file'),
 	PodcastProcedure.store
 );
 routes.put(
-	'/podcast/:pod_id',
+	'/podcast/editarpodcast/:pod_id',
 	authMiddlewarePodcaster,
 	PodcastProcedure.update
 );
 routes.put(
-	'/podcastimg/:pod_id',
+	'/podcaster/podcastimg/:pod_id',
 	authMiddlewarePodcaster,
 	upload.single('file'),
 	PodCast.updatePodcastImg
@@ -109,12 +113,12 @@ routes.put(
 	Categoria.updateCtgDescricao
 );
 routes.post(
-	'/adm/podcast',
+	'/adm/criarpodcast',
 	authMiddlewareAdm,
 	upload.single('file'),
 	PodcastProcedure.store
 );
-routes.put('/adm/podcast/:pod_id', authMiddlewareAdm, PodcastProcedure.update);
+routes.put('/adm/editarpodcast/:pod_id', authMiddlewareAdm, PodcastProcedure.update);
 routes.put(
 	'/adm/podcastimg/:pod_id',
 	authMiddlewareAdm,

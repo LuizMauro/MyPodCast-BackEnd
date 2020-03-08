@@ -10,6 +10,24 @@ module.exports = {
 		return resp.json(podcast_ctg);
 	},
 
+	async indexPodcastByID(req, resp){
+
+		const { pod_id } = req.params;
+		console.log(pod_id);
+
+		const podcast = await PodcastCategoria.findPodcastsByID(pod_id);
+
+		return resp.json(podcast);
+
+	},
+
+	async indexAllPodcast(req, resp) {
+
+		const podcast_ctg = await PodcastCategoria.findAllPodcast();
+
+		return resp.json(podcast_ctg);
+	},
+
 	async indexPodcastByCtgID(req, resp) {
 		const { ctg_id } = req.params;
 
@@ -19,22 +37,21 @@ module.exports = {
 	},
 
 	async indexPodcastByCtgNome(req, resp) {
-		const { ctg_id } = req.params;
-		const { pod_nome } = req.body;
-
+		const { nome, ctg_id } = req.params;
+	
 		const podcast_ctg = await PodcastCategoria.findPodcastsByCtgNome(
 			ctg_id,
-			pod_nome
+			nome
 		);
-
+		
 		return resp.json(podcast_ctg);
 	},
 
 	async indexPodcastByNome(req, resp) {
-		const { pod_nome } = req.body;
+		const { nome } = req.params;
 
 		const podcast_ctg = await PodcastCategoria.findPodcastsByNome(
-			pod_nome
+			nome
 		);
 
 		return resp.json(podcast_ctg);
