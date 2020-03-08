@@ -38,6 +38,7 @@ routes.post('/sessions', SessionController.store);
 
 routes.get('/categoria', Categoria.index);
 routes.get('/podcasts', PodCast.index);
+routes.get('/allpodcasts', PodcastCategoria.indexAllPodcast);
 routes.get('/podcastctg/:pod_id', PodcastCategoria.indexCtgByPodcastID);
 routes.get('/pesquisar/:ctg_id', PodcastCategoria.indexPodcastByCtgID);
 routes.get('/pesquisar/nome/:ctg_id', PodcastCategoria.indexPodcastByCtgNome);
@@ -81,18 +82,18 @@ routes.put(
 
 //PODCASTER
 routes.post(
-	'/podcast',
+	'/podcaster/criarpodcast',
 	authMiddlewarePodcaster,
 	upload.single('file'),
 	PodcastProcedure.store
 );
 routes.put(
-	'/podcast/:pod_id',
+	'/podcast/editarpodcast/:pod_id',
 	authMiddlewarePodcaster,
 	PodcastProcedure.update
 );
 routes.put(
-	'/podcastimg/:pod_id',
+	'/podcaster/podcastimg/:pod_id',
 	authMiddlewarePodcaster,
 	upload.single('file'),
 	PodCast.updatePodcastImg
@@ -107,12 +108,12 @@ routes.put(
 	Categoria.updateCtgDescricao
 );
 routes.post(
-	'/adm/podcast',
+	'/adm/criarpodcast',
 	authMiddlewareAdm,
 	upload.single('file'),
 	PodcastProcedure.store
 );
-routes.put('/adm/podcast/:pod_id', authMiddlewareAdm, PodcastProcedure.update);
+routes.put('/adm/editarpodcast/:pod_id', authMiddlewareAdm, PodcastProcedure.update);
 routes.put(
 	'/adm/podcastimg/:pod_id',
 	authMiddlewareAdm,

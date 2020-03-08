@@ -10,6 +10,13 @@ module.exports = {
 		return resp.json(podcast_ctg);
 	},
 
+	async indexAllPodcast(req, resp) {
+
+		const podcast_ctg = await PodcastCategoria.findAllPodcast();
+
+		return resp.json(podcast_ctg);
+	},
+
 	async indexPodcastByCtgID(req, resp) {
 		const { ctg_id } = req.params;
 
