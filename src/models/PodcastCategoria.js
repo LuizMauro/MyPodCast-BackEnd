@@ -56,6 +56,17 @@ class PodcastCategoria extends Model {
 		);
 		return results;
 	}
+
+	static async findPodcastsByNome(podnome) {
+		const results = await this.sequelize.query(
+			'select a.pod_endereco_img, a.pod_id, a.pod_nome from pod_podcast a join pct_podcast_categoria b on a.pod_id = b.pod_id join ctg_categoria c on b.ctg_id = c.ctg_id where a.pod_nome like :pod_nome and a.pod_status = true and a.pod_permissao = 1 order by pod_nome',
+			{
+				replacements: { pod_nome: `%${podnome}%` },
+				type: QueryTypes.SELECT
+			}
+		);
+		return results;
+	}
 }
 
 module.exports = PodcastCategoria;

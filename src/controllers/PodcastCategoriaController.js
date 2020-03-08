@@ -30,6 +30,16 @@ module.exports = {
 		return resp.json(podcast_ctg);
 	},
 
+	async indexPodcastByNome(req, resp) {
+		const { pod_nome } = req.body;
+
+		const podcast_ctg = await PodcastCategoria.findPodcastsByNome(
+			pod_nome
+		);
+
+		return resp.json(podcast_ctg);
+	},
+
 	//CREATE
 	async store(req, resp) {
 		const { pod_id, ctg_id } = req.body;
