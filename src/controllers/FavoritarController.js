@@ -15,6 +15,15 @@ module.exports = {
 		return resp.json(fav);
 	},
 
+	async indexFindFavorito(req, resp) {
+		const { pod_id } = req.params;
+        const { userId } = req;
+
+		const fav = await Favoritar.findFavorito(pod_id, userId);
+
+		return resp.json(fav);
+	},
+
 	//CREATE
 	async store(req, resp) {
 		const { pod_id } = req.params;
@@ -41,13 +50,13 @@ module.exports = {
         const { pod_id } = req.params;
         const { userId } = req;
 
-		const favorito = await Favoritar.findFavorito(pod_id);
+		const favorito = await Favoritar.findFavorito(pod_id, userId);
 
 		if (favorito) {
-			const { fbk_id, fbk_status } = favorito;
+			const { pod_id, fbk_status } = favorito;
 
-			const update = await Favoritar.updateFeedback(fbk_id, fbk_status ? 0 : 1, userId);
-			console.log(fbk_id, fbk_status);
+			const update = await Favoritar.updateFavorito(pod_id, fbk_status ? 0 : 1, userId);
+			console.log(fbk_status, pod_id);
 
 			if (!update) {
 				return res.json({

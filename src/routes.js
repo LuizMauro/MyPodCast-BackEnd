@@ -45,7 +45,10 @@ routes.get('/podcast/:pod_id', PodcastCategoria.indexPodcastByID);
 routes.get('/podcasts', PodCast.index);
 
 routes.get('/pesquisar/:ctg_id', PodcastCategoria.indexPodcastByCtgID);
-routes.get('/pesquisar/nome/:ctg_id/:nome', PodcastCategoria.indexPodcastByCtgNome);
+routes.get(
+	'/pesquisar/nome/:ctg_id/:nome',
+	PodcastCategoria.indexPodcastByCtgNome
+);
 
 routes.get('/pesquisarnome/:nome', PodcastCategoria.indexPodcastByNome);
 //routes.post('/podcastctg', PodcastCategoria.store);
@@ -59,14 +62,25 @@ routes.post('/users', UserStoreValidate, UserController.store);
 routes.put('/edituser/', authMiddleware, UserController.updateUserPerfil);
 routes.put('/usersenha/', authMiddleware, UserController.updateUserSenha);
 routes.get('/user', authMiddleware, UserController.read);
+
+//FAVORITO
 routes.post('/:pod_id/favoritar', authMiddleware, FavoritarController.store);
-routes.get('/feedbacks', authMiddleware, FavoritarController.index);
-routes.get('/profile', authMiddleware, FavoritarController.read);
+routes.get(
+	'/findfavorito/:pod_id',
+	authMiddleware,
+	FavoritarController.indexFindFavorito
+);
 routes.put(
 	'/profile/favoritar/:pod_id',
 	authMiddleware,
 	FavoritarController.update
 );
+
+//CHECA FAVORITO/PODCASTS MARCADOS
+routes.get('/feedbacks', authMiddleware, FavoritarController.index);
+routes.get('/profile', authMiddleware, FavoritarController.read);
+
+//ACOMPANHANDO
 routes.post(
 	'/:pod_id/acompanhando',
 	authMiddleware,
@@ -82,7 +96,11 @@ routes.put(
 	authMiddleware,
 	AcompanhandoController.update
 );
-
+routes.get(
+	'/acompanhando/:pod_id',
+	authMiddleware,
+	AcompanhandoController.indexFindAcompanhando
+);
 //FIM USUARIO LOGADO
 
 //PODCASTER
@@ -118,7 +136,11 @@ routes.post(
 	upload.single('file'),
 	PodcastProcedure.store
 );
-routes.put('/adm/editarpodcast/:pod_id', authMiddlewareAdm, PodcastProcedure.update);
+routes.put(
+	'/adm/editarpodcast/:pod_id',
+	authMiddlewareAdm,
+	PodcastProcedure.update
+);
 routes.put(
 	'/adm/podcastimg/:pod_id',
 	authMiddlewareAdm,

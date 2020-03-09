@@ -8,6 +8,15 @@ module.exports = {
 		return resp.json(fav);
 	},
 
+	async indexFindAcompanhando(req, resp) {
+		const { pod_id } = req.params;
+		const { userId } = req;
+
+		const fav = await Acompanhando.findAcompanhando(pod_id, userId);
+
+		return resp.json(fav);
+	},
+
 	async read(req, resp) {
 		const { userId } = req;
 		const fav = await Acompanhando.findFeedbackUser(userId);
@@ -44,13 +53,13 @@ module.exports = {
 		const { pod_id, fbk_status } = req.params;
 		const { userId } = req;
 
-		const alterar = await Acompanhando.findAcompanhando(pod_id);
+		const alterar = await Acompanhando.findAcompanhando(pod_id, userId);
 
 		if (alterar) {
 			const { fbk_id } = alterar;
 
-			const update = await Acompanhando.updateFeedback(
-				fbk_id,
+			const update = await Acompanhando.updateAcompanhando(
+				pod_id,
 				fbk_status,
 				userId
 			);
