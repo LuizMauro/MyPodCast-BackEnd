@@ -44,6 +44,7 @@ class PodcastCategoria extends Model {
 		return results;
 	}
 
+	//Podcast pelo ID
 	static async findPodcastsByID(podID) {
 		const [results] = await this.sequelize.query(
 			' select a.pod_id, a.pod_nome, a.pod_anocriacao, a.pod_descricao, a.pod_endereco_img, a.pod_criador, a.pod_duracao, a.pod_status, a.pod_destaque, a.pod_permissao, a.usu_id, c.ctg_id, group_concat(distinct c.ctg_descricao) as ctg_descricao, group_concat(distinct d.end_link) as end_link from pod_podcast a join pct_podcast_categoria b on a.pod_id = b.pod_id join ctg_categoria c on b.ctg_id = c.ctg_id join end_endereco d on a.pod_id = d.pod_id  where a.pod_id = :pod_id and a.pod_status = true and a.pod_permissao = 1 group by a.pod_id;',
@@ -55,11 +56,10 @@ class PodcastCategoria extends Model {
 		return results;
 	}
 
-
-
+	// Podcasts pelo ID da categoria
 	static async findPodcastsByCtgID(ctgid) {
 		const results = await this.sequelize.query(
-			'select a.pod_nome, a.pod_id, a.pod_endereco_img, c.ctg_descricao from pod_podcast a join pct_podcast_categoria b on a.pod_id = b.pod_id join ctg_categoria c on b.ctg_id = c.ctg_id where c.ctg_id = :ctg_id and a.pod_status = true and a.pod_permissao = 1 order by pod_nome',
+			'select a.pod_nome, a.pod_id, a.pod_endereco_img,  group_concat(c.ctg_descricao) as ctg_descricao from pod_podcast a join pct_podcast_categoria b on a.pod_id = b.pod_id join ctg_categoria c on b.ctg_id = c.ctg_id where c.ctg_id = :ctg_id and a.pod_status = true and a.pod_permissao = 1 group by pod_id',
 			{
 				replacements: { ctg_id: ctgid },
 				type: QueryTypes.SELECT
@@ -68,9 +68,10 @@ class PodcastCategoria extends Model {
 		return results;
 	}
 
+	// Podcasts pelo ID da categoria e pelo nome
 	static async findPodcastsByCtgNome(ctgid, podnome) {
-		const [results] = await this.sequelize.query(
-			'select a.pod_id, a.pod_nome, a.pod_descricao, a.pod_endereco_img, a.pod_criador, a.pod_duracao, a.pod_status, a.pod_destaque, a.pod_permissao, a.usu_id, c.ctg_id, group_concat(c.ctg_descricao) as ctg_descricao  from pod_podcast a join pct_podcast_categoria b on a.pod_id = b.pod_id join ctg_categoria c on b.ctg_id = c.ctg_id where c.ctg_id = :ctg_id and a.pod_nome like :pod_nome and a.pod_status = true and a.pod_permissao = 1 order by pod_nome',
+		const results = await this.sequelize.query(
+			'select a.pod_nome, a.pod_id, a.pod_endereco_img, group_concat(c.ctg_descricao) as ctg_descricao  from pod_podcast a join pct_podcast_categoria b on a.pod_id = b.pod_id join ctg_categoria c on b.ctg_id = c.ctg_id where c.ctg_id = :ctg_id and a.pod_nome like :pod_nome and a.pod_status = true and a.pod_permissao = 1 group by pod_id',
 			{
 				replacements: { ctg_id: ctgid, pod_nome: `%${podnome}%` },
 				type: QueryTypes.SELECT
@@ -79,6 +80,7 @@ class PodcastCategoria extends Model {
 		return results;
 	}
 
+	//PODCASTS pelo nome
 	static async findPodcastsByNome(podnome) {
 		const results = await this.sequelize.query(
 			' select a.pod_id, a.pod_nome, a.pod_descricao, a.pod_endereco_img, a.pod_criador, a.pod_duracao, a.pod_status, a.pod_destaque, a.pod_permissao, a.usu_id, c.ctg_id, group_concat(c.ctg_descricao) as ctg_descricao  from pod_podcast a join pct_podcast_categoria b on a.pod_id = b.pod_id join ctg_categoria c on b.ctg_id = c.ctg_id where a.pod_nome like :pod_nome and a.pod_status = true and a.pod_permissao = 1 group by pod_nome',
