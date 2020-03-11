@@ -23,6 +23,20 @@ module.exports = {
 			return resp.json({ mensagem: 'Por favor escolha uma imagem' });
 		}
 
+		let link1= null;
+		let link2 = null;
+		let link3 = null;
+
+		if(!end_link1.includes('https://')){
+			link1 = `https://${end_link1}`;
+		}
+		if(!end_link2.includes('https://')){
+			link2 = `https://${end_link2}`;
+		}
+		if(!end_link3.includes('https://')){
+			link3 = `https://${end_link3}`;
+		}
+
 		const { originalname, filename, path } = req.file;
 
 		//regras de negocio
@@ -40,9 +54,9 @@ module.exports = {
 			pod_permissao,
 			pod_destaque,
 			usu_id,
-			end_link1,
-			end_link2,
-			end_link3,
+			link1 ? link1 : end_link1,
+			link2 ? link2 : end_link2,
+			link3 ? link3 : end_link3,
 			list_of_categoria
 		);
 
