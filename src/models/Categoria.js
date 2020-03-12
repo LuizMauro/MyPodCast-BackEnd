@@ -32,13 +32,26 @@ class Categoria extends Model {
 			);
 			return result;
 		} catch (err) {
-			console.log(err)
+			console.log(err);
 			return false;
 		}
 	}
 
 	static async buscaTodos() {
 		const [results] = await this.sequelize.query('SELECT * FROM ctg_categoria');
+
+		return results;
+	}
+
+	static async validaCategoria(ctgdescricao) {
+		const [results] = await this.sequelize.query(
+			'SELECT * FROM ctg_categoria where ctg_descricao = :ctg_descricao',
+			{
+				replacements: { ctg_descricao: ctgdescricao },
+				type: QueryTypes.SELECT,
+				nest: true
+			}
+		);
 
 		return results;
 	}

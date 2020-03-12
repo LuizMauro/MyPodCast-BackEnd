@@ -11,19 +11,23 @@ module.exports = {
 
 	//CREATE
 	async store(req, resp) {
-		const { descricao } = req.body;
+		const { ctg_descricao } = req.body;
 
 		//regras de negocio
+		const verifica = await Categoria.validaCategoria(ctg_descricao);
 
+		if(verifica){
+			return resp.json({ctgExists:true});
+		}
 		//final regras de negocio
 
-		const data = [descricao, 1, '2019-11-24 21:36:48'];
+		const data = [ctg_descricao, 1, '2019-11-24 21:36:48'];
 		const id = await Categoria.createCategoria(data);
 
 		if (!id) {
-			return resp.json({ mensagem: 'Erro ao criar categoria!', _id: id });
+			return resp.json({_id: id });
 		}
-		return resp.json({ mensagem: 'Categoria criado com sucesso!', _id: id });
+		return resp.json({ctgCreated:true, _id: id });
 	},
 
 	//UPDATE
