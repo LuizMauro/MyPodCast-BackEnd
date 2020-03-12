@@ -21,6 +21,22 @@ module.exports = {
 
 		if (senha) {
 			const criptSenha = await hash(senha, 8);
+
+			const checaNome = await User.verifyNome(nome);
+			if (checaNome) {
+				console.log('caiu aq')
+				return resp.json({
+					nomeExists:true
+				});
+			}
+
+			const checaEmail = await User.verifyEmail(email);
+			if (checaEmail) {
+				return resp.json({
+					emailExists:true
+				});
+			}
+
 			const data = [nome, criptSenha, email, cpf, 1, 0, tus_id];
 			const id = await User.createUser(data);
 
@@ -63,7 +79,7 @@ module.exports = {
 
 		const atual = await User.findUser(userId);
 		const verifica = await User.findEditValidation(userId);
-		console.log('atual é',atual);
+		console.log('atual é', atual);
 		const { usu_cpf } = atual;
 
 		if (verifica.some((usuario) => usuario.usu_nome === usu_nome)) {
@@ -85,7 +101,7 @@ module.exports = {
 
 		if (!userUpdate) {
 			return res.json({
-			mensagem: 'não foi possível editar perfil'
+				mensagem: 'não foi possível editar perfil'
 			});
 		}
 		return res.json({

@@ -17,7 +17,7 @@ module.exports = {
 
 		//final regras de negocio
 
-		const data = [descricao, 1, date(Date.now()).format];
+		const data = [descricao, 1, '2019-11-24 21:36:48'];
 		const id = await Categoria.createCategoria(data);
 
 		if (!id) {

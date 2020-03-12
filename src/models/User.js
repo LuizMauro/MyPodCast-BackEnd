@@ -118,6 +118,32 @@ class User extends Model {
 		return results;
 	}
 
+	// Select para validação de cadastro - EMAIL
+	static async verifyNome(nome) {
+		const [results] = await this.sequelize.query(
+			'SELECT usu_id, usu_nome, usu_email FROM usu_usuario where usu_nome = :usu_nome',
+			{
+				replacements: { usu_nome: nome},
+				type: QueryTypes.SELECT,
+				nest: true
+			}
+		);
+			return results;
+	}
+
+		// Select para validação de cadastro - SENHA
+		static async verifyEmail(email) {
+			const [results] = await this.sequelize.query(
+				'SELECT usu_id, usu_nome, usu_email FROM usu_usuario where usu_email = :usu_email',
+				{
+					replacements: { usu_email: email},
+					type: QueryTypes.SELECT,
+					nest: true
+				}
+			);
+				return results;
+		}
+
 	//Mudar status do usuário
 	static async updateUserStatus(usuid, usustatus) {
 		try {

@@ -32,6 +32,7 @@ class Categoria extends Model {
 			);
 			return result;
 		} catch (err) {
+			console.log(err)
 			return false;
 		}
 	}
