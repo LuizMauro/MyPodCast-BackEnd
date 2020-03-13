@@ -15,7 +15,7 @@ module.exports = {
 				unique: false
 			},
 			pod_descricao: {
-				type: Sequelize.STRING,
+				type: Sequelize.STRING(600),
 				allowNull: false,
 				unique: true
 			},

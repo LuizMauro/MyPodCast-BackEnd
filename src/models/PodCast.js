@@ -5,7 +5,7 @@ class PodCast extends Model {
 		super.init(
 			{
 				pod_nome: DataTypes.STRING,
-				pod_descricao: DataTypes.STRING,
+				pod_descricao: DataTypes.TEXT,
 				pod_criador: DataTypes.STRING,
 				pod_anocriacao: DataTypes.INTEGER,
 				pod_duracao: DataTypes.INTEGER,

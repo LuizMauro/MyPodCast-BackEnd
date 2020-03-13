@@ -132,8 +132,8 @@ routes.put(
 );
 routes.post(
 	'/adm/criarpodcast',
-	authMiddlewareAdm,
-	upload.single('file'),
+	[authMiddlewareAdm,
+	upload.single('file')],
 	PodcastProcedure.store
 );
 routes.put(
