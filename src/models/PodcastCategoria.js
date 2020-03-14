@@ -44,6 +44,19 @@ class PodcastCategoria extends Model {
 		return results;
 	}
 
+	//VERIFICA SE NOME DO PODCAST EXISTE
+	static async validaPodcastNome(podnome) {
+		const [results] = await this.sequelize.query(
+			' select pod_id from pod_podcast where pod_status = true and pod_permissao = 1 and pod_nome = :pod_nome',
+			{
+				replacements: { pod_nome: podnome},
+				type: QueryTypes.SELECT
+			}
+		);
+
+		return results;
+	}
+
 	//Podcast pelo ID
 	static async findPodcastsByID(podID) {
 		const [results] = await this.sequelize.query(

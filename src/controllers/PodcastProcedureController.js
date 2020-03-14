@@ -1,4 +1,5 @@
 const PodCast = require('../models/PodCast');
+const Pod = require('../models/PodcastCategoria');
 
 module.exports = {
 	//Procedure de Cadastro
@@ -16,12 +17,6 @@ module.exports = {
 			end_link3,
 			list_of_categoria
 		} = req.body;
-
-		const { userId } = req;
-
-		console.log('outras infos são', req.body);
-		console.log('arquivo é', req.file);
-		console.log('nome é', pod_nome);
 
 		if (req.file.length == 0) {
 			return resp.json({ mensagem: 'Por favor escolha uma imagem' });
@@ -44,7 +39,11 @@ module.exports = {
 		const { originalname, filename, path } = req.file;
 
 		//regras de negocio
+		const verificaNome = await Pod.validaPodcastNome(pod_nome);
 
+		if(verificaNome){
+			return resp.json({nomeExists:true});
+		}
 		//final regras de negocio
 
 		const id = await PodCast.callInsertProcedure(
@@ -66,12 +65,11 @@ module.exports = {
 
 		if (!id) {
 			return resp.json({
-				mensagem: 'Procedure criar podcast NÃO funcinou!',
 				_id: id
 			});
 		}
 		return resp.json({
-			mensagem: 'Procedure criar podcast funcinou',
+			podCreated:true,
 			_id: id
 		});
 	},
