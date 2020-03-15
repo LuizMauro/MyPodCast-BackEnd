@@ -11,12 +11,13 @@ module.exports = {
 			pod_anocriacao,
 			pod_duracao,
 			pod_permissao,
-			usu_id,
 			end_link1,
 			end_link2,
 			end_link3,
 			list_of_categoria
 		} = req.body;
+
+		const { userId } = req;
 
 		if (req.file.length == 0) {
 			return resp.json({ mensagem: 'Por favor escolha uma imagem' });
@@ -43,6 +44,18 @@ module.exports = {
 
 		if(verificaNome){
 			return resp.json({nomeExists:true});
+		}
+
+		const verificaDescricao = await Pod.validaPodcastDescricao(pod_descricao);
+
+		if(verificaDescricao){
+			return resp.json({descricaoExists:true});
+		}
+
+		const verificaLink = await Pod.validaPodcastLink(link1,link2,link3);
+
+		if(verificaLink){
+			return resp.json({linkExists:true});
 		}
 		//final regras de negocio
 

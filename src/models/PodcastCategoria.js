@@ -57,6 +57,32 @@ class PodcastCategoria extends Model {
 		return results;
 	}
 
+	//VERIFICA SE DESCRIÇÃO DO PODCAST EXISTE
+	static async validaPodcastDescricao(poddescricao) {
+		const [results] = await this.sequelize.query(
+			' select pod_id from pod_podcast where pod_status = true and pod_permissao = 1 and pod_descricao = :pod_descricao',
+			{
+				replacements: { pod_descricao: poddescricao},
+				type: QueryTypes.SELECT
+			}
+		);
+
+		return results;
+	}
+
+	//VERIFICA SE LINKS DO PODCAST EXISTE
+	static async validaPodcastLink(endlink, endlink2, endlink3) {
+		const [results] = await this.sequelize.query(
+			'select a.end_link from end_endereco a join pod_podcast b on a.pod_id = b.pod_id where b.pod_status = 1 and b.pod_permissao = 1 and end_link in (:end_link, :end_link2, :end_link3) and end_link != "https://" ',
+			{
+				replacements: { end_link: endlink, end_link2: endlink2, end_link3: endlink3},
+				type: QueryTypes.SELECT
+			}
+		);
+
+		return results;
+	}
+
 	//Podcast pelo ID
 	static async findPodcastsByID(podID) {
 		const [results] = await this.sequelize.query(
