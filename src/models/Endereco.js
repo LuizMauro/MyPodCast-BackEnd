@@ -32,7 +32,12 @@ class Endereco extends Model {
 
 	static async findEndereco(podid) {
 		const [results] = await this.sequelize.query(
-			'Select * from end_endereco'
+			'Select * from end_endereco where pod_id = :pod_id',
+			{
+				replalcements: { pod_id: podid },
+				type: QueryTypes.SELECT,
+				nest: true
+			}
 		);
 
 		return results;
