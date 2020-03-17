@@ -5,6 +5,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `EditarPodcast`(
 	in `pod_criadorP` VARCHAR(45),
 	in `pod_anocriacaoP` INT,
 	in `pod_duracaoP` INT,
+    in `pod_endereco_imgP` VARCHAR(255),
 	in `pod_statusP` BOOLEAN ,
     in `pod_permissaoP` INT,
 	in `pod_destaqueP` BOOLEAN ,
@@ -19,7 +20,7 @@ begin
     declare continue handler for sqlexception set excessao = 1;
     
     start transaction;
-    update pod_podcast set pod_nome = pod_nomeP, pod_descricao = pod_descricaoP, pod_criador = pod_criadorP, pod_anocriacao = pod_anocriacaoP, pod_duracao = pod_duracaoP, pod_status = pod_statusP, pod_permissao = pod_permissaoP, pod_destaque = pod_destaqueP where pod_id = pod_idP;
+    update pod_podcast set pod_nome = pod_nomeP, pod_descricao = pod_descricaoP, pod_criador = pod_criadorP, pod_anocriacao = pod_anocriacaoP, pod_duracao = pod_duracaoP, pod_endereco_img = pod_endereco_imgP, pod_status = pod_statusP, pod_permissao = pod_permissaoP, pod_destaque = pod_destaqueP where pod_id = pod_idP;
     
     if(excessao = 0) then
 		
