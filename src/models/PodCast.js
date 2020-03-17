@@ -164,27 +164,10 @@ class PodCast extends Model {
 		}
 	}
 
-	//Update Imagem (Altera Imagem do Podcast)
-	static async updatePodcastImg(podid, enderecoimg) {
-		try {
-			const [result] = await this.sequelize.query(
-				'update pod_podcast set pod_endereco_img = :pod_endereco_img where pod_id = :pod_id',
-				{
-					replacements: { pod_id: podid, pod_endereco_img: enderecoimg },
-					type: QueryTypes.UPDATE,
-					nest: true
-				}
-			);
-			return true;
-		} catch (err) {
-			return false;
-		}
-	}
-
 	//Exibe Solicitações de Cadastro de Podcast pelo Nome do Podcast
 	static async findPodcastSolicitacoes(data) {
 		const [results] = await this.sequelize.query(
-			'select distinct a.pod_nome, a.pod_id, b.usu_nome from pod_podcast a join usu_usuario b on b.usu_id = a.usu_id  where a.pod_permissao = 0 ORDER by a.pod_id'
+			'select a.pod_id, e.usu_nome, a.pod_nome, a.pod_anocriacao, a.pod_descricao, a.pod_endereco_img, a.pod_criador, a.pod_duracao, a.pod_status, a.pod_destaque, a.pod_permissao, a.usu_id, group_concat(distinct c.ctg_id) as ctg_id, group_concat(distinct c.ctg_descricao) as ctg_descricao, group_concat(distinct d.end_link) as end_link from pod_podcast a join usu_usuario e on e.usu_id = a.usu_id join pct_podcast_categoria b on a.pod_id = b.pod_id join ctg_categoria c on b.ctg_id = c.ctg_id join end_endereco d on a.pod_id = d.pod_id  where a.pod_status = true and a.pod_permissao = 0 group by a.pod_id'
 		);
 
 		return results;
