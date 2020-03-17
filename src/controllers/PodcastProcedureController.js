@@ -42,20 +42,20 @@ module.exports = {
 		//regras de negocio
 		const verificaNome = await Pod.validaPodcastNome(pod_nome);
 
-		if(verificaNome){
-			return resp.json({nomeExists:true});
+		if (verificaNome) {
+			return resp.json({ nomeExists: true });
 		}
 
 		const verificaDescricao = await Pod.validaPodcastDescricao(pod_descricao);
 
-		if(verificaDescricao){
-			return resp.json({descricaoExists:true});
+		if (verificaDescricao) {
+			return resp.json({ descricaoExists: true });
 		}
 
-		const verificaLink = await Pod.validaPodcastLink(link1,link2,link3);
+		const verificaLink = await Pod.validaPodcastLink(link1, link2, link3);
 
-		if(verificaLink){
-			return resp.json({linkExists:true});
+		if (verificaLink) {
+			return resp.json({ linkExists: true });
 		}
 		//final regras de negocio
 
@@ -82,7 +82,7 @@ module.exports = {
 			});
 		}
 		return resp.json({
-			podCreated:true,
+			podCreated: true,
 			_id: id
 		});
 	},
@@ -106,6 +106,17 @@ module.exports = {
 
 		const { pod_id } = req.params;
 
+		let imgfilename = null;
+
+		if (req.file) {
+			if (req.file.length == 0) {
+				return resp.json({ mensagem: 'Por favor escolha uma imagem' });
+			}
+			const { originalname, filename } = req.file;
+			imgfilename = filename
+		}
+
+		const atual = await Pod.findPodcastsByID(pod_id);
 		//regras de negocio
 
 		//final regras de negocio
@@ -117,6 +128,7 @@ module.exports = {
 			pod_criador,
 			pod_anocriacao,
 			pod_duracao,
+			req.file ? imgfilename : atual.pod_endereco_img,
 			pod_status,
 			pod_permissao,
 			pod_destaque,

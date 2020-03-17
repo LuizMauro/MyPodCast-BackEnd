@@ -138,7 +138,8 @@ routes.post(
 );
 routes.put(
 	'/adm/editarpodcast/:pod_id',
-	authMiddlewareAdm,
+	[authMiddlewareAdm,
+	upload.single('file')],
 	PodcastProcedure.update
 );
 routes.put(
