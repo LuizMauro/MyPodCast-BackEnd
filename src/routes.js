@@ -176,7 +176,7 @@ routes.put(
 	authMiddlewareAdm,
 	UserController.updateUsuarioTipo
 );
-routes.get('/adm/users', authMiddlewareAdm, UserController.index);
+routes.get('/adm/users', authMiddlewareAdm, UserController.indexAllUsers);
 routes.get('/adm/user', authMiddlewareAdm, UserController.read);
 routes.post('/adm/tfb', authMiddlewareAdm, TipoFeedbackController.store);
 routes.get('/adm/tfb', authMiddlewareAdm, TipoFeedbackController.index);

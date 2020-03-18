@@ -4,6 +4,12 @@ const { hash } = require('bcryptjs');
 module.exports = {
 	//SELECTS
 	async index(req, resp) {
+		const users = await User.findAll();
+
+		return resp.json(users);
+	},
+	
+	async indexAllUsers(req, resp) {
 		const users = await User.findAllUsers();
 
 		return resp.json(users);

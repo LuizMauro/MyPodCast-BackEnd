@@ -38,10 +38,19 @@ class User extends Model {
 		}
 	}
 
-	// Exibe todos OUVINTES por ordem alfabética com seu tipo de usuario
-	static async findAllUsers() {
+	// Exibe todos usuarios por ordem alfabética com seu tipo de usuario
+	static async findAll() {
 		const [results] = await this.sequelize.query(
 			'select distinct a.usu_nome, a.usu_id, a.usu_email, a.usu_cpf, a.usu_status, a.usu_premium, b.tus_id, b.tus_descricao from usu_usuario a join tus_tipo_usuario b on a.tus_id = b.tus_id order by a.usu_id'
+		);
+
+		return results;
+	}
+
+	// Exibe todos OUVINTES E PODCASTERS por ordem alfabética com seu tipo de usuario
+	static async findAllUsers() {
+		const [results] = await this.sequelize.query(
+			'select distinct a.usu_nome, a.usu_id, a.usu_email, a.usu_cpf, a.usu_status, a.usu_premium, b.tus_id, b.tus_descricao from usu_usuario a join tus_tipo_usuario b on a.tus_id = b.tus_id where b.tus_id between 1 and 2 order by a.usu_id;'
 		);
 
 		return results;
