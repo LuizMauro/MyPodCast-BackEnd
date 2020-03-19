@@ -15,6 +15,12 @@ module.exports = {
 		return resp.json(users);
 	},
 
+	async indexAllModUser(req, resp) {
+		const users = await User.findAllModUser();
+
+		return resp.json(users);
+	},
+
 	async read(req, resp) {
 		const { userId } = req;
 		const user = await User.findOneUser(userId);
