@@ -27,6 +27,10 @@ const SessionController = require('./controllers/SessionController');
 
 //chamndo os validators
 const UserStoreValidate = require('./validators/UserStore').validation;
+const PodcastStoreValidate = require('./validators/PodcastStore').validation;
+const TagStoreValidate = require('./validators/TagStore').validation;
+const CategoriaStoreValidate = require('./validators/CategoriaStore')
+	.validation;
 //final validators
 
 const { date } = require('./utils/Date');
@@ -107,12 +111,14 @@ routes.get(
 routes.post(
 	'/podcaster/criarpodcast',
 	authMiddlewarePodcaster,
+	PodcastStoreValidate,
 	upload.single('file'),
 	PodcastProcedure.store
 );
 routes.put(
 	'/podcast/editarpodcast/:pod_id',
 	authMiddlewarePodcaster,
+	PodcastStoreValidate,
 	PodcastProcedure.update
 );
 routes.put(
@@ -124,22 +130,26 @@ routes.put(
 //FIM PODCASTER
 
 //ADM
-routes.post('/adm/categoria', authMiddlewareAdm, Categoria.store);
+routes.post(
+	'/adm/categoria',
+	authMiddlewareAdm,
+	CategoriaStoreValidate,
+	Categoria.store
+);
 routes.put(
 	'/adm/categoria/:ctg_id',
 	authMiddlewareAdm,
+	CategoriaStoreValidate,
 	Categoria.updateCtgDescricao
 );
 routes.post(
 	'/adm/criarpodcast',
-	[authMiddlewareAdm,
-	upload.single('file')],
+	[authMiddlewareAdm, PodcastStoreValidate, upload.single('file')],
 	PodcastProcedure.store
 );
 routes.put(
 	'/adm/editarpodcast/:pod_id',
-	[authMiddlewareAdm,
-	upload.single('file')],
+	[authMiddlewareAdm, PodcastStoreValidate, upload.single('file')],
 	PodcastProcedure.update
 );
 routes.put(
@@ -159,8 +169,13 @@ routes.put(
 	authMiddlewareAdm,
 	SolicitacaoCadastro.update
 );
-routes.post('/adm/tag', authMiddlewareAdm, Tag.store);
-routes.put('/adm/tag/:tag_id', authMiddlewareAdm, Tag.updateTag);
+routes.post('/adm/tag', authMiddlewareAdm, TagStoreValidate, Tag.store);
+routes.put(
+	'/adm/tag/:tag_id',
+	authMiddlewareAdm,
+	TagStoreValidate,
+	Tag.updateTag
+);
 routes.put(
 	'/adm/tag/:tag_id/:tag_status',
 	authMiddlewareAdm,
@@ -184,10 +199,16 @@ routes.get('/adm/tfb', authMiddlewareAdm, TipoFeedbackController.index);
 //FIM ADM
 
 //MOD
-routes.post('/mod/categoria', authMiddlewareMod, Categoria.store);
+routes.post(
+	'/mod/categoria',
+	authMiddlewareMod,
+	CategoriaStoreValidate,
+	Categoria.store
+);
 routes.put(
 	'/mod/categoria/:ctg_id',
 	authMiddlewareMod,
+	CategoriaStoreValidate,
 	Categoria.updateCtgDescricao
 );
 routes.put('/mod/podcast/:pod_id', authMiddlewareMod, PodcastProcedure.update);
