@@ -7,7 +7,7 @@ class Feedback extends Model {
 				fbk_datacriacao: DataTypes.DATE,
 				fbk_status: DataTypes.BOOLEAN,
 				fbk_valor: DataTypes.INTEGER,
-				tag_valor_boolean: DataTypes.BOOLEAN
+				tag_valor_boolean: DataTypes.BOOLEAN,
 			},
 			{ sequelize }
 		);
@@ -27,7 +27,7 @@ class Feedback extends Model {
 				{
 					replacements: [data],
 					type: QueryTypes.INSERT,
-					nest: true
+					nest: true,
 				}
 			);
 			return result;
@@ -45,7 +45,7 @@ class Feedback extends Model {
 				{
 					replacements: { pod_id: podid, fbk_status: fbkstatus, usu_id: usuid },
 					type: QueryTypes.UPDATE,
-					nest: true
+					nest: true,
 				}
 			);
 			return true;
@@ -63,7 +63,30 @@ class Feedback extends Model {
 				{
 					replacements: { pod_id: podid, fbk_status: fbkstatus, usu_id: usuid },
 					type: QueryTypes.UPDATE,
-					nest: true
+					nest: true,
+				}
+			);
+			return true;
+		} catch (err) {
+			console.log(err);
+			return false;
+		}
+	}
+
+	//Muda nota do podcast avaliado
+	static async updateAvaliar(podid, fbkvalor, fbkstatus, usuid) {
+		try {
+			const [result] = await this.sequelize.query(
+				'update fbk_feedback set fbk_valor = :fbk_valor, fbk_status = :fbk_status where pod_id = :pod_id and tfb_id = 3 and usu_id = :usu_id',
+				{
+					replacements: {
+						pod_id: podid,
+						fbk_status: fbkstatus,
+						fbk_valor: fbkvalor,
+						usu_id: usuid,
+					},
+					type: QueryTypes.UPDATE,
+					nest: true,
 				}
 			);
 			return true;
@@ -82,14 +105,43 @@ class Feedback extends Model {
 		return results;
 	}
 
-	//Visualiza todos os Favoritos feitos para um podcast
+	//Visualiza Média (nota) de um Podcast
+	static async findNotaMedia(podid) {
+		const [results] = await this.sequelize.query(
+			'select avg (d.fbk_valor) as pod_media from fbk_feedback d join pod_podcast b on b.pod_id = d.pod_id join tfb_tipo_feedback c on c.tfb_id = d.tfb_id where b.pod_id = :pod_id and c.tfb_id = 3 and d.fbk_status = 1 and b.pod_status = 1',
+			{
+				replacements: { pod_id: podid},
+				type: QueryTypes.SELECT,
+				nest: true,
+			}
+		);
+
+		return results;
+	}
+
+	//Visualiza Favoritos feitos para um podcast por um usuario
 	static async findFavorito(podid, usuid) {
 		const [results] = await this.sequelize.query(
 			'select a.usu_nome, b.pod_id, b.pod_nome, c.tfb_descricao, d.fbk_id, d.fbk_status from usu_usuario a join fbk_feedback d on a.usu_id  = d.usu_id join pod_podcast b on b.pod_id = d.pod_id join tfb_tipo_feedback c on c.tfb_id = d.tfb_id where b.pod_id = :pod_id and a.usu_id = :usu_id and c.tfb_id = 1 and d.fbk_status = 1 and b.pod_status = 1;',
 			{
 				replacements: { pod_id: podid, usu_id: usuid },
 				type: QueryTypes.SELECT,
-				nest: true
+				nest: true,
+			}
+		);
+
+		return results;
+	}
+
+	//Visualiza avaliação feitoa para um podcast por um usuario
+	static async findAvaliar(podid, usuid) {
+		const [results] = await this.sequelize.query(
+			'select a.usu_nome, b.pod_id, b.pod_nome, c.tfb_descricao, d.fbk_valor, d.fbk_id, d.fbk_status from usu_usuario a join fbk_feedback d on a.usu_id  = d.usu_id join pod_podcast b on b.pod_id = d.pod_id join tfb_tipo_feedback c on c.tfb_id = d.tfb_id where b.pod_id = :pod_id  and a.usu_id = :usu_id and c.tfb_id = 3 and d.fbk_status = 1 and b.pod_status = 1',
+
+			{
+				replacements: { pod_id: podid, usu_id: usuid },
+				type: QueryTypes.SELECT,
+				nest: true,
 			}
 		);
 
@@ -99,11 +151,11 @@ class Feedback extends Model {
 	//Visualiza todos os Acompanhando/PretendoAcompanhar feitos para um podcast
 	static async findAcompanhando(podid, usuid) {
 		const [results] = await this.sequelize.query(
-			'select a.usu_nome, b.pod_nome, c.tfb_descricao, d.fbk_id, d.fbk_status from usu_usuario a join fbk_feedback d on a.usu_id  = d.usu_id join pod_podcast b on b.pod_id = d.pod_id join tfb_tipo_feedback c on c.tfb_id = d.tfb_id where b.pod_id = :pod_id and a.usu_id = :usu_id and d.tfb_id = 2  and b.pod_status = 1' ,
+			'select a.usu_nome, b.pod_nome, c.tfb_descricao, d.fbk_id, d.fbk_status from usu_usuario a join fbk_feedback d on a.usu_id  = d.usu_id join pod_podcast b on b.pod_id = d.pod_id join tfb_tipo_feedback c on c.tfb_id = d.tfb_id where b.pod_id = :pod_id and a.usu_id = :usu_id and d.tfb_id = 2  and b.pod_status = 1',
 			{
-				replacements: {pod_id: podid, usu_id: usuid},
+				replacements: { pod_id: podid, usu_id: usuid },
 				type: QueryTypes.SELECT,
-				nest: true
+				nest: true,
 			}
 		);
 
@@ -117,13 +169,12 @@ class Feedback extends Model {
 			{
 				replacements: [usuid],
 				type: QueryTypes.SELECT,
-				nest: true
+				nest: true,
 			}
 		);
 
 		return results;
 	}
-
 }
 
 module.exports = Feedback;

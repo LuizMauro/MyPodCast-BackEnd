@@ -22,6 +22,7 @@ const TipoFeedbackController = require('./controllers/TipoFeedbackController');
 const FavoritarController = require('./controllers/FavoritarController');
 const AcompanhandoController = require('./controllers/AcompanhandoController');
 const AcompanharController = require('./controllers/AcompanharController');
+const AvaliarController = require('./controllers/AvaliarController');
 const SessionController = require('./controllers/SessionController');
 //final chamando os controllers
 
@@ -105,6 +106,23 @@ routes.get(
 	authMiddleware,
 	AcompanhandoController.indexFindAcompanhando
 );
+
+//AVALIAR
+routes.post(
+	'/:pod_id/avaliar/:fbk_valor',
+	authMiddleware,
+	AvaliarController.store
+);
+routes.put(
+	'/:pod_id/avaliar/:fbk_valor/:fbk_status',
+	authMiddleware,
+	AvaliarController.update
+);
+routes.get(
+	'/:pod_id/medianota',
+	AvaliarController.read
+);
+
 //FIM USUARIO LOGADO
 
 //PODCASTER
