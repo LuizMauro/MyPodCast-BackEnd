@@ -122,6 +122,11 @@ routes.get(
 	'/:pod_id/medianota',
 	AvaliarController.read
 );
+routes.get(
+	'/:pod_id/avaliar',
+	authMiddleware,
+	AvaliarController.index
+);
 
 //FIM USUARIO LOGADO
 

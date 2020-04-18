@@ -2,11 +2,20 @@ const Avaliar = require('../models/Feedback');
 
 module.exports = {
 	//SELECT
-	async read(req, resp) {
+	async index(req, res) {
+		const { pod_id } = req.params;
+		const { userId } = req;
+		console.log('teste de id', userId);
+		const fav = await Avaliar.findAvaliar(pod_id, userId);
+
+		return res.json(fav);
+	},
+
+	async read(req, res) {
 		const { pod_id } = req.params;
 		const fav = await Avaliar.findNotaMedia(pod_id);
 
-		return resp.json(fav);
+		return res.json(fav);
 	},
 
 	//CREATE
