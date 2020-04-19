@@ -7,31 +7,36 @@ module.exports = {
 				type: Sequelize.INTEGER,
 				primaryKey: true,
 				autoIncrement: true,
-				allowNull: false
+				allowNull: false,
 			},
-      cmt_conteudo: {
-        type: Sequelize.STRING(2000),
-        allowNull: false
-      },
+			cmt_conteudo: {
+				type: Sequelize.STRING(2000),
+				allowNull: false,
+			},
 			cmt_datacriacao: {
 				type: Sequelize.DATE,
 				allowNull: false,
-				unique: false
+				unique: false,
 			},
 			cmt_status: {
 				type: Sequelize.BOOLEAN,
-				allowNull: false
+				allowNull: false,
 			},
 			usu_id: {
 				type: Sequelize.INTEGER,
 				allowNull: false,
-				references: { model: 'usu_usuario', key: 'usu_id' }
+				references: { model: 'usu_usuario', key: 'usu_id' },
 			},
 			pod_id: {
 				type: Sequelize.INTEGER,
 				allowNull: false,
-				references: { model: 'pod_podcast', key: 'pod_id' }
-			}
+				references: { model: 'pod_podcast', key: 'pod_id' },
+			},
+			tag_id: {
+				type: Sequelize.INTEGER,
+				allowNull: false,
+				references: { model: 'tag_tag', key: 'tag_id' },
+			},
 		});
   },
 

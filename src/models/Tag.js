@@ -11,7 +11,9 @@ class Tag extends Model {
 		);
 	}
 
-	static associate(models) {}
+	static associate(models) {
+		
+	}
 
 	static async createTag(data) {
 		try {
