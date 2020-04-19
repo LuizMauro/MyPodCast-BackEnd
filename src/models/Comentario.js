@@ -6,29 +6,24 @@ class Comentario extends Model {
 			{
 				cmt_conteudo: DataTypes.TEXT,
 				pod_datacriacao: DataTypes.DATE,
-				pod_status: DataTypes.BOOLEAN
+				pod_status: DataTypes.BOOLEAN,
 			},
 			{ sequelize }
 		);
 	}
 
 	static associate(models) {
-		this.belongsTo(models.User, { foreignKey: 'usu_id' });
-		this.belongsToMany(models.Categoria, {
-			through: 'pct_podcast_categoria',
-			as: 'categorias',
-			foreignKey: 'ctg_id'
-		});
+		this.belongsTo(models.Tag, { foreignKey: 'tag_id' });
 	}
 
-	static async createPodcastCategoria(data) {
+	static async createComentario(data) {
 		try {
 			const [result] = await this.sequelize.query(
-				'INSERT INTO pct_podcast_categoria(pod_id, ctg_id) values (?)',
+				'INSERT INTO cmt_comentario(cmt_conteudo,cmt_datacriacao,cmt_status,usu_id,pod_id,tag_id) values (?)',
 				{
 					replacements: [data],
 					type: QueryTypes.INSERT,
-					nest: true
+					nest: true,
 				}
 			);
 			return result;
@@ -37,18 +32,27 @@ class Comentario extends Model {
 		}
 	}
 
-	static async findCtgByPodcastID(podid) {
+	static async findComentariosByPodcast(podid) {
 		const results = await this.sequelize.query(
-			'select c.pod_nome, a.ctg_id, a.ctg_descricao from ctg_categoria a join pct_podcast_categoria b on a.ctg_id = b.ctg_id join pod_podcast c on b.pod_id = c.pod_id where c.pod_id = :pod_id',
+			'select a.cmt_conteudo, a.cmt_id, b.usu_id, b.usu_nome, c.pod_id, c.pod_nome, d.tag_descricao from usu_usuario b join cmt_comentario a on a.usu_id = b.usu_id join pod_podcast c on a.pod_id = c.pod_id join tag_tag d on a.tag_id = d.tag_id where c.pod_id = :pod_id',
 			{
 				replacements: { pod_id: podid },
-				type: QueryTypes.SELECT
+				type: QueryTypes.SELECT,
 			}
 		);
-
 		return results;
 	}
 
+	static async findComentariosByPodcastUser(podid, usuid) {
+		const results = await this.sequelize.query(
+			'select a.cmt_conteudo, a.cmt_id, b.usu_id, b.usu_nome, c.pod_id, c.pod_nome, d.tag_descricao from usu_usuario b join cmt_comentario a on a.usu_id = b.usu_id join pod_podcast c on a.pod_id = c.pod_id join tag_tag d on a.tag_id = d.tag_id where c.pod_id = :pod_id and b.usu_id = :usu_id',
+			{
+				replacements: { pod_id: podid, usu_id: usuid },
+				type: QueryTypes.SELECT,
+			}
+		);
+		return results;
+	}
 }
 
 module.exports = Comentario;

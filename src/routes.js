@@ -24,6 +24,7 @@ const AcompanhandoController = require('./controllers/AcompanhandoController');
 const AcompanharController = require('./controllers/AcompanharController');
 const AvaliarController = require('./controllers/AvaliarController');
 const SessionController = require('./controllers/SessionController');
+const ComentarioController = require('./controllers/ComentarioController');
 //final chamando os controllers
 
 //chamndo os validators
@@ -118,15 +119,13 @@ routes.put(
 	authMiddleware,
 	AvaliarController.update
 );
-routes.get(
-	'/:pod_id/medianota',
-	AvaliarController.read
-);
-routes.get(
-	'/:pod_id/avaliar',
-	authMiddleware,
-	AvaliarController.index
-);
+routes.get('/:pod_id/medianota', AvaliarController.read);
+routes.get('/:pod_id/avaliar', authMiddleware, AvaliarController.index);
+
+//COMENTARIOS
+routes.post('/comentar/:pod_id/:tag_id', authMiddleware, ComentarioController.store);
+routes.get('/allcomentarios/:pod_id',ComentarioController.index);
+routes.get('/comentario/:pod_id',authMiddleware,ComentarioController.index);
 
 //FIM USUARIO LOGADO
 
