@@ -126,6 +126,7 @@ routes.get('/:pod_id/avaliar', authMiddleware, AvaliarController.index);
 routes.post('/comentar/:pod_id/:tag_id', authMiddleware, ComentarioController.store);
 routes.get('/allcomentarios/:pod_id',ComentarioController.index);
 routes.get('/comentario/:pod_id',authMiddleware,ComentarioController.index);
+routes.get('/allcomentarios/:pod_id/:tag_id',ComentarioController.indexTag);
 
 //FIM USUARIO LOGADO
 

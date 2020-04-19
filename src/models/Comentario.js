@@ -53,6 +53,17 @@ class Comentario extends Model {
 		);
 		return results;
 	}
+
+	static async findComentariosByPodcastTag(podid, tagid) {
+		const results = await this.sequelize.query(
+			'select a.cmt_conteudo, a.cmt_id, b.usu_id, b.usu_nome, c.pod_id, c.pod_nome, d.tag_descricao from usu_usuario b join cmt_comentario a on a.usu_id = b.usu_id join pod_podcast c on a.pod_id = c.pod_id join tag_tag d on a.tag_id = d.tag_id where c.pod_id = :pod_id and d.tag_id = :tag_id',
+			{
+				replacements: { pod_id: podid, tag_id: tagid },
+				type: QueryTypes.SELECT,
+			}
+		);
+		return results;
+	}
 }
 
 module.exports = Comentario;

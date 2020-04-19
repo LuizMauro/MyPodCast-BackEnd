@@ -8,6 +8,14 @@ module.exports = {
 		const comments = await Comentario.findComentariosByPodcast(pod_id);
 
 		return resp.json(comments);
+    },
+    
+	async indexTag(req, resp) {
+		const { pod_id, tag_id } = req.params;
+
+		const comments = await Comentario.findComentariosByPodcastTag(pod_id,tag_id);
+
+		return resp.json(comments);
 	},
 
 	async read(req, resp) {
