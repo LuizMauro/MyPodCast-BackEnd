@@ -34,6 +34,8 @@ const PodcastProcedureStoreValidate = require("./validators/PodcastProcedureStor
 const TagStoreValidate = require("./validators/TagStore").validation;
 const CategoriaStoreValidate = require("./validators/CategoriaStore")
   .validation;
+const ComentarioStoreValidate = require("./validators/ComentarioStore")
+  .validation;
 //final validators
 
 const { date } = require("./utils/Date");
@@ -127,6 +129,7 @@ routes.get("/:pod_id/avaliar", authMiddleware, AvaliarController.index);
 routes.post(
   "/comentar/:pod_id/:tag_id",
   authMiddleware,
+  ComentarioStoreValidate,
   ComentarioController.store
 );
 routes.get("/allcomentarios/:pod_id", ComentarioController.index);
