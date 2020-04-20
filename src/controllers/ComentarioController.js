@@ -72,6 +72,8 @@ module.exports = {
 		const { pod_id, tag_id } = req.params;
 		const { userId } = req;
 
+		console.log('conteudo',cmt_conteudo);
+
 		const data = [
 			cmt_conteudo,
 			'2019-11-24 21:36:48',

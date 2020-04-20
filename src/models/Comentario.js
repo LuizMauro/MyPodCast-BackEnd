@@ -35,7 +35,7 @@ class Comentario extends Model {
 
 	static async findComentariosByPodcast(podid) {
 		const results = await this.sequelize.query(
-			'select a.cmt_id, a.cmt_conteudo, a.cmt_filho, a.id_comentario_pai, b.usu_id, b.usu_nome, c.pod_id, c.pod_nome, d.tag_descricao from usu_usuario b join cmt_comentario a on a.usu_id = b.usu_id join pod_podcast c on a.pod_id = c.pod_id join tag_tag d on a.tag_id = d.tag_id where c.pod_id = :pod_id',
+			'select a.cmt_id, a.cmt_conteudo, a.cmt_filho, a.id_comentario_pai, b.usu_id, b.usu_nome, c.pod_id, c.pod_nome, d.tag_descricao from usu_usuario b join cmt_comentario a on a.usu_id = b.usu_id join pod_podcast c on a.pod_id = c.pod_id join tag_tag d on a.tag_id = d.tag_id where c.pod_id = :pod_id and a.cmt_status = 1',
 			{
 				replacements: { pod_id: podid },
 				type: QueryTypes.SELECT,
@@ -46,7 +46,7 @@ class Comentario extends Model {
 
 	static async findComentariosByPodcastUser(podid, usuid) {
 		const results = await this.sequelize.query(
-			'select a.cmt_id, a.cmt_conteudo, a.cmt_filho, a.id_comentario_pai, b.usu_id, b.usu_nome, c.pod_id, c.pod_nome, d.tag_descricao from usu_usuario b join cmt_comentario a on a.usu_id = b.usu_id join pod_podcast c on a.pod_id = c.pod_id join tag_tag d on a.tag_id = d.tag_id where c.pod_id = :pod_id and b.usu_id = :usu_id',
+			'select a.cmt_id, a.cmt_conteudo, a.cmt_filho, a.id_comentario_pai, b.usu_id, b.usu_nome, c.pod_id, c.pod_nome, d.tag_descricao from usu_usuario b join cmt_comentario a on a.usu_id = b.usu_id join pod_podcast c on a.pod_id = c.pod_id join tag_tag d on a.tag_id = d.tag_id where c.pod_id = :pod_id and b.usu_id = :usu_id and a.cmt_status = 1',
 			{
 				replacements: { pod_id: podid, usu_id: usuid },
 				type: QueryTypes.SELECT,
@@ -57,7 +57,7 @@ class Comentario extends Model {
 
 	static async findComentariosByPodcastTag(podid, tagid) {
 		const results = await this.sequelize.query(
-			'select a.cmt_id, a.cmt_conteudo, a.cmt_filho, a.id_comentario_pai, b.usu_id, b.usu_nome, c.pod_id, c.pod_nome, d.tag_descricao from usu_usuario b join cmt_comentario a on a.usu_id = b.usu_id join pod_podcast c on a.pod_id = c.pod_id join tag_tag d on a.tag_id = d.tag_id where c.pod_id = :pod_id and d.tag_id = :tag_id',
+			'select a.cmt_id, a.cmt_conteudo, a.cmt_filho, a.id_comentario_pai, b.usu_id, b.usu_nome, c.pod_id, c.pod_nome, d.tag_descricao from usu_usuario b join cmt_comentario a on a.usu_id = b.usu_id join pod_podcast c on a.pod_id = c.pod_id join tag_tag d on a.tag_id = d.tag_id where c.pod_id = :pod_id and d.tag_id = :tag_id and a.cmt_status = 1',
 			{
 				replacements: { pod_id: podid, tag_id: tagid },
 				type: QueryTypes.SELECT,
