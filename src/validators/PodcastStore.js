@@ -5,6 +5,7 @@ module.exports.validation = async function(req, res, next) {
     const schema = Yup.object().shape({
       pod_nome: Yup.string()
         .required("Campo obrigatório!")
+        .min(1)
         .max(45)
         .trim(),
       pod_descricao: Yup.string()
