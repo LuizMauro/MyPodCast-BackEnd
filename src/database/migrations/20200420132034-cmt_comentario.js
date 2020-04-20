@@ -22,6 +22,10 @@ module.exports = {
 				type: Sequelize.BOOLEAN,
 				allowNull: false,
 			},
+			cmt_filho: {
+				type: Sequelize.BOOLEAN,
+				allowNull: false,
+			},
 			usu_id: {
 				type: Sequelize.INTEGER,
 				allowNull: false,
@@ -36,7 +40,12 @@ module.exports = {
 				type: Sequelize.INTEGER,
 				allowNull: false,
 				references: { model: 'tag_tag', key: 'tag_id' },
-			},
+      },
+      id_comentario_pai:{
+        type: Sequelize.INTEGER,
+				allowNull: true,
+				references: { model: 'cmt_comentario', key: 'cmt_id' },
+      }
 		});
   },
 
