@@ -36,7 +36,7 @@ module.exports = {
 	//CREATE
 	async store(req, resp) {
 		const { cmt_conteudo } = req.body;
-		const { pod_id, tag_id } = req.params;
+		const { pod_id, tag_id, id_comentario_pai } = req.params;
 		const { userId } = req;
 
 		console.log('conteudo', cmt_conteudo);
@@ -49,7 +49,7 @@ module.exports = {
 			userId,
 			pod_id,
 			tag_id,
-			null,
+			id_comentario_pai ? id_comentario_pai : null
 		];
 
 		//regras de negocio
@@ -88,20 +88,25 @@ module.exports = {
 		});
 	},
 
-	async updateTagStatus(req, res) {
-		const { tag_id, tag_status } = req.params;
+	async delete(req, res) {
+		const { pod_id, cmt_id } = req.params;
+		const { userId } = req;
 
-		const tagUpdate = await Tag.updateTagStatus(tag_id, tag_status);
+		const commentUpdate = await Comentario.updateComentarioStatus(
+			pod_id,
+			cmt_id,
+			userId
+		);
 
-		if (!tagUpdate) {
+		if (!commentUpdate) {
 			return res.json({
-				mensagem: 'Erro ao mudar status da tag!',
-				_id: tagUpdate,
+				mensagem: 'Erro ao apagar comentário!',
+				_id: commentUpdate,
 			});
 		}
 		return res.json({
-			mensagem: 'status da tag alterado!',
-			_id: tagUpdate,
+			mensagem: 'comentário apagado!',
+			_id: commentUpdate,
 		});
 	},
 };
