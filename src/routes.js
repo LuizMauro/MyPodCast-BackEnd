@@ -123,10 +123,14 @@ routes.get('/:pod_id/medianota', AvaliarController.read);
 routes.get('/:pod_id/avaliar', authMiddleware, AvaliarController.index);
 
 //COMENTARIOS
-routes.post('/comentar/:pod_id/:tag_id', authMiddleware, ComentarioController.store);
-routes.get('/allcomentarios/:pod_id',ComentarioController.index);
-routes.get('/comentario/:pod_id',authMiddleware,ComentarioController.index);
-routes.get('/allcomentarios/:pod_id/:tag_id',ComentarioController.indexTag);
+routes.post(
+	'/comentar/:pod_id/:tag_id',
+	authMiddleware,
+	ComentarioController.store
+);
+routes.get('/allcomentarios/:pod_id', ComentarioController.index);
+routes.get('/comentario/:pod_id', authMiddleware, ComentarioController.index);
+routes.get('/allcomentarios/:pod_id/:tag_id', ComentarioController.indexTag);
 
 //FIM USUARIO LOGADO
 
@@ -134,13 +138,14 @@ routes.get('/allcomentarios/:pod_id/:tag_id',ComentarioController.indexTag);
 routes.post(
 	'/podcaster/criarpodcast',
 	authMiddlewarePodcaster,
-	PodcastStoreValidate,
 	upload.single('file'),
+	PodcastStoreValidate,
 	PodcastProcedure.store
 );
 routes.put(
 	'/podcast/editarpodcast/:pod_id',
 	authMiddlewarePodcaster,
+	upload.single('file'),
 	PodcastStoreValidate,
 	PodcastProcedure.update
 );
@@ -167,12 +172,16 @@ routes.put(
 );
 routes.post(
 	'/adm/criarpodcast',
-	[authMiddlewareAdm, PodcastStoreValidate, upload.single('file')],
+	authMiddlewareAdm,
+	upload.single('file'),
+	PodcastStoreValidate,
 	PodcastProcedure.store
 );
 routes.put(
 	'/adm/editarpodcast/:pod_id',
-	[authMiddlewareAdm, PodcastStoreValidate, upload.single('file')],
+	authMiddlewareAdm,
+	upload.single('file'),
+	PodcastStoreValidate,
 	PodcastProcedure.update
 );
 routes.put(
