@@ -8,12 +8,15 @@ module.exports = {
 		const comments = await Comentario.findComentariosByPodcast(pod_id);
 
 		return resp.json(comments);
-    },
-    
+	},
+
 	async indexTag(req, resp) {
 		const { pod_id, tag_id } = req.params;
 
-		const comments = await Comentario.findComentariosByPodcastTag(pod_id,tag_id);
+		const comments = await Comentario.findComentariosByPodcastTag(
+			pod_id,
+			tag_id
+		);
 
 		return resp.json(comments);
 	},
@@ -72,7 +75,7 @@ module.exports = {
 		const { pod_id, tag_id } = req.params;
 		const { userId } = req;
 
-		console.log('conteudo',cmt_conteudo);
+		console.log('conteudo', cmt_conteudo);
 
 		const data = [
 			cmt_conteudo,
@@ -82,7 +85,7 @@ module.exports = {
 			userId,
 			pod_id,
 			tag_id,
-			null
+			null,
 		];
 
 		//regras de negocio
