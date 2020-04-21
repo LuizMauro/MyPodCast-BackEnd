@@ -1,28 +1,25 @@
 'use strict';
 
 module.exports = {
-	up: (queryInterface, Sequelize) => {
-		return queryInterface.createTable('cmt_comentario', {
-			cmt_id: {
+  up: (queryInterface, Sequelize) => {
+    return queryInterface.createTable('lik_like', {
+			lik_id: {
 				type: Sequelize.INTEGER,
 				primaryKey: true,
 				autoIncrement: true,
 				allowNull: false,
 			},
-			cmt_conteudo: {
-				type: Sequelize.STRING(2000),
+			lik_tipo: {
+				type: Sequelize.BOOLEAN,
 				allowNull: false,
+				unique: false,
 			},
-			cmt_datacriacao: {
+			lik_datacriacao: {
 				type: Sequelize.DATE,
 				allowNull: false,
 				unique: false,
 			},
-			cmt_status: {
-				type: Sequelize.BOOLEAN,
-				allowNull: false,
-			},
-			cmt_filho: {
+			lik_status: {
 				type: Sequelize.BOOLEAN,
 				allowNull: false,
 			},
@@ -31,31 +28,21 @@ module.exports = {
 				allowNull: false,
 				references: { model: 'usu_usuario', key: 'usu_id' },
 			},
-			pod_id: {
+			cmt_id: {
 				type: Sequelize.INTEGER,
 				allowNull: false,
-				references: { model: 'pod_podcast', key: 'pod_id' },
-			},
-			tag_id: {
-				type: Sequelize.INTEGER,
-				allowNull: false,
-				references: { model: 'tag_tag', key: 'tag_id' },
-			},
-			id_comentario_pai: {
-				type: Sequelize.INTEGER,
-				allowNull: true,
 				references: { model: 'cmt_comentario', key: 'cmt_id' },
 			},
 		});
-	},
+  },
 
-	down: (queryInterface, Sequelize) => {
-		/*
+  down: (queryInterface, Sequelize) => {
+    /*
       Add reverting commands here.
       Return a promise to correctly handle asynchronicity.
 
       Example:
       return queryInterface.dropTable('users');
     */
-	},
+  }
 };

@@ -13,6 +13,8 @@ class Comentario extends Model {
 	}
 
 	static associate(models) {
+		this.belongsTo(models.PodCast, { foreignKey: 'pod_id' });
+		this.belongsTo(models.User, { foreignKey: 'usu_id' });
 		this.belongsTo(models.Tag, { foreignKey: 'tag_id' });
 		this.belongsTo(models.Comentario, { foreignKey: 'id_comentario_pai' });
 	}

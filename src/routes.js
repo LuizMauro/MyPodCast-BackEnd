@@ -25,6 +25,7 @@ const AcompanharController = require('./controllers/AcompanharController');
 const AvaliarController = require('./controllers/AvaliarController');
 const SessionController = require('./controllers/SessionController');
 const ComentarioController = require('./controllers/ComentarioController');
+const LikeController = require('./controllers/LikeController');
 //final chamando os controllers
 
 //chamndo os validators
@@ -139,19 +140,24 @@ routes.post(
 	ComentarioController.store
 );
 routes.put(
-  '/editarcomentario/:pod_id/:cmt_id',
-  authMiddleware,
+	'/editarcomentario/:pod_id/:cmt_id',
+	authMiddleware,
 	ComentarioStoreValidate,
 	ComentarioController.updateComentario
 );
 routes.put(
-  '/deletarcomentario/:pod_id/:cmt_id',
-  authMiddleware,
+	'/deletarcomentario/:pod_id/:cmt_id',
+	authMiddleware,
 	ComentarioController.delete
 );
 routes.get('/allcomentarios/:pod_id', ComentarioController.index);
 routes.get('/comentario/:pod_id', authMiddleware, ComentarioController.index);
 routes.get('/allcomentarios/:pod_id/:tag_id', ComentarioController.indexTag);
+
+//LIKE DISLIKE EM COMENTÁRIO
+routes.post('/like/:cmt_id', authMiddleware, LikeController.store);
+routes.put('/tirarlike/:lik_id/:lik_status', authMiddleware, LikeController.updateStatus);
+routes.put('/mudarlike/:lik_id/:lik_tipo', authMiddleware, LikeController.updateTipo);
 
 //FIM USUARIO LOGADO
 
