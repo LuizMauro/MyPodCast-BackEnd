@@ -134,7 +134,6 @@ routes.get('/allcomentarios/:pod_id/:tag_id',ComentarioController.indexTag);
 routes.post(
 	'/podcaster/criarpodcast',
 	authMiddlewarePodcaster,
-	PodcastStoreValidate,
 	upload.single('file'),
 	PodcastProcedure.store
 );
@@ -167,7 +166,7 @@ routes.put(
 );
 routes.post(
 	'/adm/criarpodcast',
-	[authMiddlewareAdm, PodcastStoreValidate, upload.single('file')],
+	[authMiddlewareAdm, upload.single('file')],
 	PodcastProcedure.store
 );
 routes.put(
