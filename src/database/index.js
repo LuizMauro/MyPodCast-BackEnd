@@ -12,6 +12,7 @@ const Tag = require('../models/Tag');
 const TipoFeedback = require('../models/TipoFeedback');
 const Feedback = require('../models/Feedback');
 const Comentario = require('../models/Comentario');
+const Like = require('../models/Like');
 // final models import
 
 const connection = new Sequelize(dbConfig);
@@ -27,6 +28,7 @@ Tag.init(connection);
 TipoFeedback.init(connection);
 Feedback.init(connection);
 Comentario.init(connection);
+Like.init(connection);
 //final inicialização dos models
 
 //associate dos models
@@ -36,6 +38,7 @@ Endereco.associate(connection.models);
 PodcastCategoria.associate(connection.models);
 Feedback.associate(connection.models);
 Comentario.associate(connection.models);
+Like.associate(connection.models);
 //final associate dos models
 
 module.exports = connection;

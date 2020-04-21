@@ -1,8 +1,8 @@
 'use strict';
 
 module.exports = {
-  up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('cmt_comentario', {
+	up: (queryInterface, Sequelize) => {
+		return queryInterface.createTable('cmt_comentario', {
 			cmt_id: {
 				type: Sequelize.INTEGER,
 				primaryKey: true,
@@ -22,6 +22,10 @@ module.exports = {
 				type: Sequelize.BOOLEAN,
 				allowNull: false,
 			},
+			cmt_filho: {
+				type: Sequelize.BOOLEAN,
+				allowNull: false,
+			},
 			usu_id: {
 				type: Sequelize.INTEGER,
 				allowNull: false,
@@ -37,16 +41,21 @@ module.exports = {
 				allowNull: false,
 				references: { model: 'tag_tag', key: 'tag_id' },
 			},
+			id_comentario_pai: {
+				type: Sequelize.INTEGER,
+				allowNull: true,
+				references: { model: 'cmt_comentario', key: 'cmt_id' },
+			},
 		});
-  },
+	},
 
-  down: (queryInterface, Sequelize) => {
-    /*
+	down: (queryInterface, Sequelize) => {
+		/*
       Add reverting commands here.
       Return a promise to correctly handle asynchronicity.
 
       Example:
       return queryInterface.dropTable('users');
     */
-  }
+	},
 };

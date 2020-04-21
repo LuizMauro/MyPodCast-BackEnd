@@ -25,13 +25,17 @@ const AcompanharController = require('./controllers/AcompanharController');
 const AvaliarController = require('./controllers/AvaliarController');
 const SessionController = require('./controllers/SessionController');
 const ComentarioController = require('./controllers/ComentarioController');
+const LikeController = require('./controllers/LikeController');
 //final chamando os controllers
 
 //chamndo os validators
 const UserStoreValidate = require('./validators/UserStore').validation;
-const PodcastStoreValidate = require('./validators/PodcastStore').validation;
+const PodcastProcedureStoreValidate = require('./validators/PodcastProcedureStore')
+	.validation;
 const TagStoreValidate = require('./validators/TagStore').validation;
 const CategoriaStoreValidate = require('./validators/CategoriaStore')
+	.validation;
+const ComentarioStoreValidate = require('./validators/ComentarioStore')
 	.validation;
 //final validators
 
@@ -123,10 +127,37 @@ routes.get('/:pod_id/medianota', AvaliarController.read);
 routes.get('/:pod_id/avaliar', authMiddleware, AvaliarController.index);
 
 //COMENTARIOS
-routes.post('/comentar/:pod_id/:tag_id', authMiddleware, ComentarioController.store);
-routes.get('/allcomentarios/:pod_id',ComentarioController.index);
-routes.get('/comentario/:pod_id',authMiddleware,ComentarioController.index);
-routes.get('/allcomentarios/:pod_id/:tag_id',ComentarioController.indexTag);
+routes.post(
+	'/comentar/:pod_id/:tag_id',
+	authMiddleware,
+	ComentarioStoreValidate,
+	ComentarioController.store
+);
+routes.post(
+	'/comentar/:pod_id/:tag_id/:id_comentario_pai',
+	authMiddleware,
+	ComentarioStoreValidate,
+	ComentarioController.store
+);
+routes.put(
+	'/editarcomentario/:pod_id/:cmt_id',
+	authMiddleware,
+	ComentarioStoreValidate,
+	ComentarioController.updateComentario
+);
+routes.put(
+	'/deletarcomentario/:pod_id/:cmt_id',
+	authMiddleware,
+	ComentarioController.delete
+);
+routes.get('/allcomentarios/:pod_id', ComentarioController.index);
+routes.get('/comentario/:pod_id', authMiddleware, ComentarioController.index);
+routes.get('/allcomentarios/:pod_id/:tag_id', ComentarioController.indexTag);
+
+//LIKE DISLIKE EM COMENTÁRIO
+routes.post('/like/:cmt_id', authMiddleware, LikeController.store);
+routes.put('/tirarlike/:lik_id/:lik_status', authMiddleware, LikeController.updateStatus);
+routes.put('/mudarlike/:lik_id/:lik_tipo', authMiddleware, LikeController.updateTipo);
 
 //FIM USUARIO LOGADO
 
@@ -140,7 +171,7 @@ routes.post(
 routes.put(
 	'/podcast/editarpodcast/:pod_id',
 	authMiddlewarePodcaster,
-	PodcastStoreValidate,
+	PodcastProcedureStoreValidate,
 	PodcastProcedure.update
 );
 routes.put(
@@ -171,7 +202,9 @@ routes.post(
 );
 routes.put(
 	'/adm/editarpodcast/:pod_id',
-	[authMiddlewareAdm, PodcastStoreValidate, upload.single('file')],
+	authMiddlewareAdm,
+	upload.single('file'),
+	PodcastProcedureStoreValidate,
 	PodcastProcedure.update
 );
 routes.put(
