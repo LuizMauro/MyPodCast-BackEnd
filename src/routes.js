@@ -5,6 +5,7 @@ const upload = require('./utils/multer');
 const authMiddleware = require('./middlewares/auth');
 const authMiddlewareAdm = require('./middlewares/authAdm');
 const authMiddlewareMod = require('./middlewares/authMod');
+const authMiddlewareStaff = require('./middlewares/authStaff');
 const authMiddlewarePodcaster = require('./middlewares/authPodcaster');
 //middleware
 
@@ -156,8 +157,16 @@ routes.get('/allcomentarios/:pod_id/:tag_id', ComentarioController.indexTag);
 
 //LIKE DISLIKE EM COMENTÁRIO
 routes.post('/like/:cmt_id', authMiddleware, LikeController.store);
-routes.put('/tirarlike/:lik_id/:lik_status', authMiddleware, LikeController.updateStatus);
-routes.put('/mudarlike/:lik_id/:lik_tipo', authMiddleware, LikeController.updateTipo);
+routes.put(
+	'/tirarlike/:lik_id/:lik_status',
+	authMiddleware,
+	LikeController.updateStatus
+);
+routes.put(
+	'/mudarlike/:lik_id/:lik_tipo',
+	authMiddleware,
+	LikeController.updateTipo
+);
 
 //FIM USUARIO LOGADO
 
@@ -183,19 +192,41 @@ routes.put(
 );
 //FIM PODCASTER
 
-//ADM
+//ADM E MODERADOR (STAFF)
+
 routes.post(
-	'/adm/categoria',
-	authMiddlewareAdm,
+	'/categoria',
+	authMiddlewareStaff,
 	CategoriaStoreValidate,
 	Categoria.store
 );
 routes.put(
-	'/adm/categoria/:ctg_id',
-	authMiddlewareAdm,
+	'/categoria/:ctg_id',
+	authMiddlewareStaff,
 	CategoriaStoreValidate,
 	Categoria.updateCtgDescricao
 );
+routes.put('/podcast/:pod_id/:pod_status', PodCast.updatePodcastStatus);
+routes.get(
+	'/podcasts/solicitacao',
+	authMiddlewareStaff,
+	SolicitacaoCadastro.index
+);
+routes.put(
+	'/podcasts/solicitacao/:pod_id/:pod_permissao',
+	authMiddlewareStaff,
+	SolicitacaoCadastro.update
+);
+
+routes.put(
+	'/users/:usu_id/:usu_status',
+	authMiddlewareStaff,
+	UserController.updateUserStatus
+);
+
+routes.get('/users', authMiddlewareStaff, UserController.indexAllUsers);
+
+//APENAS ADM
 routes.post(
 	'/adm/criarpodcast',
 	authMiddlewareAdm,
@@ -216,18 +247,9 @@ routes.put(
 	upload.single('file'),
 	PodCast.updatePodcastImg
 );
-routes.put('/adm/podcast/:pod_id/:pod_status', PodCast.updatePodcastStatus);
-routes.get(
-	'/adm/podcasts/solicitacao',
-	authMiddlewareAdm,
-	SolicitacaoCadastro.index
-);
-routes.put(
-	'/adm/podcasts/solicitacao/:pod_id/:pod_permissao',
-	authMiddlewareAdm,
-	SolicitacaoCadastro.update
-);
+
 routes.post('/adm/tag', authMiddlewareAdm, TagStoreValidate, Tag.store);
+
 routes.put(
 	'/adm/tag/:tag_id',
 	authMiddlewareAdm,
@@ -239,36 +261,17 @@ routes.put(
 	authMiddlewareAdm,
 	Tag.updateTagStatus
 );
-routes.put(
-	'/adm/users/:usu_id/:usu_status',
-	authMiddlewareAdm,
-	UserController.updateUserStatus
-);
+
 routes.put(
 	'/adm/users/tipo/:usu_id/:tus_id',
 	authMiddlewareAdm,
 	UserController.updateUsuarioTipo
 );
-routes.get('/adm/users', authMiddlewareAdm, UserController.indexAllUsers);
 routes.get('/adm/modusers', authMiddlewareAdm, UserController.indexAllModUser);
 routes.get('/adm/user', authMiddlewareAdm, UserController.read);
-routes.post('/adm/tfb', authMiddlewareAdm, TipoFeedbackController.store);
-routes.get('/adm/tfb', authMiddlewareAdm, TipoFeedbackController.index);
-//FIM ADM
+//FIM APENAS ADM
 
-//MOD
-routes.post(
-	'/mod/categoria',
-	authMiddlewareMod,
-	CategoriaStoreValidate,
-	Categoria.store
-);
-routes.put(
-	'/mod/categoria/:ctg_id',
-	authMiddlewareMod,
-	CategoriaStoreValidate,
-	Categoria.updateCtgDescricao
-);
+// APENAS MOD
 routes.put('/mod/podcast/:pod_id', authMiddlewareMod, PodcastProcedure.update);
 routes.put(
 	'/mod/podcastimg/:pod_id',
@@ -276,34 +279,7 @@ routes.put(
 	upload.single('file'),
 	PodCast.updatePodcastImg
 );
-routes.put(
-	'/mod/podcast/:pod_id/:pod_status',
-	authMiddlewareMod,
-	PodCast.updatePodcastStatus
-);
-routes.get(
-	'/mod/podcasts/solicitacao',
-	authMiddlewareMod,
-	SolicitacaoCadastro.index
-);
-routes.put(
-	'/mod/podcasts/solicitacao/:pod_id/:pod_permissao',
-	authMiddlewareMod,
-	SolicitacaoCadastro.update
-);
-routes.put(
-	'/mod/users/:usu_id/:usu_status',
-	authMiddlewareMod,
-	UserController.updateUserStatus
-);
-routes.put(
-	'/mod/users/tipo/:usu_id/:tus_id',
-	authMiddlewareMod,
-	UserController.updateUsuarioTipo
-);
-routes.get('/mod/users', authMiddlewareMod, UserController.index);
-routes.get('/mod/users/:usu_id', authMiddlewareMod, UserController.read);
-//FIM MOD
+// FIM APENAS MOD
 
 //TESTES
 routes.get('/adm/', authMiddlewareAdm, (req, resp) => {
