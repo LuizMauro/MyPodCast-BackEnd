@@ -35,25 +35,25 @@ class Like extends Model {
 	}
 
 	static async findLike(cmtid) {
-		const results = await this.sequelize.query(
-			'select count(b.cmt_id) as qtd_likes from lik_like a join cmt_comentario b on a.cmt_id = b.cmt_id where b.cmt_status = 1 and a.lik_tipo = 1 and b.cmt_id = :cmt_id',
+		const [results] = await this.sequelize.query(
+			'select b.cmt_id, count(b.cmt_id) as qtd_likes from lik_like a join cmt_comentario b on a.cmt_id = b.cmt_id where b.cmt_status = 1 and a.lik_tipo = 1 and b.cmt_id = :cmt_id',
 			{
 				replacements: { cmt_id: cmtid },
 				type: QueryTypes.SELECT,
 			}
 		);
-		return results;
+		return [results];
 	}
 
 	static async findDislike(cmtid) {
-		const results = await this.sequelize.query(
-			'select count(b.cmt_id) as qtd_likes from lik_like a join cmt_comentario b on a.cmt_id = b.cmt_id where b.cmt_status = 1 and a.lik_tipo = 0 and b.cmt_id = :cmt_id',
+		const [results] = await this.sequelize.query(
+			'select b.cmt_id, count(b.cmt_id) as qtd_likes from lik_like a join cmt_comentario b on a.cmt_id = b.cmt_id where b.cmt_status = 1 and a.lik_tipo = 0 and b.cmt_id = :cmt_id',
 			{
 				replacements: { cmt_id: cmtid },
 				type: QueryTypes.SELECT,
 			}
 		);
-		return results;
+		return [results];
 	}
 
 	//Tirar Like/dislike
