@@ -6,8 +6,9 @@ module.exports = {
 		const { cmt_id } = req.params;
 
 		const like = await Like.findLike(cmt_id);
+		const dislike = await Like.findDislike(cmt_id)
 
-		return resp.json(like);
+		return resp.json({like, dislike});
 	},
 
 	//CREATE

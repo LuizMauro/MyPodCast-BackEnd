@@ -27,6 +27,7 @@ const AvaliarController = require('./controllers/AvaliarController');
 const SessionController = require('./controllers/SessionController');
 const ComentarioController = require('./controllers/ComentarioController');
 const LikeController = require('./controllers/LikeController');
+const DislikeController = require('./controllers/DislikeController');
 //final chamando os controllers
 
 //chamndo os validators
@@ -167,6 +168,7 @@ routes.put(
 	authMiddleware,
 	LikeController.updateTipo
 );
+routes.get('/qtdlikes/:cmt_id', LikeController.index);
 
 //FIM USUARIO LOGADO
 

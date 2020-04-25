@@ -36,9 +36,9 @@ class Like extends Model {
 
 	static async findLike(cmtid) {
 		const results = await this.sequelize.query(
-			'select a.lik_id, a.lik_tipo, a.lik_status, a.usu_id as id_user_filho, b.cmt_id, b.cmt_conteudo, b.usu_id as id_user_pai from lik_like a join cmt_comentario b on a.cmt_id = b.cmt_id where a.lik_tipo = 1 and b.cmt_status = 1 and b.cmt_id = :cmt_id',
+			'select count(b.cmt_id) as qtd_likes from lik_like a join cmt_comentario b on a.cmt_id = b.cmt_id where b.cmt_status = 1 and a.lik_tipo = 1 and b.cmt_id = :cmt_id',
 			{
-				replacements: { pod_id: podid },
+				replacements: { cmt_id: cmtid },
 				type: QueryTypes.SELECT,
 			}
 		);
@@ -47,9 +47,9 @@ class Like extends Model {
 
 	static async findDislike(cmtid) {
 		const results = await this.sequelize.query(
-			'select a.lik_id, a.lik_tipo, a.lik_status, a.usu_id as id_user_filho, b.cmt_id, b.cmt_conteudo, b.usu_id as id_user_pai from lik_like a join cmt_comentario b on a.cmt_id = b.cmt_id where a.lik_tipo = 0 and b.cmt_status = 1 and b.cmt_id = :cmt_id',
+			'select count(b.cmt_id) as qtd_likes from lik_like a join cmt_comentario b on a.cmt_id = b.cmt_id where b.cmt_status = 1 and a.lik_tipo = 0 and b.cmt_id = :cmt_id',
 			{
-				replacements: { pod_id: podid },
+				replacements: { cmt_id: cmtid },
 				type: QueryTypes.SELECT,
 			}
 		);
