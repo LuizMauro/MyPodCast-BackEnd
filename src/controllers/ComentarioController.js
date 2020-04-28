@@ -46,7 +46,7 @@ module.exports = {
 			cmt_conteudo,
 			'2019-11-24 21:36:48',
 			1,
-			0,
+			id_comentario_pai ? 1 : 0,
 			userId,
 			pod_id,
 			tag_id,
