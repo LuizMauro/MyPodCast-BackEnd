@@ -28,6 +28,7 @@ const SessionController = require('./controllers/SessionController');
 const ComentarioController = require('./controllers/ComentarioController');
 const LikeController = require('./controllers/LikeController');
 const DislikeController = require('./controllers/DislikeController');
+const PodcasterController = require('./controllers/PodcasterController')
 //final chamando os controllers
 
 //chamndo os validators
@@ -74,6 +75,8 @@ routes.post('/users', UserStoreValidate, UserController.store);
 routes.put('/edituser/', authMiddleware, UserController.updateUserPerfil);
 routes.put('/usersenha/', authMiddleware, UserController.updateUserSenha);
 routes.get('/user', authMiddleware, UserController.read);
+
+routes.put('/virarpodcaster',authMiddleware,PodcasterController.update);
 
 //FAVORITO
 routes.post('/:pod_id/favoritar', authMiddleware, FavoritarController.store);
