@@ -27,6 +27,7 @@ const AvaliarController = require('./controllers/AvaliarController');
 const SessionController = require('./controllers/SessionController');
 const ComentarioController = require('./controllers/ComentarioController');
 const LikeController = require('./controllers/LikeController');
+const DislikeController = require('./controllers/DislikeController');
 //final chamando os controllers
 
 //chamndo os validators
@@ -157,8 +158,9 @@ routes.get('/allcomentarios/:pod_id/:tag_id', ComentarioController.indexTag);
 
 //LIKE DISLIKE EM COMENTÁRIO
 routes.post('/like/:cmt_id', authMiddleware, LikeController.store);
+routes.post('/dislike/:cmt_id', authMiddleware, DislikeController.store);
 routes.put(
-	'/tirarlike/:lik_id/:lik_status',
+	'/likestatus/:lik_id/:lik_status',
 	authMiddleware,
 	LikeController.updateStatus
 );
@@ -167,6 +169,7 @@ routes.put(
 	authMiddleware,
 	LikeController.updateTipo
 );
+routes.get('/likeuser/:cmt_id', authMiddleware, LikeController.read);
 routes.get('/qtdlikes/:cmt_id', LikeController.index);
 
 //FIM USUARIO LOGADO

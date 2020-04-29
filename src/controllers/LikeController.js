@@ -11,6 +11,15 @@ module.exports = {
 		return resp.json({like, dislike});
 	},
 
+	async read(req, resp) {
+		const { cmt_id } = req.params;
+		const { userId } = req;
+
+		const response = await Like.findUserLike(userId,cmt_id)
+
+		return resp.json(response);
+	},
+
 	//CREATE
 	async store(req, resp) {
 		const { cmt_id } = req.params;

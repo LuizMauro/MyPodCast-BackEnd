@@ -37,7 +37,7 @@ class Comentario extends Model {
 
 	static async findComentariosByPodcast(podid) {
 		const results = await this.sequelize.query(
-			'select a.cmt_id as comment_id, (select count(b.cmt_id) as qtd_likes from lik_like a join cmt_comentario b on a.cmt_id = b.cmt_id where b.cmt_status = 1 and b.cmt_id = comment_id) as qtd_likes, (select count(b.cmt_id) as qtd_likes from lik_like a join cmt_comentario b on a.cmt_id = b.cmt_id where b.cmt_status = 0 and b.cmt_id = comment_id) as qtd_dislikes, a.cmt_conteudo, a.cmt_filho, a.id_comentario_pai, b.usu_id, b.usu_nome, c.pod_id, c.pod_nome, d.tag_id, d.tag_descricao from usu_usuario b join cmt_comentario a on a.usu_id = b.usu_id join pod_podcast c on a.pod_id = c.pod_id join tag_tag d on a.tag_id = d.tag_id where c.pod_id = :pod_id and a.cmt_status = 1;',
+			'select a.cmt_id as comment_id, (select count(b.cmt_id) as qtd_likes from lik_like a join cmt_comentario b on a.cmt_id = b.cmt_id where b.cmt_status = 1 and a.lik_status = 1 and a.lik_tipo = 1 and  b.cmt_id = comment_id) as qtd_likes, (select count(b.cmt_id) as qtd_likes from lik_like a join cmt_comentario b on a.cmt_id = b.cmt_id where b.cmt_status = 1 and a.lik_status = 1 and a.lik_tipo = 0 and b.cmt_id = comment_id) as qtd_dislikes, a.cmt_conteudo, a.cmt_filho, a.id_comentario_pai, b.usu_id, b.usu_nome, c.pod_id, c.pod_nome, d.tag_id, d.tag_descricao from usu_usuario b join cmt_comentario a on a.usu_id = b.usu_id join pod_podcast c on a.pod_id = c.pod_id join tag_tag d on a.tag_id = d.tag_id where c.pod_id = :pod_id and a.cmt_status = 1;',
 			{
 				replacements: { pod_id: podid },
 				type: QueryTypes.SELECT,
