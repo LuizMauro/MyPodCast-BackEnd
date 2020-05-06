@@ -165,7 +165,7 @@ class Feedback extends Model {
 	//Visualiza todos os Feedbacks de um usuário
 	static async findFeedbackUser(usuid) {
 		const results = await this.sequelize.query(
-			' select a.usu_nome, b.pod_nome, c.tfb_id, c.tfb_descricao, d.fbk_status from usu_usuario a join fbk_feedback d on a.usu_id  = d.usu_id join pod_podcast b on b.pod_id = d.pod_id join tfb_tipo_feedback c on c.tfb_id = d.tfb_id where a.usu_id = ?  and b.pod_status = 1',
+			'  select a.usu_nome, b.pod_id as podid, (select d.fbk_valor from usu_usuario a join fbk_feedback d on a.usu_id  = d.usu_id join pod_podcast b on b.pod_id = d.pod_id join tfb_tipo_feedback c on c.tfb_id = d.tfb_id where a.usu_id = 2 and d.tfb_id = 3  and b.pod_status = 1 and b.pod_id = podid and d.fbk_status = 1 order by d.fbk_id DESC LIMIT 1) as nota, b.pod_nome, c.tfb_id, c.tfb_descricao, d.fbk_valor, d.fbk_status from usu_usuario a join fbk_feedback d on a.usu_id  = d.usu_id join pod_podcast b on b.pod_id = d.pod_id join tfb_tipo_feedback c on c.tfb_id = d.tfb_id where a.usu_id = ?  and b.pod_status = 1',
 			{
 				replacements: [usuid],
 				type: QueryTypes.SELECT,
