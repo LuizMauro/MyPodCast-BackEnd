@@ -187,7 +187,7 @@ routes.post(
 	PodcastProcedure.store
 );
 routes.put(
-	'/podcast/editarpodcast/:pod_id',
+	'/podcaster/editarpodcast/:pod_id',
 	authMiddlewarePodcaster,
 	PodcastProcedureStoreValidate,
 	PodcastProcedure.update
