@@ -178,6 +178,7 @@ routes.get('/qtdlikes/:cmt_id', LikeController.index);
 //FIM USUARIO LOGADO
 
 //PODCASTER
+routes.get('/userpodcasts',authMiddlewarePodcaster , PodcastCategoria.readUserPodcasts);
 routes.post(
 	'/podcaster/criarpodcast',
 	authMiddlewarePodcaster,
