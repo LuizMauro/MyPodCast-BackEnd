@@ -35,8 +35,30 @@ module.exports = {
 		return resp.json({
 			user: { usu_id, usu_nome, tus_id, tus_descricao, usu_email, usu_cpf },
 			token: jwt.sign({ usu_id, tus_id, tus_descricao }, authConfig.secret, {
-				expiresIn: authConfig.expiresIn
-			})
+				expiresIn: authConfig.expiresIn,
+			}),
 		});
-	}
+	},
+
+	async refreshToken(req, res) {
+		const { userId } = req;
+		const user = await User.findOneUser(userId);
+		console.log('dados aqui',user);
+
+		const {
+			usu_id,
+			usu_nome,
+			tus_id,
+			tus_descricao,
+			usu_email,
+			usu_cpf,
+		} = user;
+
+		return res.json({
+			user: { usu_id, usu_nome, tus_id, tus_descricao, usu_email, usu_cpf },
+			token: jwt.sign({ usu_id, tus_id, tus_descricao }, authConfig.secret, {
+				expiresIn: authConfig.expiresIn,
+			}),
+		});
+	},
 };

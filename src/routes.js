@@ -77,6 +77,7 @@ routes.put('/usersenha/', authMiddleware, UserController.updateUserSenha);
 routes.get('/user', authMiddleware, UserController.read);
 
 routes.put('/virarpodcaster',authMiddleware,PodcasterController.update);
+routes.put('/refreshtoken',authMiddleware,SessionController.refreshToken);
 
 //FAVORITO
 routes.post('/:pod_id/favoritar', authMiddleware, FavoritarController.store);

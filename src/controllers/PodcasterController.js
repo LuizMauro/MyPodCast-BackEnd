@@ -10,7 +10,8 @@ module.exports = {
 			return res.json({ mensagem: 'Erro ao virar podcaster!', _id: userUpdate });
 		}
 		return res.json({
-			tus_descricao: "Podcaster"
+			tus_descricao: "Podcaster",
+			tus_id: 2
 		});
 	},
 };
