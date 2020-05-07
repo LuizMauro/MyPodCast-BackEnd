@@ -77,6 +77,7 @@ routes.put('/usersenha/', authMiddleware, UserController.updateUserSenha);
 routes.get('/user', authMiddleware, UserController.read);
 
 routes.put('/virarpodcaster',authMiddleware,PodcasterController.update);
+routes.put('/refreshtoken',authMiddleware,SessionController.refreshToken);
 
 //FAVORITO
 routes.post('/:pod_id/favoritar', authMiddleware, FavoritarController.store);
@@ -178,6 +179,7 @@ routes.get('/qtdlikes/:cmt_id', LikeController.index);
 //FIM USUARIO LOGADO
 
 //PODCASTER
+routes.get('/userpodcasts',authMiddlewarePodcaster , PodcastCategoria.readUserPodcasts);
 routes.post(
 	'/podcaster/criarpodcast',
 	authMiddlewarePodcaster,
@@ -186,7 +188,7 @@ routes.post(
 	PodcastProcedure.store
 );
 routes.put(
-	'/podcast/editarpodcast/:pod_id',
+	'/podcaster/editarpodcast/:pod_id',
 	authMiddlewarePodcaster,
 	PodcastProcedureStoreValidate,
 	PodcastProcedure.update
