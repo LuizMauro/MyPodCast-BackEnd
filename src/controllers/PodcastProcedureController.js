@@ -117,7 +117,25 @@ module.exports = {
 		}
 
 		const atual = await Pod.findPodcastsByID(pod_id);
+		
 		//regras de negocio
+		const verificaNome = await Pod.validaPodcastNomeEdit(pod_id, pod_nome);
+
+		if (verificaNome) {
+			return resp.json({ nomeExists: true });
+		}
+
+		const verificaDescricao = await Pod.validaPodcastDescricaoEdit(pod_id, pod_descricao);
+
+		if (verificaDescricao) {
+			return resp.json({ descricaoExists: true });
+		}
+
+		const verificaLink = await Pod.validaPodcastLinkEdit(pod_id, end_link1, end_link2, end_link3);
+
+		if (verificaLink) {
+			return resp.json({ linkExists: true });
+		}
 
 		//final regras de negocio
 
@@ -145,6 +163,7 @@ module.exports = {
 			});
 		}
 		return resp.json({
+			podEdited: true,
 			mensagem: 'Podcast editado',
 			_id: id
 		});
