@@ -180,6 +180,7 @@ routes.get('/qtdlikes/:cmt_id', LikeController.index);
 
 //PODCASTER
 routes.get('/userpodcasts',authMiddlewarePodcaster , PodcastCategoria.readUserPodcasts);
+routes.put('/podcaster/podcast/:pod_id/:pod_status', authMiddlewarePodcaster , PodCast.updatePodcastStatus);
 routes.post(
 	'/podcaster/criarpodcast',
 	authMiddlewarePodcaster,
@@ -190,6 +191,7 @@ routes.post(
 routes.put(
 	'/podcaster/editarpodcast/:pod_id',
 	authMiddlewarePodcaster,
+	upload.single('file'),
 	PodcastProcedureStoreValidate,
 	PodcastProcedure.update
 );
@@ -215,7 +217,7 @@ routes.put(
 	CategoriaStoreValidate,
 	Categoria.updateCtgDescricao
 );
-routes.put('/podcast/:pod_id/:pod_status', PodCast.updatePodcastStatus);
+routes.put('/podcast/:pod_id/:pod_status', authMiddlewareStaff, PodCast.updatePodcastStatus);
 routes.get(
 	'/podcasts/solicitacao',
 	authMiddlewareStaff,
