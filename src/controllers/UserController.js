@@ -8,7 +8,7 @@ module.exports = {
 
 		return resp.json(users);
 	},
-	
+
 	async indexAllUsers(req, resp) {
 		const users = await User.findAllUsers();
 
@@ -36,16 +36,16 @@ module.exports = {
 
 			const checaNome = await User.verifyNome(nome);
 			if (checaNome) {
-				console.log('caiu aq')
+				console.log('caiu aq');
 				return resp.json({
-					nomeExists:true
+					nomeExists: true,
 				});
 			}
 
 			const checaEmail = await User.verifyEmail(email);
 			if (checaEmail) {
 				return resp.json({
-					emailExists:true
+					emailExists: true,
 				});
 			}
 
@@ -70,12 +70,12 @@ module.exports = {
 		if (!userUpdate) {
 			return res.json({
 				mensagem: 'Erro ao atualizar status',
-				_id: userUpdate
+				_id: userUpdate,
 			});
 		}
 		return res.json({
 			mensagem: 'status atualizado com sucesso!',
-			_id: userUpdate
+			_id: userUpdate,
 		});
 	},
 
@@ -88,6 +88,8 @@ module.exports = {
 		if (usu_senha) {
 			criptSenha = await hash(usu_senha, 8);
 		}
+		console.log('senha nova', usu_senha);
+		console.log('senha nova criptografa', criptSenha);
 
 		const atual = await User.findUser(userId);
 		const verifica = await User.findEditValidation(userId);
@@ -98,7 +100,7 @@ module.exports = {
 			console.log('nome ja existe');
 			return res.json({
 				mensagem: 'Nome de usuário já existe',
-				usuNomeExists: true
+				usuNomeExists: true,
 			});
 		} else if (verifica.some((usuario) => usuario.usu_email === usu_email)) {
 			return res.json({ mensagem: 'email já existe', usuEmailExists: true });
@@ -113,13 +115,16 @@ module.exports = {
 
 		if (!userUpdate) {
 			return res.json({
-				mensagem: 'não foi possível editar perfil'
+				mensagem: 'não foi possível editar perfil',
 			});
 		}
 		return res.json({
 			usu_nome: usu_nome,
 			usu_email: usu_email,
-			usu_cpf: usu_cpf
+			usu_cpf: usu_cpf,
+			tus_id: atual.tus_id,
+			usu_id: atual.usu_id,
+			tus_descricao: atual.tus_descricao,
 		});
 	},
 
@@ -137,7 +142,7 @@ module.exports = {
 			}
 			return res.json({
 				mensagem: 'senha alterada!',
-				_id: userUpdate
+				_id: userUpdate,
 			});
 		} else {
 			return res.json({ mensagem: 'Erro ao mudar senha!', _id: userUpdate });
@@ -154,7 +159,7 @@ module.exports = {
 		}
 		return res.json({
 			mensagem: 'status alterado!',
-			_id: userUpdate
+			_id: userUpdate,
 		});
-	}
+	},
 };

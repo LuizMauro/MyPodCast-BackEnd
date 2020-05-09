@@ -1,4 +1,5 @@
 const Comentario = require('../models/Comentario');
+const Like = require('../models/Like');
 
 module.exports = {
 	//SELECT
@@ -45,11 +46,11 @@ module.exports = {
 			cmt_conteudo,
 			'2019-11-24 21:36:48',
 			1,
-			0,
+			id_comentario_pai ? 1 : 0,
 			userId,
 			pod_id,
 			tag_id,
-			id_comentario_pai ? id_comentario_pai : null
+			id_comentario_pai ? id_comentario_pai : null,
 		];
 
 		//regras de negocio
