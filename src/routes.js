@@ -29,6 +29,7 @@ const ComentarioController = require('./controllers/ComentarioController');
 const LikeController = require('./controllers/LikeController');
 const DislikeController = require('./controllers/DislikeController');
 const PodcasterController = require('./controllers/PodcasterController')
+const RelatorioController = require('./controllers/RelatorioController')
 //final chamando os controllers
 
 //chamndo os validators
@@ -280,6 +281,7 @@ routes.put(
 );
 routes.get('/adm/modusers', authMiddlewareAdm, UserController.indexAllModUser);
 routes.get('/adm/user', authMiddlewareAdm, UserController.read);
+routes.get('/dash/home', authMiddlewareAdm, RelatorioController.index);
 //FIM APENAS ADM
 
 // APENAS MOD
