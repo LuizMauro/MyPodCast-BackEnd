@@ -1,6 +1,6 @@
 const Yup = require("yup");
 const { date } = require("../utils/Date");
-module.exports.validation = async function (req, res, next) {
+module.exports.validation = async function(req, res, next) {  
   try {
     const schema = Yup.object().shape({
       pod_nome: Yup.string().required("Campo obrigatório!").max(45).trim(),

@@ -59,6 +59,7 @@ module.exports = {
 		}
 		//final regras de negocio
 
+		console.log("LISTA DE CATEGORIAS -> ", list_of_categoria);
 		const id = await PodCast.callInsertProcedure(
 			pod_nome,
 			pod_descricao,

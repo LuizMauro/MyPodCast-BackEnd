@@ -1,9 +1,9 @@
 module.exports = {
 	dialect: 'mysql',
-	host: '127.0.0.1',
+	host: 'localhost',
 	username: 'root',
-	password: '12345',
-	database: 'mypodecastnodedb',
+	password: '123456',
+	database: 'mypodecastnodedb'
 	//define: {
 	//  timestamps: true,
 	//  underscored: true,

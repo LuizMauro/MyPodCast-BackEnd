@@ -185,7 +185,6 @@ routes.put('/podcaster/podcast/:pod_id/:pod_status', authMiddlewarePodcaster , P
 routes.post(
 	'/podcaster/criarpodcast',
 	authMiddlewarePodcaster,
-	//PodcastStoreValidate,
 	upload.single('file'),
 	PodcastProcedure.store
 );
@@ -241,9 +240,7 @@ routes.get('/users', authMiddlewareStaff, UserController.indexAllUsers);
 //APENAS ADM
 routes.post(
 	'/adm/criarpodcast',
-	authMiddlewareAdm,
-	upload.single('file'),
-	PodcastProcedureStoreValidate,
+	[authMiddlewareAdm, upload.single('file')],
 	PodcastProcedure.store
 );
 routes.put(
