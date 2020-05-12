@@ -7,13 +7,20 @@ module.exports = {
         const month = `0${date.getUTCMonth() + 1 }`.slice(-2);
         const day = `0${date.getUTCDate()}`.slice(-2);
 
+        //vamos datetime para o banco
+       
+        var data = date.getFullYear()+'-'+(date.getMonth()+1)+'-'+date.getDate();
+        var time = date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
+        var dateTime = data+' '+time;
+
         return{
             day,
             month,
             year,
             iso: `${year}-${month}-${day}`,
             birthDay: `${day}/${month}`,
-            format:`${day}/${month}/${year}`
+            format:`${day}/${month}/${year}`,
+            currentDateTime: dateTime
         }
     }
 

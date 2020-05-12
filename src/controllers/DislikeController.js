@@ -1,4 +1,5 @@
 const Dislike = require('../models/Like');
+const { date } = require('../utils/Date');
 
 module.exports = {
 	//CREATE
@@ -6,7 +7,7 @@ module.exports = {
 		const { cmt_id } = req.params;
 		const { userId } = req;
 
-		const data = [0, '2019-11-24 21:36:48', 1, userId, cmt_id];
+		const data = [0, date(Date.now()).currentDateTime, 1, userId, cmt_id];
 
 		const id = await Dislike.create(data);
 

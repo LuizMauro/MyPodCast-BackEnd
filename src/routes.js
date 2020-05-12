@@ -46,6 +46,11 @@ const { date } = require('./utils/Date');
 
 const routes = express.Router();
 
+
+routes.get('/getdate', (req, resp) => {
+	return resp.json({ data: date(Date.now()).currentDateTime });
+});	
+
 //GERAL
 routes.post('/sessions', SessionController.store);
 routes.get('/categoria', Categoria.index);
@@ -295,9 +300,6 @@ routes.get('/adm/', authMiddlewareAdm, (req, resp) => {
 	return resp.json({ msg: 'LOGADO COMO ADM' });
 });
 
-routes.get('/getdate', (req, resp) => {
-	return resp.json({ data: date(Date.now()).format });
-});
 //FIM TESTES
 
 module.exports = routes;

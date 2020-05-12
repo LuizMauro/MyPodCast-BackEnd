@@ -1,5 +1,6 @@
 const Comentario = require('../models/Comentario');
 const Like = require('../models/Like');
+const { date } = require('../utils/Date');
 
 module.exports = {
 	//SELECT
@@ -44,7 +45,7 @@ module.exports = {
 
 		const data = [
 			cmt_conteudo,
-			'2019-11-24 21:36:48',
+			date(Date.now()).currentDateTime,
 			1,
 			id_comentario_pai ? 1 : 0,
 			userId,

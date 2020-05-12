@@ -22,8 +22,8 @@ module.exports = {
 			return resp.json({ ctgExists: true });
 		}
 		//final regras de negocio
-
-		const data = [ctg_descricao, 1, '2019-11-24 21:36:48'];
+		
+		const data = [ctg_descricao, 1, date(Date.now()).currentDateTime];
 		const id = await Categoria.createCategoria(data);
 
 		if (!id) {

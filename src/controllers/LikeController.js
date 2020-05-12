@@ -1,4 +1,5 @@
 const Like = require('../models/Like');
+const { date } = require('../utils/Date');
 
 module.exports = {
 	//SELECT
@@ -25,7 +26,7 @@ module.exports = {
 		const { cmt_id } = req.params;
 		const { userId } = req;
 
-		const data = [1, '2019-11-24 21:36:48', 1, userId, cmt_id];
+		const data = [1,date(Date.now()).currentDateTime, 1, userId, cmt_id];
 
 		const id = await Like.create(data);
 

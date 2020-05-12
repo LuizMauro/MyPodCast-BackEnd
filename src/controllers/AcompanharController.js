@@ -1,4 +1,5 @@
 const PretendoAcompanhar = require('../models/Feedback');
+const { date } = require('../utils/Date');
 
 module.exports = {
 	//SELECT
@@ -24,7 +25,7 @@ module.exports = {
 
 		//final regras de negocio
 
-		const data = ['2019-11-24 21:36:48', 2, 0, 0, userId, pod_id, 2];
+		const data = [date(Date.now()).currentDateTime, 2, 0, 0, userId, pod_id, 2];
 		const marcar = await PretendoAcompanhar.createFeedback(data);
 
 		if (!marcar) {

@@ -17,7 +17,7 @@ module.exports = {
 
 		//final regras de negocio
 		console.log(date(Date.now().format));
-		const data = [tfb_descricao, 1, '2019-11-24 21:36:48', 0, 0];
+		const data = [tfb_descricao, 1, date(Date.now()).currentDateTime, 0, 0];
 		const tfb = await TipoFeedback.createTipoFeedback(data);
 
 		if (!tfb) {

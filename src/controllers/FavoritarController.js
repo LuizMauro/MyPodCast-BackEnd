@@ -1,4 +1,5 @@
 const Favoritar = require('../models/Feedback');
+const { date } = require('../utils/Date');
 
 module.exports = {
 	//SELECT
@@ -33,7 +34,7 @@ module.exports = {
 
 		//final regras de negocio
 
-		const data = ['2019-11-24 21:36:48', 1, 0, 0, userId, pod_id, 1];
+		const data = [date(Date.now()).currentDateTime, 1, 0, 0, userId, pod_id, 1];
 		const fav = await Favoritar.createFeedback(data);
 
 		if (!fav) {

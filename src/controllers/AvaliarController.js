@@ -1,4 +1,5 @@
 const Avaliar = require('../models/Feedback');
+const { date } = require('../utils/Date');
 
 module.exports = {
 	//SELECT
@@ -27,7 +28,7 @@ module.exports = {
 
 		//final regras de negocio
 
-		const data = ['2019-11-24 21:36:48', 1, fbk_valor, 1, userId, pod_id, 3];
+		const data = [date(Date.now()).currentDateTime, 1, fbk_valor, 1, userId, pod_id, 3];
 		const avaliar = await Avaliar.createFeedback(data);
 
 		if (!avaliar) {
