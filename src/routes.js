@@ -29,6 +29,7 @@ const ComentarioController = require('./controllers/ComentarioController');
 const LikeController = require('./controllers/LikeController');
 const DislikeController = require('./controllers/DislikeController');
 const PodcasterController = require('./controllers/PodcasterController')
+const RelatorioController = require('./controllers/RelatorioController')
 //final chamando os controllers
 
 //chamndo os validators
@@ -185,16 +186,17 @@ routes.get('/qtdlikes/:cmt_id', LikeController.index);
 
 //PODCASTER
 routes.get('/userpodcasts',authMiddlewarePodcaster , PodcastCategoria.readUserPodcasts);
+routes.put('/podcaster/podcast/:pod_id/:pod_status', authMiddlewarePodcaster , PodCast.updatePodcastStatus);
 routes.post(
 	'/podcaster/criarpodcast',
 	authMiddlewarePodcaster,
-	//PodcastStoreValidate,
 	upload.single('file'),
 	PodcastProcedure.store
 );
 routes.put(
 	'/podcaster/editarpodcast/:pod_id',
 	authMiddlewarePodcaster,
+	upload.single('file'),
 	PodcastProcedureStoreValidate,
 	PodcastProcedure.update
 );
@@ -220,7 +222,7 @@ routes.put(
 	CategoriaStoreValidate,
 	Categoria.updateCtgDescricao
 );
-routes.put('/podcast/:pod_id/:pod_status', PodCast.updatePodcastStatus);
+routes.put('/podcast/:pod_id/:pod_status', authMiddlewareStaff, PodCast.updatePodcastStatus);
 routes.get(
 	'/podcasts/solicitacao',
 	authMiddlewareStaff,
@@ -243,9 +245,7 @@ routes.get('/users', authMiddlewareStaff, UserController.indexAllUsers);
 //APENAS ADM
 routes.post(
 	'/adm/criarpodcast',
-	authMiddlewareAdm,
-	upload.single('file'),
-	PodcastProcedureStoreValidate,
+	[authMiddlewareAdm, upload.single('file')],
 	PodcastProcedure.store
 );
 routes.put(
@@ -283,6 +283,7 @@ routes.put(
 );
 routes.get('/adm/modusers', authMiddlewareAdm, UserController.indexAllModUser);
 routes.get('/adm/user', authMiddlewareAdm, UserController.read);
+routes.get('/dash/home', authMiddlewareAdm, RelatorioController.index);
 //FIM APENAS ADM
 
 // APENAS MOD

@@ -59,6 +59,7 @@ module.exports = {
 		}
 		//final regras de negocio
 
+		console.log("LISTA DE CATEGORIAS -> ", list_of_categoria);
 		const id = await PodCast.callInsertProcedure(
 			pod_nome,
 			pod_descricao,
@@ -106,6 +107,20 @@ module.exports = {
 
 		const { pod_id } = req.params;
 
+		let link1 = null;
+		let link2 = null;
+		let link3 = null;
+
+		if (!end_link1.includes('https://')) {
+			link1 = `https://${end_link1}`;
+		}
+		if (!end_link2.includes('https://')) {
+			link2 = `https://${end_link2}`;
+		}
+		if (!end_link3.includes('https://')) {
+			link3 = `https://${end_link3}`;
+		}
+
 		let imgfilename = null;
 
 		if (req.file) {
@@ -117,7 +132,35 @@ module.exports = {
 		}
 
 		const atual = await Pod.findPodcastsByID(pod_id);
+		
 		//regras de negocio
+		const verificaNome = await Pod.validaPodcastNomeEdit(pod_id, pod_nome);
+
+		if (verificaNome) {
+			return resp.json({ nomeExists: true });
+		}
+
+		const verificaDescricao = await Pod.validaPodcastDescricaoEdit(pod_id, pod_descricao);
+
+		if (verificaDescricao) {
+			return resp.json({ descricaoExists: true });
+		}
+
+		const verificaLink = await Pod.validaPodcastLinkEdit(pod_id, end_link1, end_link2, end_link3);
+
+		if (verificaLink) {
+			return resp.json({ linkExists: true });
+		}
+
+		if (!end_link1.includes('https://')) {
+			link1 = `https://${end_link1}`;
+		}
+		if (!end_link2.includes('https://')) {
+			link2 = `https://${end_link2}`;
+		}
+		if (!end_link3.includes('https://')) {
+			link3 = `https://${end_link3}`;
+		}
 
 		//final regras de negocio
 
@@ -132,9 +175,9 @@ module.exports = {
 			pod_status,
 			pod_permissao,
 			pod_destaque,
-			end_link1,
-			end_link2,
-			end_link3,
+			link1 ? link1 : end_link1,
+			link2 ? link2 : end_link2,
+			link3 ? link3 : end_link3,
 			list_of_categoria
 		);
 
@@ -145,6 +188,7 @@ module.exports = {
 			});
 		}
 		return resp.json({
+			podEdited: true,
 			mensagem: 'Podcast editado',
 			_id: id
 		});

@@ -51,7 +51,7 @@ module.exports = {
 	async indexPodcastByCtgNome(req, resp) {
 		const { nome, ctg_id } = req.params;
 
-		const podcast_ctg = await PodcastCategoria.findPodcastsByNome(ctg_id, nome);
+		const podcast_ctg = await PodcastCategoria.findPodcastsByNomeID(ctg_id, nome);
 
 		//ids pega todos ids de podcast que contenham a categoria escolhida e depois busca por tds suas outras categorias
 		const ids = podcast_ctg.map((pod) => pod.pod_id);

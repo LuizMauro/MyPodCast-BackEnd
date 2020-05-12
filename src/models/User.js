@@ -47,6 +47,24 @@ class User extends Model {
 		return results;
 	}
 
+	// Exibe todos usuarios por ordem alfabética com seu tipo de usuario
+	static async findAllPodcaster() {
+		const [results] = await this.sequelize.query(
+			'select distinct a.usu_nome, a.usu_id, a.usu_email, a.usu_cpf, a.usu_status, a.usu_premium, b.tus_id, b.tus_descricao from usu_usuario a join tus_tipo_usuario b on a.tus_id = b.tus_id where b.tus_id = 2 order by a.usu_id'
+		);
+
+		return results;
+	}
+
+	// Exibe todos usuarios por ordem alfabética com seu tipo de usuario
+	static async findAllPodcasterPremium() {
+		const [results] = await this.sequelize.query(
+			'select distinct a.usu_nome, a.usu_id, a.usu_email, a.usu_cpf, a.usu_status, a.usu_premium, b.tus_id, b.tus_descricao from usu_usuario a join tus_tipo_usuario b on a.tus_id = b.tus_id where b.tus_id = 2 and a.usu_premium = 1 order by a.usu_id'
+		);
+
+		return results;
+	}
+
 	// Exibe todos OUVINTES E PODCASTERS por ordem alfabética com seu tipo de usuario
 	static async findAllUsers() {
 		const [results] = await this.sequelize.query(
@@ -60,6 +78,15 @@ class User extends Model {
 	static async findAllModUser() {
 		const [results] = await this.sequelize.query(
 			'select distinct a.usu_nome, a.usu_id, a.usu_email, a.usu_cpf, a.usu_status, a.usu_premium, b.tus_id, b.tus_descricao from usu_usuario a join tus_tipo_usuario b on a.tus_id = b.tus_id where b.tus_id = 1 || b.tus_id = 3 order by a.usu_nome;'
+		);
+
+		return results;
+	}
+
+	// Exibe todos OUVINTES E Moderadores por ordem alfabética com seu tipo de usuario
+	static async findAllMod() {
+		const [results] = await this.sequelize.query(
+			'select distinct a.usu_nome, a.usu_id, a.usu_email, a.usu_cpf, a.usu_status, a.usu_premium, b.tus_id, b.tus_descricao from usu_usuario a join tus_tipo_usuario b on a.tus_id = b.tus_id where b.tus_id = 3 order by a.usu_nome;'
 		);
 
 		return results;
