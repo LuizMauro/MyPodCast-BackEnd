@@ -44,13 +44,23 @@ const ComentarioStoreValidate = require('./validators/ComentarioStore')
 //final validators
 
 const { date } = require('./utils/Date');
+const dateFNS = require('date-fns');
 
 const routes = express.Router();
 
-
+//ROTA TESTES
 routes.get('/getdate', (req, resp) => {
 	return resp.json({ data: date(Date.now()).currentDateTime });
 });	
+
+routes.get('/hoursbetween', (req, resp) => {
+	// ano, mes, dia, hora, minuto
+	
+	//data atual, data passa
+	const hours = dateFNS.differenceInHours(new Date(2020, 5, 12, 20, 41),new Date(2020, 5, 10, 20, 41));
+	return resp.json({hours: hours })
+})
+//ROTA TESTES
 
 //GERAL
 routes.post('/sessions', SessionController.store);
