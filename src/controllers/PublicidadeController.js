@@ -1,4 +1,5 @@
 const Publicidade = require('../models/Publicidade');
+const { date } = require('../utils/Date');
 
 module.exports = {
 	async index(req, resp) {
@@ -8,7 +9,7 @@ module.exports = {
 	},
 
 	async store(req, res) {
-		const { pub_descricao, pub_data_inicio, pub_data_fim, pub_link } = req.body;
+		const { pub_descricao, pub_data_fim, pub_link } = req.body;
 
 		const { userId } = req;
 
@@ -23,7 +24,7 @@ module.exports = {
 
 		const data = [
 			pub_descricao,
-			pub_data_inicio,
+			date(Date.now()).currentDateTime,
 			pub_data_fim,
 			filename,
 			pub_link,
