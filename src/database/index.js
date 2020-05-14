@@ -13,6 +13,7 @@ const TipoFeedback = require('../models/TipoFeedback');
 const Feedback = require('../models/Feedback');
 const Comentario = require('../models/Comentario');
 const Like = require('../models/Like');
+const Publicidade = require('../models/Publicidade');
 // final models import
 
 const connection = new Sequelize(dbConfig);
@@ -29,6 +30,7 @@ TipoFeedback.init(connection);
 Feedback.init(connection);
 Comentario.init(connection);
 Like.init(connection);
+Publicidade.init(connection);
 //final inicialização dos models
 
 //associate dos models
@@ -39,6 +41,7 @@ PodcastCategoria.associate(connection.models);
 Feedback.associate(connection.models);
 Comentario.associate(connection.models);
 Like.associate(connection.models);
+Publicidade.associate(connection.models);
 //final associate dos models
 
 module.exports = connection;

@@ -15,12 +15,12 @@ module.exports = {
 				unique: false
 			},
 			pub_data_inicio: {
-				type: Sequelize.DATETIME,
+				type: Sequelize.DATE,
 				allowNull: false,
 				unique: false
 			},
 			pub_data_fim: {
-				type: Sequelize.DATETIME,
+				type: Sequelize.DATE,
 				allowNull: false,
 				unique: false
 			},

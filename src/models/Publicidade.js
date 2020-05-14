@@ -5,8 +5,8 @@ class Publicidade extends Model {
 		super.init(
 			{
 				pub_descricao: DataTypes.STRING,
-				pub_data_inicio: DataTypes.DATETIME,
-				pub_data_fim: DataTypes.DATETIME,
+				pub_data_inicio: DataTypes.DATE,
+				pub_data_fim: DataTypes.DATE,
 				pub_endereco_img: DataTypes.STRING,
 				pub_status: DataTypes.BOOLEAN,
 			},
@@ -21,7 +21,7 @@ class Publicidade extends Model {
 	static async create(data) {
 		try {
 			const [result] = await this.sequelize.query(
-				'INSERT INTO pub_publicidade (pub_descricao,pub_data_inicio,pub_data_fim,pub_endereco_img,pub_status,usu_id) values (?)',
+				'INSERT INTO pub_publicidade (pub_descricao,pub_data_inicio,pub_data_fim,pub_endereco_img,pub_link,pub_status,usu_id) values (?)',
 				{
 					replacements: [data],
 					type: QueryTypes.INSERT,
@@ -30,6 +30,7 @@ class Publicidade extends Model {
 			);
 			return result;
 		} catch (err) {
+			console.log(err);
 			return false;
 		}
 	}
@@ -40,20 +41,26 @@ class Publicidade extends Model {
 		);
 
 		return results;
-    }
-    
-    static async update(pubid) {
+	}
+
+	static async update(pubid, pubdescricao, pubdatafim, pubenderecoimg) {
 		try {
 			const [result] = await this.sequelize.query(
-				'update pub_publicade set pub_descricao = :pub_descricao, pub_data_fim = :pub_data_fim, pub_endereco_img = :pub_endereco_img where pub_id = :pub_id',
+				'update pub_publicidade set pub_descricao = :pub_descricao, pub_data_fim = :pub_data_fim, pub_endereco_img = :pub_endereco_img where pub_id = :pub_id',
 				{
-					replacements: { pub_id: pubid },
+					replacements: {
+						pub_id: pubid,
+						pub_descricao: pubdescricao,
+						pub_data_fim: pubdatafim,
+						pub_endereco_img: pubenderecoimg,
+					},
 					type: QueryTypes.UPDATE,
-					nest: true
+					nest: true,
 				}
 			);
 			return true;
 		} catch (err) {
+			console.log(err)
 			return false;
 		}
 	}
@@ -63,13 +70,14 @@ class Publicidade extends Model {
 			const [result] = await this.sequelize.query(
 				'update pub_publicidade set pub_status = 0 where pub_id = :pub_id',
 				{
-					replacements: { pub_id : pubid },
+					replacements: { pub_id: pubid },
 					type: QueryTypes.UPDATE,
-					nest: true
+					nest: true,
 				}
 			);
 			return true;
 		} catch (err) {
+			console.log(err)
 			return false;
 		}
 	}

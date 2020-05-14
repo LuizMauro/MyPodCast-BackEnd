@@ -30,6 +30,7 @@ const LikeController = require('./controllers/LikeController');
 const DislikeController = require('./controllers/DislikeController');
 const PodcasterController = require('./controllers/PodcasterController')
 const RelatorioController = require('./controllers/RelatorioController')
+const PublicidadeController = require('./controllers/PublicidadeController')
 //final chamando os controllers
 
 //chamndo os validators
@@ -251,6 +252,11 @@ routes.put(
 );
 
 routes.get('/users', authMiddlewareStaff, UserController.indexAllUsers);
+
+routes.post('/publicidade',authMiddlewareStaff,upload.single('file'),PublicidadeController.store);
+routes.put('/publicidade/:pub_id',authMiddlewareStaff,upload.single('file'),PublicidadeController.update);
+routes.put('/removerpublicidade/:pub_id',authMiddlewareStaff,PublicidadeController.delete);
+routes.get('/publicidades',authMiddlewareStaff,PublicidadeController.index);
 
 //APENAS ADM
 routes.post(
