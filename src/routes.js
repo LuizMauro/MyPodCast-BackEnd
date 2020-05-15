@@ -28,9 +28,10 @@ const SessionController = require('./controllers/SessionController');
 const ComentarioController = require('./controllers/ComentarioController');
 const LikeController = require('./controllers/LikeController');
 const DislikeController = require('./controllers/DislikeController');
-const PodcasterController = require('./controllers/PodcasterController')
-const RelatorioController = require('./controllers/RelatorioController')
-const PublicidadeController = require('./controllers/PublicidadeController')
+const PodcasterController = require('./controllers/PodcasterController');
+const RelatorioController = require('./controllers/RelatorioController');
+const PublicidadeController = require('./controllers/PublicidadeController');
+const ForgetPasswordController = require('./controllers/ForgetPasswordController');
 //final chamando os controllers
 
 //chamndo os validators
@@ -42,25 +43,29 @@ const CategoriaStoreValidate = require('./validators/CategoriaStore')
 	.validation;
 const ComentarioStoreValidate = require('./validators/ComentarioStore')
 	.validation;
+const changePasswordValidate = require('./validators/changePasswordStore')
+	.validation;
 //final validators
 
 const { date } = require('./utils/Date');
-const dateFNS = require('date-fns');
 
 const routes = express.Router();
 
 //ROTA TESTES
 routes.get('/getdate', (req, resp) => {
 	return resp.json({ data: date(Date.now()).currentDateTime });
-});	
+});
 
 routes.get('/hoursbetween', (req, resp) => {
 	// ano, mes, dia, hora, minuto
-	
+
 	//data atual, data passa
-	const hours = dateFNS.differenceInHours(new Date(2020, 5, 12, 20, 41),new Date(2020, 5, 10, 20, 41));
-	return resp.json({hours: hours })
-})
+	const hours = dateFNS.differenceInHours(
+		new Date(2020, 5, 12, 20, 41),
+		new Date(2020, 5, 10, 20, 41)
+	);
+	return resp.json({ hours: hours });
+});
 //ROTA TESTES
 
 //GERAL
@@ -86,6 +91,12 @@ routes.get('/endereco', Endereco.index);
 //routes.post('/endereco', Endereco.store);
 routes.get('/tag', Tag.index);
 routes.post('/users', UserStoreValidate, UserController.store);
+routes.post('/forgot_password', ForgetPasswordController.store);
+routes.post(
+	'/reset_password',
+	changePasswordValidate,
+	ForgetPasswordController.update
+);
 //FIM GERAL
 
 //USUÁRIO LOGADO
@@ -93,8 +104,8 @@ routes.put('/edituser/', authMiddleware, UserController.updateUserPerfil);
 routes.put('/usersenha/', authMiddleware, UserController.updateUserSenha);
 routes.get('/user', authMiddleware, UserController.read);
 
-routes.put('/virarpodcaster',authMiddleware,PodcasterController.update);
-routes.put('/refreshtoken',authMiddleware,SessionController.refreshToken);
+routes.put('/virarpodcaster', authMiddleware, PodcasterController.update);
+routes.put('/refreshtoken', authMiddleware, SessionController.refreshToken);
 
 //FAVORITO
 routes.post('/:pod_id/favoritar', authMiddleware, FavoritarController.store);
@@ -196,8 +207,16 @@ routes.get('/qtdlikes/:cmt_id', LikeController.index);
 //FIM USUARIO LOGADO
 
 //PODCASTER
-routes.get('/userpodcasts',authMiddlewarePodcaster , PodcastCategoria.readUserPodcasts);
-routes.put('/podcaster/podcast/:pod_id/:pod_status', authMiddlewarePodcaster , PodCast.updatePodcastStatus);
+routes.get(
+	'/userpodcasts',
+	authMiddlewarePodcaster,
+	PodcastCategoria.readUserPodcasts
+);
+routes.put(
+	'/podcaster/podcast/:pod_id/:pod_status',
+	authMiddlewarePodcaster,
+	PodCast.updatePodcastStatus
+);
 routes.post(
 	'/podcaster/criarpodcast',
 	authMiddlewarePodcaster,
@@ -233,7 +252,11 @@ routes.put(
 	CategoriaStoreValidate,
 	Categoria.updateCtgDescricao
 );
-routes.put('/podcast/:pod_id/:pod_status', authMiddlewareStaff, PodCast.updatePodcastStatus);
+routes.put(
+	'/podcast/:pod_id/:pod_status',
+	authMiddlewareStaff,
+	PodCast.updatePodcastStatus
+);
 routes.get(
 	'/podcasts/solicitacao',
 	authMiddlewareStaff,
@@ -253,10 +276,24 @@ routes.put(
 
 routes.get('/users', authMiddlewareStaff, UserController.indexAllUsers);
 
-routes.post('/publicidade',authMiddlewareStaff,upload.single('file'),PublicidadeController.store);
-routes.put('/publicidade/:pub_id',authMiddlewareStaff,upload.single('file'),PublicidadeController.update);
-routes.put('/removerpublicidade/:pub_id',authMiddlewareStaff,PublicidadeController.delete);
-routes.get('/publicidades',authMiddlewareStaff,PublicidadeController.index);
+routes.post(
+	'/publicidade',
+	authMiddlewareStaff,
+	upload.single('file'),
+	PublicidadeController.store
+);
+routes.put(
+	'/publicidade/:pub_id',
+	authMiddlewareStaff,
+	upload.single('file'),
+	PublicidadeController.update
+);
+routes.put(
+	'/removerpublicidade/:pub_id',
+	authMiddlewareStaff,
+	PublicidadeController.delete
+);
+routes.get('/publicidades', authMiddlewareStaff, PublicidadeController.index);
 
 //APENAS ADM
 routes.post(

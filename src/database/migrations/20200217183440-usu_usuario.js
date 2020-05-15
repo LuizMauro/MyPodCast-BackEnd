@@ -36,6 +36,14 @@ module.exports = {
 				type: Sequelize.BOOLEAN,
 				allowNull: false
 			},
+			usu_reset_token:{
+				type:Sequelize.STRING,
+				allowNull:true,
+			},
+			usu_reset_expires:{
+				type:Sequelize.DATE,
+				allowNull:true
+			},
 			tus_id: {
 				type: Sequelize.INTEGER,
 				allowNull: false,

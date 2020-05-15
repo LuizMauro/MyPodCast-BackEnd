@@ -7,7 +7,7 @@ class User extends Model {
 				usu_nome: DataTypes.STRING,
 				usu_senha: DataTypes.STRING,
 				usu_email: DataTypes.STRING,
-				usu_cpf: DataTypes.STRING
+				usu_cpf: DataTypes.STRING,
 			},
 			{ sequelize }
 		);
@@ -27,7 +27,7 @@ class User extends Model {
 				{
 					replacements: [data],
 					type: QueryTypes.INSERT,
-					nest: true
+					nest: true,
 				}
 			);
 
@@ -99,7 +99,7 @@ class User extends Model {
 			{
 				replacements: [data],
 				type: QueryTypes.SELECT,
-				nest: true
+				nest: true,
 			}
 		);
 
@@ -114,7 +114,7 @@ class User extends Model {
 			{
 				replacements: [data],
 				type: QueryTypes.SELECT,
-				nest: true
+				nest: true,
 			}
 		);
 
@@ -128,7 +128,7 @@ class User extends Model {
 			{
 				replacements: [email],
 				type: QueryTypes.SELECT,
-				nest: true
+				nest: true,
 			}
 		);
 
@@ -142,7 +142,7 @@ class User extends Model {
 			{
 				replacements: [data],
 				type: QueryTypes.SELECT,
-				nest: true
+				nest: true,
 			}
 		);
 
@@ -156,7 +156,7 @@ class User extends Model {
 			{
 				replacements: { email: email, senha: senha },
 				type: QueryTypes.SELECT,
-				nest: true
+				nest: true,
 			}
 		);
 
@@ -168,26 +168,26 @@ class User extends Model {
 		const [results] = await this.sequelize.query(
 			'SELECT usu_id, usu_nome, usu_email FROM usu_usuario where usu_nome = :usu_nome',
 			{
-				replacements: { usu_nome: nome},
+				replacements: { usu_nome: nome },
 				type: QueryTypes.SELECT,
-				nest: true
+				nest: true,
 			}
 		);
-			return results;
+		return results;
 	}
 
-		// Select para validação de cadastro - SENHA
-		static async verifyEmail(email) {
-			const [results] = await this.sequelize.query(
-				'SELECT usu_id, usu_nome, usu_email FROM usu_usuario where usu_email = :usu_email',
-				{
-					replacements: { usu_email: email},
-					type: QueryTypes.SELECT,
-					nest: true
-				}
-			);
-				return results;
-		}
+	// Select para validação de cadastro - SENHA
+	static async verifyEmail(email) {
+		const [results] = await this.sequelize.query(
+			'SELECT usu_id, usu_nome, usu_email FROM usu_usuario where usu_email = :usu_email',
+			{
+				replacements: { usu_email: email },
+				type: QueryTypes.SELECT,
+				nest: true,
+			}
+		);
+		return results;
+	}
 
 	//Mudar status do usuário
 	static async updateUserStatus(usuid, usustatus) {
@@ -197,7 +197,28 @@ class User extends Model {
 				{
 					replacements: { usu_status: usustatus, usu_id: usuid },
 					type: QueryTypes.UPDATE,
-					nest: true
+					nest: true,
+				}
+			);
+			return true;
+		} catch (err) {
+			return false;
+		}
+	}
+
+	//Mudar token de esqueceu a senha
+	static async forgotPassword(usuid, usutokenreset, usutokenexpires) {
+		try {
+			const [result] = await this.sequelize.query(
+				'update usu_usuario set usu_reset_token = :usu_reset_token, usu_reset_expires = :usu_reset_expires where usu_id = :usu_id',
+				{
+					replacements: {
+						usu_id: usuid,
+						usu_reset_token: usutokenreset,
+						usu_reset_expires: usutokenexpires,
+					},
+					type: QueryTypes.UPDATE,
+					nest: true,
 				}
 			);
 			return true;
@@ -216,10 +237,10 @@ class User extends Model {
 						usu_nome: usunome,
 						usu_email: usuemail,
 						usu_id: usuid,
-						usu_senha: ususenha
+						usu_senha: ususenha,
 					},
 					type: QueryTypes.UPDATE,
-					nest: true
+					nest: true,
 				}
 			);
 			return true;
@@ -237,7 +258,7 @@ class User extends Model {
 				{
 					replacements: { usu_senha: ususenha, usu_id: usuid },
 					type: QueryTypes.UPDATE,
-					nest: true
+					nest: true,
 				}
 			);
 			return true;
@@ -254,7 +275,7 @@ class User extends Model {
 				{
 					replacements: { tus_id: tusid, usu_id: usuid },
 					type: QueryTypes.UPDATE,
-					nest: true
+					nest: true,
 				}
 			);
 			return true;
