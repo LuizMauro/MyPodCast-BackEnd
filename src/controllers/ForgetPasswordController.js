@@ -11,7 +11,7 @@ module.exports = {
 			const user = await User.findOneUserEmail(usu_email);
 
 			if (!user) {
-				return res.json({ userExists: false, error: 'user not found' });
+				return res.json({ userDoesNotExists: true, error: 'user not found' });
 			}
 
 			const token = crypto.randomBytes(10).toString('hex');
@@ -43,15 +43,17 @@ module.exports = {
 	async update(req, res) {
 		const { usu_email, token, usu_senha } = req.body;
 
+		console.log('aaaaaaaaa',usu_email,token,usu_senha)
+
 		try {
 			const user = await User.findOneUserEmail(usu_email);
 
 			if (!user) {
-				return res.json({ userExists: false, error: 'user not found' });
+				return res.json({ userDoesNotExists:true, error: 'user not found' });
 			}
 
 			if (token !== user.usu_reset_token)
-				return res.status(400).json({ tokenValid: false });
+				return res.status(400).json({ tokenInvalid: true });
 
 			const now = new Date();
 			if (now > user.usu_reset_expires)

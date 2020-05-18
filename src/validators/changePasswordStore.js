@@ -3,7 +3,7 @@ const Yup = require('yup');
 module.exports.validation = async function (req, res, next) {
 	try {
 		const schema = Yup.object().shape({
-			senha: Yup.string()
+			usu_senha: Yup.string()
 				.required('Campo obrigatório!')
 				.trim()
 				.matches(
