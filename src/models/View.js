@@ -30,7 +30,8 @@ class View extends Model {
             console.log(err);
 			return false;
 		}
-	}
+    }
+    
 
 	static async find(podid) {
 		const [results] = await this.sequelize.query(
@@ -47,9 +48,9 @@ class View extends Model {
     
 	static async findPodUser(podid,usuid) {
 		const [results] = await this.sequelize.query(
-			'Select * from vie_view where pod_id = :pod_id and usu_id = :usu_id ORDER BY vie_data DESC limit 1',
+			'select * from vie_view where pod_id = :pod_id and usu_id = :usu_id order by vie_id desc limit 1',
 			{
-				replalcements: { pod_id: podid, usu_id: usuid },
+				replacements: { pod_id: podid, usu_id: usuid },
 				type: QueryTypes.SELECT,
 				nest: true,
 			}
