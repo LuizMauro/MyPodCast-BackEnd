@@ -98,6 +98,8 @@ routes.post(
 	changePasswordValidate,
 	ForgetPasswordController.update
 );
+
+routes.post('/view/:pod_id/:vie_ip',ViewController.create)
 //FIM GERAL
 
 //USUÁRIO LOGADO
@@ -106,7 +108,6 @@ routes.put('/usersenha/', authMiddleware, UserController.updateUserSenha);
 routes.get('/user', authMiddleware, UserController.read);
 
 routes.post('/view/:pod_id',authMiddleware,ViewController.store)
-
 
 routes.put('/virarpodcaster', authMiddleware, PodcasterController.update);
 routes.put('/refreshtoken', authMiddleware, SessionController.refreshToken);
