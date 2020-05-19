@@ -4,7 +4,7 @@ class Endereco extends Model {
 	static init(sequelize) {
 		super.init(
 			{
-				end_link: DataTypes.STRING
+				end_link: DataTypes.STRING,
 			},
 			{ sequelize }
 		);
@@ -21,7 +21,7 @@ class Endereco extends Model {
 				{
 					replacements: [data],
 					type: QueryTypes.INSERT,
-					nest: true
+					nest: true,
 				}
 			);
 			return result;
@@ -36,7 +36,7 @@ class Endereco extends Model {
 			{
 				replalcements: { pod_id: podid },
 				type: QueryTypes.SELECT,
-				nest: true
+				nest: true,
 			}
 		);
 

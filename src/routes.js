@@ -32,6 +32,7 @@ const PodcasterController = require('./controllers/PodcasterController');
 const RelatorioController = require('./controllers/RelatorioController');
 const PublicidadeController = require('./controllers/PublicidadeController');
 const ForgetPasswordController = require('./controllers/ForgetPasswordController');
+const ViewController = require('./controllers/ViewController');
 //final chamando os controllers
 
 //chamndo os validators
@@ -103,6 +104,9 @@ routes.post(
 routes.put('/edituser/', authMiddleware, UserController.updateUserPerfil);
 routes.put('/usersenha/', authMiddleware, UserController.updateUserSenha);
 routes.get('/user', authMiddleware, UserController.read);
+
+routes.post('/view/:pod_id',authMiddleware,ViewController.store)
+
 
 routes.put('/virarpodcaster', authMiddleware, PodcasterController.update);
 routes.put('/refreshtoken', authMiddleware, SessionController.refreshToken);
