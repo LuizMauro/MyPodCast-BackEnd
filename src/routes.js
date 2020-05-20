@@ -100,6 +100,8 @@ routes.post(
   changePasswordValidate,
   ForgetPasswordController.update
 );
+
+routes.post('/view/:pod_id/:vie_ip',ViewController.create)
 //FIM GERAL
 
 //USUÁRIO LOGADO
@@ -109,8 +111,13 @@ routes.get("/user", authMiddleware, UserController.read);
 
 routes.post("/view/:pod_id", authMiddleware, ViewController.store);
 
+<<<<<<< HEAD
 routes.put("/virarpodcaster", authMiddleware, PodcasterController.update);
 routes.put("/refreshtoken", authMiddleware, SessionController.refreshToken);
+=======
+routes.put('/virarpodcaster', authMiddleware, PodcasterController.update);
+routes.put('/refreshtoken', authMiddleware, SessionController.refreshToken);
+>>>>>>> a62689e7f6c8ad3b0b06fd6c9bcf4407d07d71a9
 
 //FAVORITO
 routes.post("/:pod_id/favoritar", authMiddleware, FavoritarController.store);

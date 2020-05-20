@@ -5,6 +5,7 @@ class View extends Model {
 		super.init(
 			{
 				vie_data: DataTypes.DATE,
+				vie_ip: DataTypes.INTEGER,
 			},
 			{ sequelize }
 		);
@@ -27,11 +28,27 @@ class View extends Model {
 			);
 			return result;
 		} catch (err) {
-            console.log(err);
+		//	console.log(err);
 			return false;
 		}
-    }
-    
+	}
+
+	static async createIP(data) {
+		try {
+			const [result] = await this.sequelize.query(
+				'INSERT INTO vie_view (vie_data,vie_ip, pod_id) values (?)',
+				{
+					replacements: [data],
+					type: QueryTypes.INSERT,
+					nest: true,
+				}
+			);
+			return result;
+		} catch (err) {
+			console.log(err);
+			return false;
+		}
+	}
 
 	static async find(podid) {
 		const [results] = await this.sequelize.query(
@@ -44,9 +61,9 @@ class View extends Model {
 		);
 
 		return results;
-    }
-    
-	static async findPodUser(podid,usuid) {
+	}
+
+	static async findPodUser(podid, usuid) {
 		const [results] = await this.sequelize.query(
 			'select * from vie_view where pod_id = :pod_id and usu_id = :usu_id order by vie_id desc limit 1',
 			{
@@ -57,6 +74,53 @@ class View extends Model {
 		);
 
 		return results;
+	}
+
+	static async findPodIp(podid, vieip) {
+		const [results] = await this.sequelize.query(
+			'select * from vie_view where pod_id = :pod_id and vie_ip = :vie_ip order by vie_id desc limit 1',
+			{
+				replacements: { pod_id: podid, vie_ip: vieip },
+				type: QueryTypes.SELECT,
+				nest: true,
+			}
+		);
+
+		return results;
+	}
+
+	static async findPodUserCheck(podid, usuid) {
+		try {
+			const [results] = await this.sequelize.query(
+				'select * from vie_view where pod_id = :pod_id and usu_id = :usu_id order by vie_id desc limit 1',
+				{
+					replacements: { pod_id: podid, usu_id: usuid },
+					type: QueryTypes.SELECT,
+					nest: true,
+				}
+			);
+
+			return results;
+		} catch (err) {
+			return false;
+		}
+	}
+
+	static async findPodIPCheck(podid, vieip) {
+		try {
+			const [results] = await this.sequelize.query(
+				'select * from vie_view where pod_id = :pod_id and vie_ip = :vie_ip order by vie_id desc limit 1',
+				{
+					replacements: { pod_id: podid, vie_ip: vieip },
+					type: QueryTypes.SELECT,
+					nest: true,
+				}
+			);
+
+			return results;
+		} catch (err) {
+			return false;
+		}
 	}
 
 	static async count(podid) {

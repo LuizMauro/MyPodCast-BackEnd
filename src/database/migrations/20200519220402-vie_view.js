@@ -14,6 +14,11 @@ module.exports = {
 				allowNull: false,
 				unique: false
 			},
+			vie_ip: {
+				type: Sequelize.STRING,
+				allowNull: true,
+				unique: false
+			},
 			pod_id: {
 				type: Sequelize.INTEGER,
 				allowNull: false,
@@ -22,7 +27,7 @@ module.exports = {
 			},
 			usu_id: {
 				type: Sequelize.INTEGER,
-				allowNull: false,
+				allowNull: true,
 				onDelete: 'CASCADE',
 				references: { model: 'usu_usuario', key: 'usu_id' }
 			}
