@@ -7,6 +7,7 @@ const authMiddlewareAdm = require('./middlewares/authAdm');
 const authMiddlewareMod = require('./middlewares/authMod');
 const authMiddlewareStaff = require('./middlewares/authStaff');
 const authMiddlewarePodcaster = require('./middlewares/authPodcaster');
+const authMiddlewarePremium = require('./middlewares/authPremium');
 //middleware
 
 //chamando os controllers
@@ -33,6 +34,7 @@ const RelatorioController = require('./controllers/RelatorioController');
 const PublicidadeController = require('./controllers/PublicidadeController');
 const ForgetPasswordController = require('./controllers/ForgetPasswordController');
 const ViewController = require('./controllers/ViewController');
+const EstatisticaPremiumController = require('./controllers/EstatisticaPremiumController');
 //final chamando os controllers
 
 //chamndo os validators
@@ -242,6 +244,10 @@ routes.put(
 	PodCast.updatePodcastImg
 );
 //FIM PODCASTER
+
+// PREMIUM
+routes.get('/estatisticaspremium',authMiddlewarePremium,EstatisticaPremiumController.read)
+//FIM PREMIUM
 
 //ADM E MODERADOR (STAFF)
 
