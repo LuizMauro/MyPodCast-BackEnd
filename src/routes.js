@@ -1,38 +1,40 @@
 const express = require("express");
 
 //middleware
-const upload = require("./utils/multer");
-const authMiddleware = require("./middlewares/auth");
-const authMiddlewareAdm = require("./middlewares/authAdm");
-const authMiddlewareMod = require("./middlewares/authMod");
-const authMiddlewareStaff = require("./middlewares/authStaff");
-const authMiddlewarePodcaster = require("./middlewares/authPodcaster");
+const upload = require('./utils/multer');
+const authMiddleware = require('./middlewares/auth');
+const authMiddlewareAdm = require('./middlewares/authAdm');
+const authMiddlewareMod = require('./middlewares/authMod');
+const authMiddlewareStaff = require('./middlewares/authStaff');
+const authMiddlewarePodcaster = require('./middlewares/authPodcaster');
+const authMiddlewarePremium = require('./middlewares/authPremium');
 //middleware
 
 //chamando os controllers
-const UserController = require("./controllers/UserController");
-const TipoUser = require("./controllers/TipoUsuarioController");
-const Categoria = require("./controllers/CategoriaController");
-const PodCast = require("./controllers/PodCastController");
-const PodcastCategoria = require("./controllers/PodcastCategoriaController");
-const Endereco = require("./controllers/EnderecoController");
-const Tag = require("./controllers/TagController");
-const PodcastProcedure = require("./controllers/PodcastProcedureController");
-const SolicitacaoCadastro = require("./controllers/SolicitacaoCadastroController");
-const TipoFeedbackController = require("./controllers/TipoFeedbackController");
-const FavoritarController = require("./controllers/FavoritarController");
-const AcompanhandoController = require("./controllers/AcompanhandoController");
-const AcompanharController = require("./controllers/AcompanharController");
-const AvaliarController = require("./controllers/AvaliarController");
-const SessionController = require("./controllers/SessionController");
-const ComentarioController = require("./controllers/ComentarioController");
-const LikeController = require("./controllers/LikeController");
-const DislikeController = require("./controllers/DislikeController");
-const PodcasterController = require("./controllers/PodcasterController");
-const RelatorioController = require("./controllers/RelatorioController");
-const PublicidadeController = require("./controllers/PublicidadeController");
-const ForgetPasswordController = require("./controllers/ForgetPasswordController");
-const ViewController = require("./controllers/ViewController");
+const UserController = require('./controllers/UserController');
+const TipoUser = require('./controllers/TipoUsuarioController');
+const Categoria = require('./controllers/CategoriaController');
+const PodCast = require('./controllers/PodCastController');
+const PodcastCategoria = require('./controllers/PodcastCategoriaController');
+const Endereco = require('./controllers/EnderecoController');
+const Tag = require('./controllers/TagController');
+const PodcastProcedure = require('./controllers/PodcastProcedureController');
+const SolicitacaoCadastro = require('./controllers/SolicitacaoCadastroController');
+const TipoFeedbackController = require('./controllers/TipoFeedbackController');
+const FavoritarController = require('./controllers/FavoritarController');
+const AcompanhandoController = require('./controllers/AcompanhandoController');
+const AcompanharController = require('./controllers/AcompanharController');
+const AvaliarController = require('./controllers/AvaliarController');
+const SessionController = require('./controllers/SessionController');
+const ComentarioController = require('./controllers/ComentarioController');
+const LikeController = require('./controllers/LikeController');
+const DislikeController = require('./controllers/DislikeController');
+const PodcasterController = require('./controllers/PodcasterController');
+const RelatorioController = require('./controllers/RelatorioController');
+const PublicidadeController = require('./controllers/PublicidadeController');
+const ForgetPasswordController = require('./controllers/ForgetPasswordController');
+const ViewController = require('./controllers/ViewController');
+const EstatisticaPremiumController = require('./controllers/EstatisticaPremiumController');
 //final chamando os controllers
 
 //chamndo os validators
@@ -111,13 +113,8 @@ routes.get("/user", authMiddleware, UserController.read);
 
 routes.post("/view/:pod_id", authMiddleware, ViewController.store);
 
-<<<<<<< HEAD
 routes.put("/virarpodcaster", authMiddleware, PodcasterController.update);
 routes.put("/refreshtoken", authMiddleware, SessionController.refreshToken);
-=======
-routes.put('/virarpodcaster', authMiddleware, PodcasterController.update);
-routes.put('/refreshtoken', authMiddleware, SessionController.refreshToken);
->>>>>>> a62689e7f6c8ad3b0b06fd6c9bcf4407d07d71a9
 
 //FAVORITO
 routes.post("/:pod_id/favoritar", authMiddleware, FavoritarController.store);
@@ -249,6 +246,10 @@ routes.put(
   PodCast.updatePodcastImg
 );
 //FIM PODCASTER
+
+// PREMIUM
+routes.get('/estatisticaspremium/:pod_id',authMiddlewarePremium,EstatisticaPremiumController.read)
+//FIM PREMIUM
 
 //ADM E MODERADOR (STAFF)
 

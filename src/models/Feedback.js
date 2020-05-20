@@ -175,6 +175,48 @@ class Feedback extends Model {
 
 		return results;
 	}
+
+	//TODOS DE UM PODCAST - acompanhando
+	static async findCountAcompanhando(podid) {
+		const [results] = await this.sequelize.query(
+			'select count(d.fbk_id) as qtd_acompanhando from usu_usuario a join fbk_feedback d on a.usu_id  = d.usu_id join pod_podcast b on b.pod_id = d.pod_id join tfb_tipo_feedback c on c.tfb_id = d.tfb_id where b.pod_id = :pod_id and d.tfb_id = 2  and b.pod_status = 1 and fbk_status = 1',
+			{
+				replacements: { pod_id: podid },
+				type: QueryTypes.SELECT,
+				nest: true,
+			}
+		);
+
+		return results;
+	}
+
+	//TODOS DE UM PODCAST - pretendo acompanhar
+	static async findCountAcompanhar(podid) {
+		const [results] = await this.sequelize.query(
+			'select count(d.fbk_id) from usu_usuario a join fbk_feedback d on a.usu_id  = d.usu_id join pod_podcast b on b.pod_id = d.pod_id join tfb_tipo_feedback c on c.tfb_id = d.tfb_id where b.pod_id = :pod_id and d.tfb_id = 2  and b.pod_status = 1 and fbk_status = 2',
+			{
+				replacements: { pod_id: podid },
+				type: QueryTypes.SELECT,
+				nest: true,
+			}
+		);
+
+		return results;
+	}
+
+	//TODOS DE UM PODCAST - FAVORITOS
+	static async findCountFav(podid) {
+		const [results] = await this.sequelize.query(
+			'select count(d.fbk_id) as qtd_fav from usu_usuario a join fbk_feedback d on a.usu_id  = d.usu_id join pod_podcast b on b.pod_id = d.pod_id join tfb_tipo_feedback c on c.tfb_id = d.tfb_id where b.pod_id = :pod_id and d.tfb_id = 1  and b.pod_status = 1 and fbk_status = 1',
+			{
+				replacements: { pod_id: podid },
+				type: QueryTypes.SELECT,
+				nest: true,
+			}
+		);
+
+		return results;
+	}
 }
 
 module.exports = Feedback;
