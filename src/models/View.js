@@ -28,7 +28,7 @@ class View extends Model {
 			);
 			return result;
 		} catch (err) {
-		//	console.log(err);
+			//	console.log(err);
 			return false;
 		}
 	}
@@ -123,16 +123,46 @@ class View extends Model {
 		}
 	}
 
-	static async count(podid) {
+	static async countAll(podid) {
 		const [results] = await this.sequelize.query(
-			'Select count(pod_id) from vie_view where pod_id = :pod_id',
+			'Select count(vie_id) as qtd_viewtotal from vie_view where pod_id = :pod_id',
 			{
-				replalcements: { pod_id: podid },
+				replacements: { pod_id: podid },
 				type: QueryTypes.SELECT,
 				nest: true,
 			}
 		);
+		return results;
+	}
 
+	static async countLastWeek(podid) {
+		const [results] = await this.sequelize.query(
+			'Select count(vie_id) as qtd_viewweek from vie_view where pod_id = :pod_id and vie_data between date_sub(now(),INTERVAL 1 WEEK) and now();',
+			{
+				replacements: { pod_id: podid },
+				type: QueryTypes.SELECT,
+				nest: true,
+			}
+		);
+		return results;
+	}
+
+	static async countLastMonth(podid) {
+		const [results] = await this.sequelize.query(
+			'Select count(vie_id) as qtd_viewmonth from vie_view where pod_id = :pod_id and vie_data between date_sub(now(),INTERVAL 1 MONTH) and now();',
+			{
+				replacements: { pod_id: podid },
+				type: QueryTypes.SELECT,
+				nest: true,
+			}
+		);
+		return results;
+	}
+
+	static async countTopWeek() {
+		const [results] = await this.sequelize.query(
+			'Select pod_id as id, (select count(vie_id) from vie_view where pod_id = id) as qtd_viewtotal from vie_view where vie_data between date_sub(now(),INTERVAL 1 MONTH) and now() group by pod_id order by qtd_viewtotal desc limit 5'
+		);
 		return results;
 	}
 }
