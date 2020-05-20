@@ -246,7 +246,7 @@ routes.put(
 //FIM PODCASTER
 
 // PREMIUM
-routes.get('/estatisticaspremium',authMiddlewarePremium,EstatisticaPremiumController.read)
+routes.get('/estatisticaspremium/:pod_id',authMiddlewarePremium,EstatisticaPremiumController.read)
 //FIM PREMIUM
 
 //ADM E MODERADOR (STAFF)
