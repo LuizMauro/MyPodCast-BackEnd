@@ -221,6 +221,11 @@ routes.get(
   authMiddlewarePodcaster,
   PodcastCategoria.readUserPodcasts
 );
+routes.get(
+  "/userpodcastsAllow",
+  authMiddlewarePodcaster,
+  PodcastCategoria.readUserPodcastsAllow
+);
 routes.put(
   "/podcaster/podcast/:pod_id/:pod_status",
   authMiddlewarePodcaster,

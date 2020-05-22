@@ -34,6 +34,15 @@ module.exports = {
 		return resp.json(podcast_ctg);
 	},
 
+	async readUserPodcastsAllow(req, resp) {
+		const {userId} = req;
+		console.log('id do usuario',userId)
+
+		const podcast_ctg = await PodcastCategoria.findUserPodcastsAllow(userId);
+
+		return resp.json(podcast_ctg);
+	},
+
 	async indexPodcastByCtgID(req, resp) {
 		const { ctg_id } = req.params;
 
