@@ -33,6 +33,7 @@ const PodcasterController = require('./controllers/PodcasterController');
 const RelatorioController = require('./controllers/RelatorioController');
 const PublicidadeController = require('./controllers/PublicidadeController');
 const ForgetPasswordController = require('./controllers/ForgetPasswordController');
+const PodViewController = require('./controllers/PodViewController');
 const ViewController = require('./controllers/ViewController');
 const EstatisticaPremiumController = require('./controllers/EstatisticaPremiumController');
 //final chamando os controllers
@@ -103,7 +104,8 @@ routes.post(
   ForgetPasswordController.update
 );
 
-routes.post('/view/:pod_id/:vie_ip',ViewController.create)
+routes.post('/podview/:pod_id/:vie_ip',PodViewController.create)
+routes.post('/view/:vie_ip/',ViewController.create)
 //FIM GERAL
 
 //USUÁRIO LOGADO
@@ -111,7 +113,7 @@ routes.put("/edituser/", authMiddleware, UserController.updateUserPerfil);
 routes.put("/usersenha/", authMiddleware, UserController.updateUserSenha);
 routes.get("/user", authMiddleware, UserController.read);
 
-routes.post("/view/:pod_id", authMiddleware, ViewController.store);
+routes.post("/podview/:pod_id", authMiddleware, PodViewController.store);
 
 routes.put("/virarpodcaster", authMiddleware, PodcasterController.update);
 routes.put("/refreshtoken", authMiddleware, SessionController.refreshToken);

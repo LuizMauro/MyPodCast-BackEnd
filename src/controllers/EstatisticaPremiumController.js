@@ -9,9 +9,9 @@ module.exports = {
         const acompanhando = await Feedback.findCountAcompanhando(pod_id);
         const acompanhar = await Feedback.findCountAcompanhar(pod_id)
 		const media = await Feedback.findNotaMedia(pod_id)
-		const total_view = await View.countAll(pod_id)
-		const week_view = await View.countLastWeek(pod_id)
-		const month_view = await View.countLastMonth(pod_id)
+		const total_view = await View.countAll(pod_id,0)
+		const week_view = await View.countLastWeek(pod_id,0)
+		const month_view = await View.countLastMonth(pod_id,0)
 		const topweek = await View.countTopWeek();
 
 		return resp.json({

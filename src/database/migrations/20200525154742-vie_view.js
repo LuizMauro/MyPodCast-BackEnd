@@ -19,9 +19,14 @@ module.exports = {
 				allowNull: true,
 				unique: false
 			},
+			vie_tipo: {
+				type: Sequelize.BOOLEAN,
+				allowNull: false,
+				unique: false
+			},
 			pod_id: {
 				type: Sequelize.INTEGER,
-				allowNull: false,
+				allowNull: true,
 				onDelete: 'CASCADE',
 				references: { model: 'pod_podcast', key: 'pod_id' }
 			},
