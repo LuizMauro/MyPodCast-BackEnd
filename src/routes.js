@@ -320,14 +320,14 @@ routes.post(
 	'/publicidade',
 	authMiddlewareStaff,
 	upload.single('file'),
-	//PublicidadeStoreValidate,
+	PublicidadeStoreValidate,
 	PublicidadeController.store
 );
 routes.put(
 	'/publicidade/:pub_id',
 	authMiddlewareStaff,
 	upload.single('file'),
-	//PublicidadeStoreValidate,
+	PublicidadeStoreValidate,
 	PublicidadeController.update
 );
 routes.put(

@@ -46,19 +46,26 @@ module.exports = {
     const { pub_id } = req.params;
     const { userId } = req;
 
-    //regras de negocio
-    if (req.file.length == 0) {
-      return resp.json({ mensagem: "Por favor escolha uma imagem" });
-    }
+    const atual = Publicidade.findOne(pub_id)
 
-    const { filename } = req.file;
+    let imgfilename = null;
+    
+    //regras de negocio
+    if (req.file) {
+			if (req.file.length == 0) {
+				return resp.json({ mensagem: 'Por favor escolha uma imagem' });
+			}
+			const { originalname, filename } = req.file;
+			imgfilename = filename
+		}
+
     //final regras de negocio
 
     const id = await Publicidade.update(
       pub_id,
       pub_descricao,
       pub_data_fim,
-      filename,
+      req.file ? imgfilename : atual.pub_endereco_img,
       pub_link
     );
 

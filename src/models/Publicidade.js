@@ -43,6 +43,21 @@ class Publicidade extends Model {
 		return results;
 	}
 
+	static async findOne(pubid) {
+		const [results] = await this.sequelize.query(
+			'Select * from pub_publicidade where pub_status = 1 and pub_id = :pub_id',
+			{
+				replacements: {
+					pub_id: pubid,
+				},
+				type: QueryTypes.SELECT,
+				nest: true,
+			}
+		);
+
+		return results;
+	}
+
 	static async update(pubid, pubdescricao, pubdatafim, pubenderecoimg) {
 		try {
 			const [result] = await this.sequelize.query(
@@ -60,7 +75,7 @@ class Publicidade extends Model {
 			);
 			return true;
 		} catch (err) {
-			console.log(err)
+			console.log(err);
 			return false;
 		}
 	}
@@ -77,7 +92,7 @@ class Publicidade extends Model {
 			);
 			return true;
 		} catch (err) {
-			console.log(err)
+			console.log(err);
 			return false;
 		}
 	}
