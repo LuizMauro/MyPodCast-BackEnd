@@ -12,10 +12,23 @@ class Plano extends Model {
 		);
 	}
 
-    static associate(models) {}
-    
-    static async findAll() {
+	static associate(models) {}
+
+	static async findAll() {
 		const [results] = await this.sequelize.query('SELECT * FROM pln_plano');
+
+		return results;
+	}
+
+	static async findOne(plnid) {
+		const [results] = await this.sequelize.query(
+			'SELECT * FROM pln_plano where pln_id = :pln_id',
+			{
+				replacements: { pln_id: plnid },
+				type: QueryTypes.SELECT,
+				nest: true,
+			}
+		);
 
 		return results;
 	}
@@ -27,7 +40,7 @@ class Plano extends Model {
 				{
 					replacements: [data],
 					type: QueryTypes.INSERT,
-					nest: true
+					nest: true,
 				}
 			);
 			return result;
@@ -37,14 +50,14 @@ class Plano extends Model {
 	}
 
 	//Selecionando Usuário Comum e Podcaster para opção de cadastro
-	static async edit(plnid,plnpreco) {
+	static async edit(plnid, plnpreco) {
 		try {
 			const [result] = await this.sequelize.query(
 				'update pln_plano set pln_preco = :pln_preco where pln_id = :pln_id',
 				{
 					replacements: { pln_id: plnid, pln_preco: plnpreco },
 					type: QueryTypes.UPDATE,
-					nest: true
+					nest: true,
 				}
 			);
 			return true;

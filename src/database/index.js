@@ -16,6 +16,8 @@ const Like = require('../models/Like');
 const Publicidade = require('../models/Publicidade');
 const View = require('../models/View');
 const Plano = require('../models/Plano');
+const FormaPagamento = require('../models/FormaPagamento');
+const Assinatura = require('../models/Assinatura');
 // final models import
 
 const connection = new Sequelize(dbConfig);
@@ -35,6 +37,8 @@ Like.init(connection);
 Publicidade.init(connection);
 View.init(connection);
 Plano.init(connection);
+Assinatura.init(connection);
+FormaPagamento.init(connection);
 //final inicialização dos models
 
 //associate dos models
@@ -47,6 +51,7 @@ Comentario.associate(connection.models);
 Like.associate(connection.models);
 Publicidade.associate(connection.models);
 View.associate(connection.models);
+Assinatura.associate(connection.models);
 //final associate dos models
 
 module.exports = connection;
