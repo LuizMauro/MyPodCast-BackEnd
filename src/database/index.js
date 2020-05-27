@@ -15,6 +15,7 @@ const Comentario = require('../models/Comentario');
 const Like = require('../models/Like');
 const Publicidade = require('../models/Publicidade');
 const View = require('../models/View');
+const Plano = require('../models/Plano');
 // final models import
 
 const connection = new Sequelize(dbConfig);
@@ -33,6 +34,7 @@ Comentario.init(connection);
 Like.init(connection);
 Publicidade.init(connection);
 View.init(connection);
+Plano.init(connection);
 //final inicialização dos models
 
 //associate dos models
