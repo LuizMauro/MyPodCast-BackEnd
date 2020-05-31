@@ -58,7 +58,7 @@ const PublicidadeStoreValidate = require('./validators/PublicidadeStore')
 const { date } = require('./utils/Date');
 
 const routes = express.Router();
-
+const stripe = require("stripe")("sk_test_ZfcC8Wk9r3HXgEB8OQfipnk300sarUAoWs");
 //ROTA TESTES
 routes.get('/getdate', (req, resp) => {
 	return resp.json({ data: date(Date.now()).currentDateTime });
@@ -75,6 +75,53 @@ routes.get('/hoursbetween', (req, resp) => {
 	return resp.json({ hours: hours });
 });
 //ROTA TESTES
+
+//ROTA EM TESTE
+const calculateOrderAmount = items =>{
+	const amount = items.price;
+	console.log(amount);
+	 return amount;
+}	
+
+routes.post("/create-payment-intent", async (req, resp) =>{
+	const { items } = req.body;
+	//console.log("Item -> ", items[0]);
+
+	console.log(items);
+
+	const paymentIntent = await stripe.paymentIntents.create({
+		amount: calculateOrderAmount(items),
+		description: items.id,
+		currency: "brl", 
+	  });
+	
+	  console.log("PAYMENT->",paymentIntent);
+	
+	  resp.send({
+		clientSecret: paymentIntent.client_secret,
+		confirmation_method: "automatic",
+		receipt_email: 'luizm1997@hotmail.com', 
+	  });
+	
+});
+
+routes.get("/getpay/:id", async (req, resp) => {
+	const { id } = req.params;	
+	console.log(req.params);
+
+await stripe.paymentIntents.capture(
+		 id,
+		function(err, paymentIntent) {
+		 console.log("ERRO ->" , err);
+		 console.log("SUCCS ->", paymentIntent);
+		}
+	  );
+
+
+	resp.json({"ok": "ok"});
+})
+
+
 
 //GERAL
 routes.post('/sessions', SessionController.store);
