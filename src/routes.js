@@ -100,7 +100,6 @@ routes.post("/create-payment-intent", async (req, resp) =>{
 	  resp.send({
 		clientSecret: paymentIntent.client_secret,
 		confirmation_method: "automatic",
-		receipt_email: 'luizm1997@hotmail.com', 
 	  });
 	
 });
