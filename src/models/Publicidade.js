@@ -43,6 +43,14 @@ class Publicidade extends Model {
 		return results;
 	}
 
+	static async count() {
+		const [results] = await this.sequelize.query(
+			'Select count (pub_id) as qtd_pub from pub_publicidade where pub_status = 1'
+		);
+
+		return results;
+	}
+
 	static async findOne(pubid) {
 		const [results] = await this.sequelize.query(
 			'Select * from pub_publicidade where pub_status = 1 and pub_id = :pub_id',

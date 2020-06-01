@@ -2,6 +2,7 @@ const PodcastCategoria = require('../models/PodcastCategoria');
 const Usuario = require('../models/User');
 const Comentario = require('../models/Comentario');
 const Categoria = require('../models/Categoria');
+const Publicidade = require('../models/Publicidade');
 const View = require('../models/View');
 const Assinatura = require('../models/Assinatura');
 
@@ -16,6 +17,7 @@ module.exports = {
 		const qtd_comentario = await Comentario.findAllComments();
 		const qtd_podcaster = await Usuario.findAllPodcaster();
 		const qtd_premium = await Usuario.findAllPodcasterPremium();
+		const qtd_publicidade = await Publicidade.findAll();
 
 		return resp.json({
 			qtd_podcast: qtd_podcast.length,
@@ -25,6 +27,7 @@ module.exports = {
 			qtd_podcaster: qtd_podcaster.length,
 			qtd_comentario: qtd_comentario.length,
 			qtd_premium: qtd_premium.length,
+			qtd_publicidade: qtd_publicidade.length
 		});
 	},
 
@@ -37,6 +40,7 @@ module.exports = {
 		const qtd_categoria = await Categoria.buscaTodos();
 		const qtd_comentario = await Comentario.findAllComments();
 		const qtd_podcaster = await Usuario.findAllPodcaster();
+		const qtd_publicidade = await Publicidade.findAll();
 		const qtd_premium = await Usuario.findAllPodcasterPremium();
 		const total_view = await View.countViewAll(1);
 		const week_view = await View.countViewLastWeek(1);
@@ -53,6 +57,7 @@ module.exports = {
 			qtd_podcaster: qtd_podcaster.length,
 			qtd_comentario: qtd_comentario.length,
 			qtd_premium: qtd_premium.length,
+			qtd_publicidade: qtd_publicidade.length,
 			totalview: total_view.qtd_viewtotal,
 			viewweek: week_view.qtd_viewweek,
 			viewmonth: month_view.qtd_viewmonth,
