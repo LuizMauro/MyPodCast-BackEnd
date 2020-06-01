@@ -43,6 +43,54 @@ class Assinatura extends Model {
 		}
 	}
 
+	static async countAll(usuid) {
+		try {
+			const [result] = await this.sequelize.query(
+				'select count(ass_id) as qtd_total, sum(ass_preco) as valor_total from ass_assinatura where ass_status = 1',
+				{
+					replacements: { usu_id: usuid },
+					type: QueryTypes.SELECT,
+					nest: true,
+				}
+			);
+			return result;
+		} catch (err) {
+			return false;
+		}
+	}
+
+	static async countMensal(usuid) {
+		try {
+			const [result] = await this.sequelize.query(
+				'select count(ass_id) as qtd_mensal, sum(ass_preco) as valor_mensal from ass_assinatura where ass_status = 1 and pln_id = 1',
+				{
+					replacements: { usu_id: usuid },
+					type: QueryTypes.SELECT,
+					nest: true,
+				}
+			);
+			return result;
+		} catch (err) {
+			return false;
+		}
+	}
+
+	static async countAnual(usuid) {
+		try {
+			const [result] = await this.sequelize.query(
+				'select count(ass_id) as qtd_anual, sum(ass_preco) as valor_anual from ass_assinatura where ass_status = 1 and pln_id = 2',
+				{
+					replacements: { usu_id: usuid },
+					type: QueryTypes.SELECT,
+					nest: true,
+				}
+			);
+			return result;
+		} catch (err) {
+			return false;
+		}
+	}
+
 	static async create(data) {
 		try {
 			const [result] = await this.sequelize.query(
