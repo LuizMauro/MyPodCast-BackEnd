@@ -103,6 +103,7 @@ class Assinatura extends Model {
 			);
 			return result;
 		} catch (err) {
+			console.log('erro é',err)
 			return false;
 		}
 	}
