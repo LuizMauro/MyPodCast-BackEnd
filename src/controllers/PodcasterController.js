@@ -14,4 +14,19 @@ module.exports = {
 			tus_id: 2
 		});
 	},
+
+	async updatePremium(req, res) {
+        const { userId } = req;
+
+		const userUpdate = await User.updatePremium(1, userId);
+
+		if (!userUpdate) {
+			return res.json({ mensagem: 'Erro ao virar premium!', _id: userUpdate });
+		}
+		return res.json({
+			tus_descricao: "Podcaster",
+			tus_id: 2,
+			usu_premium: 1
+		});
+	},
 };

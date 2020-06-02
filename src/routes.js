@@ -272,6 +272,8 @@ routes.post(
 	authMiddlewarePodcaster,
 	AssinaturaController.create
 );
+
+routes.put('/virarpremium', authMiddleware, PodcasterController.updatePremium);
 //FIM PODCASTER
 
 // PREMIUM

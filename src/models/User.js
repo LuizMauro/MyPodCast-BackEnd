@@ -283,6 +283,23 @@ class User extends Model {
 			return false;
 		}
 	}
+
+	//Transformar em Premium
+	static async updatePremium(usupremium, usuid) {
+		try {
+			const [result] = await this.sequelize.query(
+				'update usu_usuario set usu_premium = :usu_premium where usu_id = :usu_id',
+				{
+					replacements: { usu_premium: usupremium, usu_id: usuid },
+					type: QueryTypes.UPDATE,
+					nest: true,
+				}
+			);
+			return true;
+		} catch (err) {
+			return false;
+		}
+	}
 }
 
 module.exports = User;
