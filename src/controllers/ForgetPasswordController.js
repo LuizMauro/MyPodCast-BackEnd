@@ -28,12 +28,16 @@ module.exports = {
 					context: { token },
 				},
 				(err) => {
-					return res.status(400).send({ error: 'error' });
+					if (err) {
+						console.log(err);
+						return res.status(400).send({ error: 'error' });
+					}
 				}
 			);
 
 			return res.json({ enviado: true });
 		} catch (err) {
+			console.log('erro é',err)
 			return res
 				.status(400)
 				.send({ error: 'Error on Forget Password, try again' });
@@ -43,13 +47,13 @@ module.exports = {
 	async update(req, res) {
 		const { usu_email, token, usu_senha } = req.body;
 
-		console.log('aaaaaaaaa',usu_email,token,usu_senha)
+		console.log('aaaaaaaaa', usu_email, token, usu_senha);
 
 		try {
 			const user = await User.findOneUserEmail(usu_email);
 
 			if (!user) {
-				return res.json({ userDoesNotExists:true, error: 'user not found' });
+				return res.json({ userDoesNotExists: true, error: 'user not found' });
 			}
 
 			if (token !== user.usu_reset_token)
@@ -64,8 +68,7 @@ module.exports = {
 
 			await User.forgotPassword(user.usu_id, null, null);
 
-            res.json({ passwordChanged: true });
-            
+			res.json({ passwordChanged: true });
 		} catch (err) {
 			return res
 				.status(400)

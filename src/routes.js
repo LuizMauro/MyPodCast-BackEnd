@@ -38,6 +38,7 @@ const ViewController = require('./controllers/ViewController');
 const EstatisticaPremiumController = require('./controllers/EstatisticaPremiumController');
 const PlanoController = require('./controllers/PlanoController');
 const AssinaturaController = require('./controllers/AssinaturaController');
+const PaymentController = require('./controllers/PaymentController');
 //final chamando os controllers
 
 //chamndo os validators
@@ -58,7 +59,6 @@ const PublicidadeStoreValidate = require('./validators/PublicidadeStore')
 const { date } = require('./utils/Date');
 
 const routes = express.Router();
-const stripe = require("stripe")("sk_test_ZfcC8Wk9r3HXgEB8OQfipnk300sarUAoWs");
 //ROTA TESTES
 routes.get('/getdate', (req, resp) => {
 	return resp.json({ data: date(Date.now()).currentDateTime });
@@ -83,44 +83,9 @@ const calculateOrderAmount = items =>{
 	 return amount;
 }	
 
-routes.post("/create-payment-intent", async (req, resp) =>{
-	const { items } = req.body;
-	//console.log("Item -> ", items[0]);
-
-	console.log(items);
-
-	const paymentIntent = await stripe.paymentIntents.create({
-		amount: calculateOrderAmount(items),
-		description: items.id,
-		currency: "brl", 
-	  });
-	
-	  console.log("PAYMENT->",paymentIntent);
-	
-	  resp.send({
-		clientSecret: paymentIntent.client_secret,
-		confirmation_method: "automatic",
-	  });
-	
-});
-
-routes.get("/getpay/:id", async (req, resp) => {
-	const { id } = req.params;	
-	console.log(req.params);
-
-await stripe.paymentIntents.capture(
-		 id,
-		function(err, paymentIntent) {
-		 console.log("ERRO ->" , err);
-		 console.log("SUCCS ->", paymentIntent);
-		}
-	  );
-
-
-	resp.json({"ok": "ok"});
-})
-
-
+routes.post("/create-payment-intent",PaymentController.create);
+routes.get("/getpay/:id",PaymentController.index)
+routes.post("/sendmail",PaymentController.sendEmail)
 
 //GERAL
 routes.post('/sessions', SessionController.store);

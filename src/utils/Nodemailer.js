@@ -4,7 +4,7 @@ const hbs = require('nodemailer-express-handlebars');
 
 const transport = mailer.createTransport({
 	host: 'smtp.mailtrap.io',
-	port: 25,
+	port: 2525,
 	auth: {
 		user: 'bd7fa96954dfdd',
 		pass: '3074b1b25085a4',
