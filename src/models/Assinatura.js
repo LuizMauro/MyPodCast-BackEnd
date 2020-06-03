@@ -43,7 +43,7 @@ class Assinatura extends Model {
 		}
 	}
 
-	static async countAll(usuid) {
+	static async countTotalAll(usuid) {
 		try {
 			const [result] = await this.sequelize.query(
 				'select count(ass_id) as qtd_total, sum(ass_preco) as valor_total from ass_assinatura where ass_status = 1',
@@ -59,7 +59,7 @@ class Assinatura extends Model {
 		}
 	}
 
-	static async countMensal(usuid) {
+	static async countTotalMensal(usuid) {
 		try {
 			const [result] = await this.sequelize.query(
 				'select count(ass_id) as qtd_mensal, sum(ass_preco) as valor_mensal from ass_assinatura where ass_status = 1 and pln_id = 1',
@@ -75,10 +75,106 @@ class Assinatura extends Model {
 		}
 	}
 
-	static async countAnual(usuid) {
+	static async countTotalAnual(usuid) {
 		try {
 			const [result] = await this.sequelize.query(
 				'select count(ass_id) as qtd_anual, sum(ass_preco) as valor_anual from ass_assinatura where ass_status = 1 and pln_id = 2',
+				{
+					replacements: { usu_id: usuid },
+					type: QueryTypes.SELECT,
+					nest: true,
+				}
+			);
+			return result;
+		} catch (err) {
+			return false;
+		}
+	}
+
+	static async countMensalAll(usuid) {
+		try {
+			const [result] = await this.sequelize.query(
+				'select count(ass_id) as qtd, sum(ass_preco) as valor from ass_assinatura where ass_status = 1 and ass_datainicio between date_sub(now(),INTERVAL 1 MONTH) and now()',
+				{
+					replacements: { usu_id: usuid },
+					type: QueryTypes.SELECT,
+					nest: true,
+				}
+			);
+			return result;
+		} catch (err) {
+			return false;
+		}
+	}
+
+	static async countMensalMensal(usuid) {
+		try {
+			const [result] = await this.sequelize.query(
+				'select count(ass_id) as qtd, sum(ass_preco) as valor from ass_assinatura where ass_status = 1 and pln_id = 1 and ass_datainicio between date_sub(now(),INTERVAL 1 MONTH) and now()',
+				{
+					replacements: { usu_id: usuid },
+					type: QueryTypes.SELECT,
+					nest: true,
+				}
+			);
+			return result;
+		} catch (err) {
+			return false;
+		}
+	}
+
+	static async countMensalAnual(usuid) {
+		try {
+			const [result] = await this.sequelize.query(
+				'select count(ass_id) as qtd, sum(ass_preco) as valor from ass_assinatura where ass_status = 1 and pln_id = 2 and ass_datainicio between date_sub(now(),INTERVAL 1 MONTH) and now()',
+				{
+					replacements: { usu_id: usuid },
+					type: QueryTypes.SELECT,
+					nest: true,
+				}
+			);
+			return result;
+		} catch (err) {
+			return false;
+		}
+	}
+
+	static async countAnualAll(usuid) {
+		try {
+			const [result] = await this.sequelize.query(
+				'select count(ass_id) as qtd, sum(ass_preco) as valor from ass_assinatura where ass_status = 1 and ass_datainicio between date_sub(now(),INTERVAL 1 YEAR) and now()',
+				{
+					replacements: { usu_id: usuid },
+					type: QueryTypes.SELECT,
+					nest: true,
+				}
+			);
+			return result;
+		} catch (err) {
+			return false;
+		}
+	}
+
+	static async countAnualMensal(usuid) {
+		try {
+			const [result] = await this.sequelize.query(
+				'select count(ass_id) as qtd, sum(ass_preco) as valor from ass_assinatura where ass_status = 1 and pln_id = 1 and ass_datainicio between date_sub(now(),INTERVAL 1 YEAR) and now()',
+				{
+					replacements: { usu_id: usuid },
+					type: QueryTypes.SELECT,
+					nest: true,
+				}
+			);
+			return result;
+		} catch (err) {
+			return false;
+		}
+	}
+
+	static async countAnualAnual(usuid) {
+		try {
+			const [result] = await this.sequelize.query(
+				'select count(ass_id) as qtd, sum(ass_preco) as valor from ass_assinatura where ass_status = 1 and pln_id = 2 and ass_datainicio between date_sub(now(),INTERVAL 1 YEAR) and now()',
 				{
 					replacements: { usu_id: usuid },
 					type: QueryTypes.SELECT,
