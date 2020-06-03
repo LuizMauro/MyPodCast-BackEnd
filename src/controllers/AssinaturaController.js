@@ -53,12 +53,14 @@ module.exports = {
 				},
 				(err) => {
 					console.log(err);
-					return res.status(400).send({ error: 'error' });
+					return resp.status(400).send({ error: 'error' });
 				}
 			);
+
+			return resp.json({ok: 'ok'});
 		} catch (err) {
 			console.log('erro inesperado');
-			return res.status(400).send({ error: 'error unknown' });
+			return resp.status(400).send({ error: 'error unknown' });
 		}
 	},
 
