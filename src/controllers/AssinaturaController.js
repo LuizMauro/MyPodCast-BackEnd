@@ -23,14 +23,29 @@ module.exports = {
 		const { pln_id, fpg_id } = req.params;
 		const { userId } = req;
 
-		console.log('dados',usu_email,usu_nome,price,plano,pln_id,fpg_id,userId);
+		console.log(
+			'dados',
+			usu_email,
+			usu_nome,
+			price,
+			plano,
+			pln_id,
+			fpg_id,
+			userId
+		);
 
 		const oplano = await Plano.findOne(pln_id);
 		const ass_preco = oplano.pln_preco;
 
+		if (pln_id === 1) {
+			const datainicio = date(Date.now()).currentDateTime;
+			const datafim = new Date();
+			datafim.setMonth(datafim.getMonth() + 1);
+		}
+		
 		const datainicio = date(Date.now()).currentDateTime;
 		const datafim = new Date();
-		datafim.setMonth(datafim.getMonth() + 1);
+		datafim.setMonth(datafim.getMonth() + 12);
 
 		const data = [1, datainicio, datafim, ass_preco, userId, pln_id, fpg_id];
 
@@ -57,7 +72,7 @@ module.exports = {
 				}
 			);
 
-			return resp.json({ok: 'ok'});
+			return resp.json({ ok: 'ok' });
 		} catch (err) {
 			console.log('erro inesperado');
 			return resp.status(400).send({ error: 'error unknown' });
