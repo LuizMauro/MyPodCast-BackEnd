@@ -45,9 +45,9 @@ module.exports = {
 	},
 
 	async update(req, res) {
-		const { usu_email, token, usu_senha } = req.body;
+		const { usu_email, usu_reset_token, usu_senha } = req.body;
 
-		console.log('aaaaaaaaa', usu_email, token, usu_senha);
+		console.log('teste', usu_email, usu_reset_token, usu_senha);
 
 		try {
 			const user = await User.findOneUserEmail(usu_email);
@@ -56,11 +56,14 @@ module.exports = {
 				return res.json({ userDoesNotExists: true, error: 'user not found' });
 			}
 
-			if (token !== user.usu_reset_token)
+			console.log('usuario',user)
+			if (usu_reset_token != user.usu_reset_token)
 				return res.status(400).json({ tokenInvalid: true });
 
 			const now = new Date();
-			if (now > user.usu_reset_expires)
+			now.setHours(now.getHours() - 3);
+			console.log('datas',now,Date.now());
+			if (Date.now() < user.usu_reset_expires)
 				return res.status(400).json({ tokenExpired: true });
 
 			const criptSenha = await hash(usu_senha, 8);

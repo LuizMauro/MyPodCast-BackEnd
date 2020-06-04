@@ -124,7 +124,7 @@ class User extends Model {
 	// Select para exibir informações de por email
 	static async findOneUserEmail(email) {
 		const [results] = await this.sequelize.query(
-			'select distinct a.usu_nome, a.usu_id, a.usu_email, a.usu_senha, a.usu_cpf, a.usu_status, a.usu_premium, b.tus_id, b.tus_descricao from usu_usuario a join tus_tipo_usuario b on a.tus_id = b.tus_id where a.usu_email = ?',
+			'select distinct a.usu_nome, a.usu_id, a.usu_email, a.usu_senha, a.usu_cpf, a.usu_status, a.usu_premium, a.usu_reset_token, a.usu_reset_expires, b.tus_id, b.tus_descricao from usu_usuario a join tus_tipo_usuario b on a.tus_id = b.tus_id where a.usu_email = ?',
 			{
 				replacements: [email],
 				type: QueryTypes.SELECT,
