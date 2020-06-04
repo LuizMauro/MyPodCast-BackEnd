@@ -289,6 +289,11 @@ routes.put(
 	authMiddlewarePremium,
 	AssinaturaController.edit
 );
+routes.put(
+	'/assinatura',
+	authMiddlewarePremium,
+	AssinaturaController.update
+);
 //FIM PREMIUM
 
 //ADM E MODERADOR (STAFF)

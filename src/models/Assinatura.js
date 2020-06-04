@@ -199,7 +199,7 @@ class Assinatura extends Model {
 			);
 			return result;
 		} catch (err) {
-			console.log('erro é',err)
+			console.log('erro é', err);
 			return false;
 		}
 	}
@@ -211,12 +211,31 @@ class Assinatura extends Model {
 				'update ass_assinatura set ass_datafim = :ass_datafim, pln_id = :pln_id, ass_preco = :ass_preco, fpg_id = :fpg_id  where ass_id = :ass_id and usu_id = :usu_id',
 				{
 					replacements: {
-                        pln_id: plnid,
-                        usu_id: usuid,
+						pln_id: plnid,
+						usu_id: usuid,
 						ass_id: assid,
-                        ass_datafim: assdatafim,
-                        ass_preco: asspreco,
-                        fpg_id: fpgid
+						ass_datafim: assdatafim,
+						ass_preco: asspreco,
+						fpg_id: fpgid,
+					},
+					type: QueryTypes.UPDATE,
+					nest: true,
+				}
+			);
+			return true;
+		} catch (err) {
+			return false;
+		}
+	}
+
+	//Cancelar assinatura
+	static async update(usuid) {
+		try {
+			const [result] = await this.sequelize.query(
+				'update ass_assinatura set ass_status = 0 where usu_id = :usu_id ',
+				{
+					replacements: {
+						usu_id: usuid,
 					},
 					type: QueryTypes.UPDATE,
 					nest: true,

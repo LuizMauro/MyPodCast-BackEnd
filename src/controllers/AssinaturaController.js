@@ -42,7 +42,7 @@ module.exports = {
 			const datafim = new Date();
 			datafim.setMonth(datafim.getMonth() + 1);
 		}
-		
+
 		const datainicio = date(Date.now()).currentDateTime;
 		const datafim = new Date();
 		datafim.setMonth(datafim.getMonth() + 12);
@@ -77,6 +77,20 @@ module.exports = {
 			console.log('erro inesperado');
 			return resp.status(400).send({ error: 'error unknown' });
 		}
+	},
+
+	async update(req, resp) {
+		const { userId } = req;
+
+		const id = await Assinatura.update(userId);
+
+		if (!id) {
+			return resp.json({ mensagem: 'Erro ao cancelar assinatura', _id: id });
+		}
+		return resp.json({
+			mensagem: 'Assinatura cancelada!',
+			_id: id,
+		});
 	},
 
 	async edit(req, resp) {
