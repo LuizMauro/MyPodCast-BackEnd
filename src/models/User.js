@@ -74,6 +74,14 @@ class User extends Model {
 		return results;
 	}
 
+	static async findCountAllUsers() {
+		const [results] = await this.sequelize.query(
+			'select distinct a.usu_nome, a.usu_id, a.usu_email, a.usu_cpf, a.usu_status, a.usu_premium, b.tus_id, b.tus_descricao from usu_usuario a join tus_tipo_usuario b on a.tus_id = b.tus_id where b.tus_id between 1 and 3 order by a.usu_nome;'
+		);
+
+		return results;
+	}
+
 	// Exibe todos OUVINTES E Moderadores por ordem alfabética com seu tipo de usuario
 	static async findAllModUser() {
 		const [results] = await this.sequelize.query(

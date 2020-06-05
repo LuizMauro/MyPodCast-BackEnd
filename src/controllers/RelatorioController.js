@@ -5,6 +5,7 @@ const Categoria = require('../models/Categoria');
 const Publicidade = require('../models/Publicidade');
 const View = require('../models/View');
 const Assinatura = require('../models/Assinatura');
+const PodCast = require('../models/PodCast');
 
 module.exports = {
 	async index(req, resp) {
@@ -35,7 +36,8 @@ module.exports = {
 		const { userId } = req;
 
 		const qtd_podcast = await PodcastCategoria.findAllPodcast();
-		const qtd_usuario = await Usuario.findAllUsers();
+		const qtd_solicitacao = await PodCast.findPodcastSolicitacoes();
+		const qtd_usuario = await Usuario.findCountAllUsers();
 		const qtd_moderador = await Usuario.findAllMod();
 		const qtd_categoria = await Categoria.buscaTodos();
 		const qtd_comentario = await Comentario.findAllComments();
@@ -57,6 +59,7 @@ module.exports = {
 
 		return resp.json({
 			qtd_podcast: qtd_podcast.length,
+			qtd_solicitacao: qtd_solicitacao.length,
 			qtd_usuario: qtd_usuario.length,
 			qtd_moderador: qtd_moderador.length,
 			qtd_categoria: qtd_categoria.length,
