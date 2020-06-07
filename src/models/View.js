@@ -50,11 +50,23 @@ class View extends Model {
 		}
 	}
 
+	//todas views sistema
+	static async findAll() {
+		const results = await this.sequelize.query(
+			'Select * from vie_view where vie_tipo = 1',
+			{
+				type: QueryTypes.SELECT,
+				nest: true,
+			}
+		);
+		return results;
+	}
+
 	static async find(podid) {
-		const [results] = await this.sequelize.query(
+		const results = await this.sequelize.query(
 			'Select * from vie_view where pod_id = :pod_id',
 			{
-				replalcements: { pod_id: podid },
+				replacements: { pod_id: podid },
 				type: QueryTypes.SELECT,
 				nest: true,
 			}
@@ -198,7 +210,7 @@ class View extends Model {
 
 	static async countViewAll(vietipo) {
 		const [results] = await this.sequelize.query(
-			'Select count(vie_id) as qtd_viewtotal from vie_view where vie_tipo = :vie_tipo',
+			'Select count(vie_id) as qtd_viewtotal, vie_data from vie_view where vie_tipo = :vie_tipo',
 			{
 				replacements: { vie_tipo: vietipo },
 				type: QueryTypes.SELECT,

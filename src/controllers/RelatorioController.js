@@ -206,4 +206,68 @@ module.exports = {
 			Dezembro,
 		});
 	},
+
+	
+	async showView(req, res) {
+		const teste = await View.findAll();
+
+		let Janeiro = [];
+		let Fevereiro = [];
+		let Marco = [];
+		let Abril = [];
+		let Maio = [];
+		let Junho = [];
+		let Julho = [];
+		let Agosto = [];
+		let Setembro = [];
+		let Outubro = [];
+		let Novembro = [];
+		let Dezembro = [];
+
+		teste.map((item) => {
+			console.log();
+			const mes = getMonth(item.vie_data);
+
+			if (mes === 0) {
+				Janeiro.push(item.vie_id);
+			} else if (mes === 1) {
+				Fevereiro.push(item.vie_id);
+			} else if (mes === 2) {
+				Marco.push(item.vie_id);
+			} else if (mes === 3) {
+				Abril.push(item.vie_id);
+			} else if (mes === 4) {
+				Maio.push(item.vie_id);
+			} else if (mes === 5) {
+				Junho.push(item.vie_id);
+			} else if (mes === 6) {
+				Julho.push(item.vie_id);
+			} else if (mes === 7) {
+				Agosto.push(item.vie_id);
+			} else if (mes === 8) {
+				Setembro.push(item.vie_id);
+			} else if (mes === 9) {
+				Outubro.push(item.vie_id);
+			} else if (mes === 10) {
+				Novembro.push(item.vie_id);
+			} else if (mes === 11) {
+				Dezembro.push(item.vie_id);
+			}
+		});
+
+		res.json({
+			Janeiro,
+			Fevereiro,
+			Marco,
+			Abril,
+			Maio,
+			Junho,
+			Julho,
+			Agosto,
+			Setembro,
+			Outubro,
+			Novembro,
+			Dezembro,
+		});
+	},
 };

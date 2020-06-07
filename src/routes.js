@@ -282,6 +282,11 @@ routes.get(
 	authMiddlewarePremium,
 	EstatisticaPremiumController.read
 );
+routes.get(
+	'/premiumgrafico/:pod_id',
+	authMiddlewarePremium,
+	EstatisticaPremiumController.showView
+);
 
 routes.get('/assinatura', authMiddlewarePremium, AssinaturaController.read);
 routes.put(
@@ -399,6 +404,7 @@ routes.get('/adm/user', authMiddlewareAdm, UserController.read);
 routes.get('/dash/home', authMiddlewareAdm, RelatorioController.index);
 routes.get('/relatorio',authMiddlewareAdm, RelatorioController.read);
 routes.get('/grafico',authMiddlewareAdm, RelatorioController.show);
+routes.get('/graficoview',authMiddlewareAdm, RelatorioController.showView);
 
 routes.put('/plano/:pln_id', authMiddlewareAdm, PlanoController.edit);
 routes.get('/planos', authMiddlewareAdm, PlanoController.index);
