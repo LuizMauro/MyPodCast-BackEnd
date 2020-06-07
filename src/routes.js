@@ -39,6 +39,7 @@ const EstatisticaPremiumController = require('./controllers/EstatisticaPremiumCo
 const PlanoController = require('./controllers/PlanoController');
 const AssinaturaController = require('./controllers/AssinaturaController');
 const PaymentController = require('./controllers/PaymentController');
+const GeneratePDF = require('./controllers/GeneratePDF')
 //final chamando os controllers
 
 //chamndo os validators
@@ -63,6 +64,8 @@ const routes = express.Router();
 routes.get('/getdate', (req, resp) => {
 	return resp.json({ data: date(Date.now()).currentDateTime });
 });
+
+routes.get('/pdf', GeneratePDF.index);
 
 routes.get('/hoursbetween', (req, resp) => {
 	// ano, mes, dia, hora, minuto
