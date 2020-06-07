@@ -58,13 +58,13 @@ module.exports = {
 
 			console.log('usuario',user)
 			if (usu_reset_token != user.usu_reset_token)
-				return res.status(400).json({ tokenInvalid: true });
+				return res.json({ tokenInvalid: true });
 
 			const now = new Date();
 			now.setHours(now.getHours() - 3);
 			console.log('datas',now,Date.now());
 			if (Date.now() < user.usu_reset_expires)
-				return res.status(400).json({ tokenExpired: true });
+				return res.json({ tokenExpired: true });
 
 			const criptSenha = await hash(usu_senha, 8);
 			await User.updateUserSenha(user.usu_id, criptSenha);
