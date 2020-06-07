@@ -397,7 +397,8 @@ routes.put(
 routes.get('/adm/modusers', authMiddlewareAdm, UserController.indexAllModUser);
 routes.get('/adm/user', authMiddlewareAdm, UserController.read);
 routes.get('/dash/home', authMiddlewareAdm, RelatorioController.index);
-routes.get('/relatorio', RelatorioController.read);
+routes.get('/relatorio',authMiddlewareAdm, RelatorioController.read);
+routes.get('/grafico',authMiddlewareAdm, RelatorioController.show);
 
 routes.put('/plano/:pln_id', authMiddlewareAdm, PlanoController.edit);
 routes.get('/planos', authMiddlewareAdm, PlanoController.index);
