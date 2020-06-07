@@ -7,6 +7,8 @@ const View = require('../models/View');
 const Assinatura = require('../models/Assinatura');
 const PodCast = require('../models/PodCast');
 
+const { getMonth } = require('date-fns');
+
 module.exports = {
 	async index(req, resp) {
 		const { userId } = req;
@@ -34,6 +36,74 @@ module.exports = {
 
 	async read(req, resp) {
 		const { userId } = req;
+
+
+		const teste  =  await Assinatura.findAll();
+		
+		let Janeiro = [];
+		let Feveiro = [];
+		let Marco = [];
+		let Abril = [];
+		let Maio = [];
+		let Junho = [];
+		let Julho = [];
+		let Agosto = [];
+		let Setembro = [];	
+		let Outubro = [];	
+		let Novembro = [];	
+		let Dezembro = [];
+
+		teste.map((item) => {
+			console.log();
+			const mes = getMonth(item.ass_datainicio);
+
+			if(mes === 0){
+				Janeiro.push(item)
+			}else if(mes === 1){
+				Feveiro.push(item)
+			}else if(mes === 2){
+				Marco.push(item)
+			}else if(mes === 3){
+				Abril.push(item)
+			}else if(mes === 4){
+				Maio.push(item)
+			}else if(mes === 5){
+				Junho.push(item)
+			}else if(mes === 6){
+				Julho.push(item)
+			}else if(mes === 7){
+				Agosto.push(item)
+			}else if(mes === 8){
+				Setembro.push(item)
+			}else if(mes === 9){
+				Outubro.push(item)
+			}else if(mes === 10){
+				Novembro.push(item)
+			}else if(mes === 11){
+				Dezembro.push(item)
+			}
+
+		});
+
+		const data = {
+			Janeiro,
+			Feveiro,
+			Marco ,
+			Abril ,
+			Maio ,
+			Junho ,
+			Julho ,
+			Agosto ,
+			Setembro ,	
+			Outubro ,	
+			Novembro ,	
+			Dezembro ,
+		}
+
+	
+		
+
+	
 
 		const qtd_podcast = await PodcastCategoria.findAllPodcast();
 		const qtd_solicitacao = await PodCast.findPodcastSolicitacoes();
@@ -87,7 +157,8 @@ module.exports = {
 			ass_valor_mensal_anual: ass_mensal_anual.valor ? ass_mensal_anual.valor : 0,
 			ass_valor_anual_total: ass_anual_total.valor ? ass_anual_total.valor : 0,
 			ass_valor_anual_mensal: ass_anual_mensal.valor ? ass_anual_mensal.valor : 0,
-			ass_valor_anual_anual: ass_anual_anual.valor ? ass_anual_anual.valor : 0
+			ass_valor_anual_anual: ass_anual_anual.valor ? ass_anual_anual.valor : 0,
+			data
 		});
 	},
 };
