@@ -8,6 +8,7 @@ const server = express();
 
 server.use(cors());
 server.use(express.json());
+server.use('/filepdf', express.static(path.resolve(__dirname, '../', 'tmp', 'pdfs')))
 server.use('/files', express.static(path.resolve(__dirname,'../', 'tmp', 'uploads', 'imgpodcast')))
 server.use(routes);
 
