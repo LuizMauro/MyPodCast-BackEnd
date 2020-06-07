@@ -184,12 +184,25 @@ class User extends Model {
 		return results;
 	}
 
-	// Select para validação de cadastro - SENHA
+	// Select para validação de cadastro - EMAIL
 	static async verifyEmail(email) {
 		const [results] = await this.sequelize.query(
 			'SELECT usu_id, usu_nome, usu_email FROM usu_usuario where usu_email = :usu_email',
 			{
 				replacements: { usu_email: email },
+				type: QueryTypes.SELECT,
+				nest: true,
+			}
+		);
+		return results;
+	}
+
+	// Select para validação de cadastro - CPF
+	static async verifyCpf(cpf) {
+		const [results] = await this.sequelize.query(
+			'SELECT usu_id, usu_nome, usu_email FROM usu_usuario where usu_cpf = :usu_cpf',
+			{
+				replacements: { usu_cpf: cpf },
 				type: QueryTypes.SELECT,
 				nest: true,
 			}

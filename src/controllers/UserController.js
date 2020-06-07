@@ -49,6 +49,13 @@ module.exports = {
 				});
 			}
 
+			const checaCpf = await User.verifyCpf(cpf);
+			if (checaCpf) {
+				return resp.json({
+					cpfExists: true,
+				});
+			}
+
 			const data = [nome, criptSenha, email, cpf, 1, 0, tus_id];
 			const id = await User.createUser(data);
 
