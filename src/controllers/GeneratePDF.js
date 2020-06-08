@@ -9,43 +9,9 @@ const PodCast = require('../models/PodCast');
 const path = require('path');
 
 const pdf = require('html-pdf');
+const ejs =  require('ejs');
 
 
-
-function generateHTML(data){
-    return `
-        Quantidade de podcasts : ${data.qtd_podcast} <br> <br>
-        Quantidade de Usuarios : ${data.qtd_usuario} <br> <br> 
-        Quantidade de Moderadores : ${data.qtd_moderador} <br> <br>
-        Quantidade de Categorias : ${data.qtd_categoria} <br> <br>
-        Quantidade de Podcasters : ${data.qtd_podcaster} <br> <br>
-        Quantidade de Comentarios :  ${data.qtd_comentario} <br> <br>
-        Quantidade de Premium :  ${data.qtd_premium} <br> <br>
-        Quantidade de Publicidades : ${data.qtd_publicidade} <br> <br>
-        Total de Visualizações : ${data.total_view} <br> <br>
-        Visualizações na Semana : ${data.week_view} <br> <br>
-        Visualizações do mês: ${data.month_view} <br> <br>
-        Total de assinaturas : ${data.ass_qtd_total_total} <br> <br>
-        Total de assinaturas Mensal: ${data.ass_qtd_anual_mensal} <br> <br>
-        Total assinaturas Anual : ${data.ass_qtd_total_anual} <br> <br>
-        Quantidade mensal total: ${data.ass_qtd_emnsal_total} <br> <br>
-        Quantidade mensal do mes: ${data.ass_qtd_mensal_mensal} <br> <br>
-        Quantidade de assinaturas anual do mes: ${data.ass_qtd_mensal_anual} <br> <br>
-        ass_qtd_anual_total : ${data.ass_anual_total}  <br> <br>
-        ass_qtd_anual_mensal : ${data.ass_qtd_anual_mensal}  <br> <br>
-        ass_qtd_anual_anual: ${data.ass_qtd_anual_anual}  <br> <br>
-        ass_valor_total_total: ${data.ass_valor_total_total}  <br> <br>
-        ass_valor_total_total: ${data.ass_valor_total_total}  <br> <br>
-        ass_valor_total_anual: ${data.ass_valor_total_anual}  <br> <br>
-        ass_valor_total_mensal: ${data.ass_valor_total_mensal}  <br> <br>
-        ass_valor_mensal_total: ${data.ass_valor_mensal_total}  <br> <br>
-        ass_valor_mensal_mensal: ${data.ass_valor_mensal_mensal} <br> <br>
-        ass_valor_mensal_anual:  ${data.ass_valor_mensal_anual}  <br> <br>
-        ass_valor_anual_total: ${data.ass_valor_anual_total}  <br> <br>
-        ass_valor_anual_mensal: ${data.ass_valor_anual_mensal}  <br> <br>
-        ass_valor_anual_anual: ${data.ass_valor_anual_anual}  <br> <br>
-    `
-}
 
 module.exports = {
 	async index(req, res) {
@@ -107,19 +73,32 @@ module.exports = {
 			ass_valor_anual_anual: ass_anual_anual.valor ? ass_anual_anual.valor : 0,
         }
 
+		
+
         const date = new Date(Date.now());
 
-        const filename = `relatorio-${date.getDay()}-${date.getMonth()}-${date.getFullYear()}-${Date.now()}.pdf`;
+        const filename = `relatorio-${Date.now()}.pdf`;
 
-        pdf.create(generateHTML(data),{}).toFile(path.resolve(__dirname, '../', "../", 'tmp', 'pdfs', filename), (err, resp) => {
-            if(err){
-                console.log("Erro")
-            }else{
-                console.log(resp)
-            }
-        })
+		ejs.renderFile( path.resolve(__dirname, '../', 'resources', 'pdf', 'relatorio.ejs') , { data }, (err, html) => {
+			if(err){
+				console.log(err)
+			}else{
+				pdf.create( html ,{data}).toFile(path.resolve(__dirname, '../', "../", 'tmp', 'pdfs', filename), (err, resp) => {
+					if(err){
+						console.log("Erro")
+					}else{
+						console.log(resp)
+					}
+				});
+				return res.json(`/filepdf/${filename}`)
+			}
+		});
+
+
+
         
-        return res.json(`/filepdf/${filename}`)
+        
+       
         
 	},
 
