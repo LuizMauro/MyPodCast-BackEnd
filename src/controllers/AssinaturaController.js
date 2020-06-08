@@ -36,19 +36,21 @@ module.exports = {
 
 		const oplano = await Plano.findOne(pln_id);
 		const ass_preco = oplano.pln_preco;
+		const datainicio = date(Date.now()).currentDateTime;
+		let datafim = new Date();
 
-		if (pln_id === 1) {
-			const datainicio = date(Date.now()).currentDateTime;
-			const datafim = new Date();
+		console.log('planos aq',oplano.pln_id,pln_id)
+
+		if (oplano.pln_id === 1) {
+			console.log('caiu aqui')
 			datafim.setMonth(datafim.getMonth() + 1);
 		}
 
-		if (pln_id === 2) {
-			const datainicio = date(Date.now()).currentDateTime;
-			const datafim = new Date();
+		if (oplano.pln_id === 2) {
 			datafim.setMonth(datafim.getMonth() + 12);
 		}
 
+		
 		const data = [1, datainicio, datafim, ass_preco, userId, pln_id, fpg_id];
 
 		try {
