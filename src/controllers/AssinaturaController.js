@@ -43,9 +43,11 @@ module.exports = {
 			datafim.setMonth(datafim.getMonth() + 1);
 		}
 
-		const datainicio = date(Date.now()).currentDateTime;
-		const datafim = new Date();
-		datafim.setMonth(datafim.getMonth() + 12);
+		if (pln_id === 2) {
+			const datainicio = date(Date.now()).currentDateTime;
+			const datafim = new Date();
+			datafim.setMonth(datafim.getMonth() + 12);
+		}
 
 		const data = [1, datainicio, datafim, ass_preco, userId, pln_id, fpg_id];
 
