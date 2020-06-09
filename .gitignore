@@ -2,4 +2,3 @@ node_modules
 src/config/*
 tmp/uploads/*
 tmp/pdfs/*
-tmp/*
