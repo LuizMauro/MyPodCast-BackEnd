@@ -1,100 +1,422 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Relatorio</title>
-    <style>
-      body {
-        margin: auto;
-        padding: auto;
-        font-family: Roboto, sans-serif !important;
-        font-size: 24px;
-        color: #151734;
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Relatorio</title>
+		<style>	
+
+	a {
+	color: #0000ee;
+	text-decoration: underline;
+    }
+    
+    body {
+      margin: 0;
+      padding: 0;
+	  
+    }
+    
+    table,
+    tr,
+    td {
+      vertical-align: top;
+      border-collapse: collapse;
+    }
+    
+    p,
+    ul {
+      margin: 0;
+    }
+    
+    .ie-container table,
+    .mso-container table {
+      table-layout: fixed;
+    }
+    
+    * {
+      line-height: inherit;
+    }
+    
+    a[x-apple-data-detectors='true'] {
+      color: inherit !important;
+      text-decoration: none !important;
+    }
+    
+    .ExternalClass,
+    .ExternalClass p,
+    .ExternalClass span,
+    .ExternalClass font,
+    .ExternalClass td,
+    .ExternalClass div {
+      line-height: 100%;
+    }
+    
+    [owa] .email-row .email-col {
+      display: table-cell;
+      float: none !important;
+      vertical-align: top;
+    }
+    
+    .ie-container .email-col-100,
+    .ie-container .email-row,
+    [owa] .email-col-100,
+    [owa] .email-row {
+      width: 600px !important;
+    }
+    
+    .ie-container .email-col-17,
+    [owa] .email-col-17 {
+      width: 102.00000000000001px !important;
+    }
+    
+    .ie-container .email-col-25,
+    [owa] .email-col-25 {
+      width: 150px !important;
+    }
+    
+    .ie-container .email-col-33,
+    [owa] .email-col-33 {
+      width: 198px !important;
+    }
+    
+    .ie-container .email-col-50,
+    [owa] .email-col-50 {
+      width: 300px !important;
+    }
+    
+    .ie-container .email-col-67,
+    [owa] .email-col-67 {
+      width: 402px !important;
+    }
+    
+    @media only screen and (min-width: 620px) {
+      .email-row {
+        width: 600px !important;
       }
-    </style>
-  </head>
-  <body>
-    <container>
-      <h2>Podcasts</h2>
-      Podcasts cadastrados: <%= data.qtd_podcast %> <br />
-      <br />
-      Solicitaçóes de cadastro: <%= data.qtd_solicitacao %> <br />
-      <br />
+      .email-row .email-col {
+        vertical-align: top;
+      }
+      .email-row .email-col-100 {
+        width: 600px !important;
+      }
+      .email-row .email-col-67 {
+        width: 402px !important;
+      }
+      .email-row .email-col-50 {
+        width: 300px !important;
+      }
+      .email-row .email-col-33 {
+        width: 198px !important;
+      }
+      .email-row .email-col-25 {
+        width: 150px !important;
+      }
+      .email-row .email-col-17 {
+        width: 102.00000000000001px !important;
+      }
+    }
+    
+    @media (max-width: 620px) {
+      .email-row-container {
+        padding-left: 0px !important;
+        padding-right: 0px !important;
+      }
+      .email-row .email-col {
+        min-width: 320px !important;
+        max-width: 100% !important;
+        display: block !important;
+      }
+      .email-row {
+        width: calc(100% - 40px) !important;
+      }
+      .email-col {
+        width: 100% !important;
+      }
+      .email-col>div {
+        margin: 0 auto;
+      }
+      .no-stack .email-col {
+        min-width: 0 !important;
+        display: table-cell !important;
+      }
+      .no-stack .email-col-50 {
+        width: 50% !important;
+      }
+      .no-stack .email-col-33 {
+        width: 33% !important;
+      }
+      .no-stack .email-col-67 {
+        width: 67% !important;
+      }
+      .no-stack .email-col-25 {
+        width: 25% !important;
+      }
+      .no-stack .email-col-17 {
+        width: 17% !important;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      .hide-mobile {
+        display: none !important;
+        max-height: 0px;
+        overflow: hidden;
+      }
+      .full-width-mobile {
+        width: 100% !important;
+        max-width: 100% !important;
+      }
+    }
+    
+    @media (min-width: 980px) {
+      .hide-desktop {
+        display: none !important;
+        max-height: none !important;
+      }
+    }
+		</style>
+	</head>
+	<body class="clean-body" style="margin: 0;padding: 0;-webkit-text-size-adjust: 100%;background-color: #ffffff">
+		
+        
+   <table class="nl-container" style="border-collapse: collapse;table-layout: fixed;border-spacing: 0;vertical-align: top;min-width: 900px;Margin: 0 auto;background-color: #ffffff;width:100%" cellpadding="0" cellspacing="0">
+      <tbody>
+        <tr style="vertical-align: top">
+          <td style="word-break: break-word;border-collapse: collapse !important;vertical-align: top">
+          
+  
+            <div class="email-row-container" style="padding: 0px;background-color: #ffffff">
+              <div style="Margin: 0 auto;min-width: 900px;overflow-wrap: break-word;word-wrap: break-word;word-break: break-word;background-color: #232659;" class="email-row">
+                <div style="border-collapse: collapse;display: table;width: 100%;background-color: #232659;">
+                  <div class="email-col email-col-33" style="min-width: 900px;display: table-cell;vertical-align: top;">
+                    <div style="width: 100% !important;">
+                      <!--[if (!mso)&(!IE)]><!-->
+                      <div style="padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;">
+                        <!--<![endif]-->
+  
+                        <table id="u_content_image_1" class="u_content_image" style="font-family:arial,helvetica,sans-serif;" role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
+                          <tbody>
+                            <tr>
+                              <td style="overflow-wrap:break-word;word-break:break-word;padding:10px;font-family:arial,helvetica,sans-serif;" align="left">
+  
+                                <table width="100%" cellpadding="0" cellspacing="0" border="0">
+                                  <tr>
+                                    <td style="margin-right: 0; padding-left: 90px;" align="right">
+  
+                                      <img align="center" border="0" src="https://unroll-images-production.s3.amazonaws.com/projects/4739/1590960198554-Ativo%2012%404x.png" alt="Image" title="Image" style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;border: none;height: auto;float: none;max-width: 90px;"
+                                        width="90" />
+                                       
+                                    </td>
+                                    <td style="padding-left: 100; margin-left: 0;" align="left">
+                                        <p style="font-size: 14px; color: #1bfdbe; padding-left: 0; padding-top: 25px;"><span style="font-size: 36px;">MYPODCAST</span></p>
+                                    </td>
+                                  </tr>
+                                </table>
+  
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+  
+                        <!--[if (!mso)&(!IE)]><!-->
+                      </div>
+                      <!--<![endif]-->
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+  
+  
+  
+            <div class="email-row-container" style="padding: 0px;background-color: transparent">
+              <div style="Margin: 0 auto;min-width: 900px;overflow-wrap: break-word;word-wrap: break-word;word-break: break-word;background-color: transparent;" class="email-row">
+                <div style="border-collapse: collapse;display: table;width: 100%;background-color: transparent;">
+                  <!--[if (mso)|(IE)]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding: 0px;background-color: transparent;" align="center"><table cellpadding="0" cellspacing="0" border="0" style="width:600px;"><tr style="background-color: transparent;"><![endif]-->
+  
+                  <!--[if (mso)|(IE)]><td align="center" width="600" style="width: 600px;padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;" valign="top"><![endif]-->
+                  <div class="email-col email-col-100" style="min-width: 900px;display: table-cell;vertical-align: top;">
+                    <div style="width: 100% !important;">
+                      <!--[if (!mso)&(!IE)]><!-->
+                      <div style="padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;">
+                        <!--<![endif]-->
+  
+                        <table id="u_content_text_2" class="u_content_text" style="font-family:arial,helvetica,sans-serif;" role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
+                          <tbody>
+                            <tr>
+                              <td style="overflow-wrap:break-word;word-break:break-word;padding:30px;font-family:arial,helvetica,sans-serif;" align="left">
+  
+                                <div style="color: #000000; line-height: 140%; text-align: left; word-wrap: break-word;">
+                                  
+		
+                                        <h2>Podcasts</h2>
+                                        Podcasts cadastrados: <%= data.qtd_podcast %> <br />
+                                        <br />
+                                        Solicitações de cadastro: <%= data.qtd_solicitacao %> <br />
+                                        <br />
+                            
+                                        <h2>Assinaturas</h2>
+                                        Total de assinaturas premium: <%= data.ass_qtd_total_total %> <br />
+                                        <br />
+                                        Assinantes do plano mensal: <%= data.ass_qtd_total_mensal %>
+                                        <br />
+                                        <br />
+                                        Assinantes do plano anual: <%= data.ass_qtd_total_anual %> <br />
+                                        <br />
+                                        <strong>Assinaturas premium do último mês: <%= data.ass_qtd_mensal_total %></strong>
+                                        <br />
+                                        <br />
+                                        Plano mensal: <%= data.ass_qtd_mensal_mensal %> <br />
+                                        <br />
+                                        Plano anual: <%= data.ass_qtd_mensal_anual %> <br />
+                                        <br />
+                                      <strong>Assinaturas premium do último ano: <%= data.ass_qtd_anual_total %></strong>
+                                        <br />
+                                        <br />
+                                        Plano mensal: <%= data.ass_qtd_anual_mensal %> <br />
+                                        <br />
+                                        Plano anual: <%= data.ass_qtd_anual_anual %> <br />
+                                        <br />
+                            
+                                        <h2>Ganhos</h2>
+                                        Ganho total: <%= data.ass_valor_total_total %> <br />
+                                        <br />
+                                        Com assinantes mensais: <%= data.ass_valor_total_anual %> <br />
+                                        <br />
+                                       
+                                        Com assinantes anuais: <%= data.ass_valor_total_mensal %> <br />
+                                        <br />
+                            
+                                       <strong> Ganho total no último mês: <%= data.ass_valor_mensal_total %></strong> <br />
+                                        <br />
+                                        Com assinantes mensais: <%= data.ass_valor_mensal_mensal %> <br />
+                                        <br />
+                                        Com assinantes anuais: <%= data.ass_valor_mensal_anual %> <br />
+                                        <br />
+                            
+                                        <strong>Ganho total no último ano: <%= data.ass_valor_anual_total %></strong> <br />
+                                        <br />
+                                        Com assinantes mensais: <%= data.ass_valor_anual_mensal %> <br />
+                                        <br />
+                                        Com assinantes anuais: <%= data.ass_valor_anual_anual %> <br />
+                                        <br />
+                                        <br />
+                                        <br />
+                                        
+                                </div>
+  
+							</td>
+							<td style="overflow-wrap:break-word;word-break:break-word;padding:30px;font-family:arial,helvetica,sans-serif;" align="left">
+								<div style="color: #000000; line-height: 140%; text-align: left; word-wrap: break-word;">
+									<h2>Usuários</h2>
+									Usuários cadastrados: <%= data.qtd_usuario %> <br />
+									<br />
+									Moderadores do sistema: <%= data.qtd_moderador %> <br />
+									<br />
+									Ouvintes do sistema: <%= data.qtd_ouvinte %><br />
+									<br />
+									Podcasters: <%= data.qtd_podcaster %> <br />
+									<br />
+									Podcasters premium: <%= data.qtd_premium %> <br />
+									<br />
 
-      <h2>Usuários</h2>
-      Usuários cadastrados: <%= data.qtd_usuario %> <br />
-      <br />
-      Moderadores do sistema: <%= data.qtd_moderador %> <br />
-      <br />
-      Podcasters: <%= data.qtd_podcaster %> <br />
-      <br />
-      Podcasters premium: <%= data.qtd_premium %> <br />
-      <br />
+									<h2>Visualizações</h2>
+									Visualições no sistema: <%= data.totalview %> <br />
+									<br />
+									Na última semana: <%= data.viewweek %> <br />
+									<br />
+									No último mês: <%= data.viewmonth %> <br />
+									<br />
 
-      <h2>Visualizações</h2>
-      Visualições no sistema: <%= data.totalview %> <br />
-      <br />
-      Na última semana: <%= data.viewweek %> <br />
-      <br />
-      No último mês: <%= data.viewmonth %> <br />
-      <br />
+									<h2>Outros</h2>
+									Categorias cadastradas: <%= data.qtd_categoria %> <br />
+									<br />
+									Comentários publicados: <%= data.qtd_comentario %> <br />
+									<br />
+									Publicidades cadastradas: <%= data.qtd_publicidade %> <br />
+								</div>
+							</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
 
-      <h2>Assinaturas</h2>
-      Total de assinaturas premium: <%= data.ass_qtd_total_total %> <br />
-      <br />
-      Assinantes do plano mensal: <%= data.ass_qtd_total_mensal %>
-      <br />
-      <br />
-      Assinantes do plano anual: <%= data.ass_qtd_total_anual %> <br />
-      <br />
-      Assinaturas premium do último mês: <%= data.ass_qtd_mensal_total %>
-      <br />
-      <br />
-      Plano mensal: <%= data.ass_qtd_mensal_mensal %> <br />
-      <br />
-      Plano anual: <%= data.ass_qtd_mensal_anual %> <br />
-      <br />
-      Assinaturas premium do último ano: <%= data.ass_qtd_anual_total %>
-      <br />
-      <br />
-      Plano mensal: <%= data.ass_qtd_anual_mensal %> <br />
-      <br />
-      Plano anual: <%= data.ass_qtd_anual_anual %> <br />
-      <br />
-
-      <h2>Ganhos</h2>
-      Ganho total: <%= data.ass_valor_total_total %> <br />
-      <br />
-      Com assinantes mensais: <%= data.ass_valor_total_anual %> <br />
-      <br />
-      Valor total obtido com assinaturas premium deste mês: <%=
-      data.ass_valor_mensal_total %> <br />
-      <br />
-      Com assinantes anuais: <%= data.ass_valor_total_mensal %> <br />
-      <br />
-
-      Ganho total no último mês: <%= data.ass_valor_mensal_total %> <br />
-      <br />
-      Com assinantes mensais: <%= data.ass_valor_mensal_mensal %> <br />
-      <br />
-      Com assinantes anuais: <%= data.ass_valor_mensal_anual %> <br />
-      <br />
-
-      Ganho total no último ano: <%= data.ass_valor_anual_total %> <br />
-      <br />
-      Com assinantes mensais: <%= data.ass_valor_anual_mensal %> <br />
-      <br />
-      Com assinantes anuais: <%= data.ass_valor_anual_anual %> <br />
-      <br />
-
-      <h2>Outros</h2>
-      Categorias cadastradas: <%= data.qtd_categoria %> <br />
-      <br />
-      Comentários publicados: <%= data.qtd_comentario %> <br />
-      <br />
-      Publicidades cadastradas: <%= data.qtd_publicidade %> <br />
-      <br />
-    </container>
-  </body>
+  
+  
+            
+  
+  
+            <div class="email-row-container" style="padding: 0px;background-color: transparent">
+              <div style="Margin: 0 auto;min-width: 320px;max-width: 600px;overflow-wrap: break-word;word-wrap: break-word;word-break: break-word;background-color: transparent;" class="email-row">
+                <div style="border-collapse: collapse;display: table;width: 100%;background-color: transparent;">
+                  <!--[if (mso)|(IE)]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding: 0px;background-color: transparent;" align="center"><table cellpadding="0" cellspacing="0" border="0" style="width:600px;"><tr style="background-color: transparent;"><![endif]-->
+  
+                  <!--[if (mso)|(IE)]><td align="center" width="600" style="width: 600px;padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;" valign="top"><![endif]-->
+                  <div class="email-col email-col-100" style="max-width: 320px;min-width: 600px;display: table-cell;vertical-align: top;">
+                    <div style="width: 100% !important;">
+                      <!--[if (!mso)&(!IE)]><!-->
+                      <div style="padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;">
+                        <!--<![endif]-->
+  
+             
+  
+                        <!--[if (!mso)&(!IE)]><!-->
+                      </div>
+                      <!--<![endif]-->
+                    </div>
+                  </div>
+                  <!--[if (mso)|(IE)]></td><![endif]-->
+                  <!--[if (mso)|(IE)]></tr></table></td></tr></table><![endif]-->
+                </div>
+              </div>
+            </div>
+  
+  
+  
+            <div class="email-row-container" style="padding: 0px;background-image: url('https://www.mypodcast.com.br');background-repeat: no-repeat;background-position: center top;background-color: transparent; margin:0">
+              <div style="Margin: 0 auto;min-width: 900px;overflow-wrap: break-word;word-wrap: break-word;word-break: break-word;background-color: #232659;" class="email-row">
+                <div style="border-collapse: collapse;display: table;width: 100%;background-color: #232659;">
+                  <!--[if (mso)|(IE)]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding: 0px;background-image: url('https://www.mypodcast.com.br');background-repeat: no-repeat;background-position: center top;background-color: transparent;" align="center"><table cellpadding="0" cellspacing="0" border="0" style="width:600px;"><tr style="background-color: #232659;"><![endif]-->
+  
+                  <!--[if (mso)|(IE)]><td align="center" width="600" style="width: 600px;padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;" valign="top"><![endif]-->
+                  <div class="email-col email-col-100" style="min-width: 900px;display: table-cell;vertical-align: top; margin:0">
+                    <div style="width: 100% !important; margin:0">
+                      <!--[if (!mso)&(!IE)]><!-->
+                      <div style="padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;margin:0">
+                        <!--<![endif]-->
+  
+                        <table id="u_content_image_2" class="u_content_image" style="font-family:arial,helvetica,sans-serif;margin:0" role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
+                          <tbody>
+                            <tr>
+                              <td style="overflow-wrap:break-word;word-break:break-word;padding:10px;font-family:arial,helvetica,sans-serif;margin:0" align="left">
+                                <table width="100%" cellpadding="0" cellspacing="0" border="0">
+                                  <tr>
+                                    <td style="padding-right: 0px;padding-left: 0px;" align="center">
+  
+                                      <img align="center" border="0" src="https://unroll-images-production.s3.amazonaws.com/projects/4739/1590960198554-Ativo%2012%404x.png" alt="Image" title="Image" style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: block !important;border: none;height: auto;float: none;width: 15%;max-width: 87px;"
+                                        width="87" />
+                                    </td>
+                                  </tr>
+                                </table>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+ </body>
 </html>

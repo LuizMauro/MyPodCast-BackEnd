@@ -7,20 +7,16 @@ const View = require('../models/View');
 const Assinatura = require('../models/Assinatura');
 const PodCast = require('../models/PodCast');
 const path = require('path');
-
 const pdf = require('html-pdf');
-const ejs =  require('ejs');
-
-
+const ejs = require('ejs');
 
 module.exports = {
 	async index(req, res) {
-
-
-        const qtd_podcast = await PodcastCategoria.findAllPodcast();
+		const qtd_podcast = await PodcastCategoria.findAllPodcast();
 		const qtd_solicitacao = await PodCast.findPodcastSolicitacoes();
 		const qtd_usuario = await Usuario.findCountAllUsers();
 		const qtd_moderador = await Usuario.findAllMod();
+		const qtd_ouvinte = await Usuario.findAllOuvinte();
 		const qtd_categoria = await Categoria.buscaTodos();
 		const qtd_comentario = await Comentario.findAllComments();
 		const qtd_podcaster = await Usuario.findAllPodcaster();
@@ -39,12 +35,12 @@ module.exports = {
 		const ass_anual_mensal = await Assinatura.countAnualMensal();
 		const ass_anual_anual = await Assinatura.countAnualAnual();
 
-        
-        const data = {
-            qtd_podcast: qtd_podcast.length,
+		const data = {
+			qtd_podcast: qtd_podcast.length,
 			qtd_solicitacao: qtd_solicitacao.length,
 			qtd_usuario: qtd_usuario.length,
 			qtd_moderador: qtd_moderador.length,
+			qtd_ouvinte: qtd_ouvinte.length,
 			qtd_categoria: qtd_categoria.length,
 			qtd_podcaster: qtd_podcaster.length,
 			qtd_comentario: qtd_comentario.length,
@@ -62,45 +58,55 @@ module.exports = {
 			ass_qtd_anual_total: ass_anual_total.qtd,
 			ass_qtd_anual_mensal: ass_anual_mensal.qtd,
 			ass_qtd_anual_anual: ass_anual_anual.qtd,
-			ass_valor_total_total: ass_total_total.valor_total ? ass_total_total.valor_total : 0 ,
-			ass_valor_total_anual: ass_total_anual.valor_anual ? ass_total_anual.valor_anual : 0,
-			ass_valor_total_mensal: ass_total_mensal.valor_mensal ? ass_total_mensal.valor_mensal : 0,
-			ass_valor_mensal_total: ass_mensal_total.valor ? ass_mensal_total.valor : 0,
-			ass_valor_mensal_mensal: ass_mensal_mensal.valor ? ass_mensal_mensal.valor : 0,
-			ass_valor_mensal_anual: ass_mensal_anual.valor ? ass_mensal_anual.valor : 0,
+			ass_valor_total_total: ass_total_total.valor_total
+				? ass_total_total.valor_total
+				: 0,
+			ass_valor_total_anual: ass_total_anual.valor_anual
+				? ass_total_anual.valor_anual
+				: 0,
+			ass_valor_total_mensal: ass_total_mensal.valor_mensal
+				? ass_total_mensal.valor_mensal
+				: 0,
+			ass_valor_mensal_total: ass_mensal_total.valor
+				? ass_mensal_total.valor
+				: 0,
+			ass_valor_mensal_mensal: ass_mensal_mensal.valor
+				? ass_mensal_mensal.valor
+				: 0,
+			ass_valor_mensal_anual: ass_mensal_anual.valor
+				? ass_mensal_anual.valor
+				: 0,
 			ass_valor_anual_total: ass_anual_total.valor ? ass_anual_total.valor : 0,
-			ass_valor_anual_mensal: ass_anual_mensal.valor ? ass_anual_mensal.valor : 0,
+			ass_valor_anual_mensal: ass_anual_mensal.valor
+				? ass_anual_mensal.valor
+				: 0,
 			ass_valor_anual_anual: ass_anual_anual.valor ? ass_anual_anual.valor : 0,
-        }
+		};
 
-		
+		const filename = `relatorio-${Date.now()}.pdf`;
 
-        const date = new Date(Date.now());
-
-        const filename = `relatorio-${Date.now()}.pdf`;
-
-		ejs.renderFile( path.resolve(__dirname, '../', 'resources', 'pdf', 'relatorio.ejs') , { data }, (err, html) => {
-			if(err){
-				console.log(err)
-			}else{
-				pdf.create( html ,{data}).toFile(path.resolve(__dirname, '../', "../", 'tmp', 'pdfs', filename), (err, resp) => {
-					if(err){
-						console.log("Erro")
-					}else{
-						console.log(resp)
-					}
-				});
-				return res.json(`/filepdf/${filename}`)
+		ejs.renderFile(
+			path.resolve(__dirname, '../', 'resources', 'pdf', 'relatorio.ejs'),
+			{ data },
+			(err, html) => {
+				if (err) {
+					console.log(err);
+				} else {
+					pdf
+						.create(html, { data })
+						.toFile(
+							path.resolve(__dirname, '../', '../', 'tmp', 'pdfs', filename),
+							(err, resp) => {
+								if (err) {
+									console.log('Erro');
+								} else {
+									console.log(resp);
+								}
+							}
+						);
+					return res.json(`/filepdf/${filename}`);
+				}
 			}
-		});
-
-
-
-        
-        
-       
-        
+		);
 	},
-
-	
 };
