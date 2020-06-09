@@ -100,6 +100,15 @@ class User extends Model {
 		return results;
 	}
 
+	// Exibe todos OUVINTES 
+	static async findAllOuvinte() {
+		const [results] = await this.sequelize.query(
+			'select distinct a.usu_nome, a.usu_id, a.usu_email, a.usu_cpf, a.usu_status, a.usu_premium, b.tus_id, b.tus_descricao from usu_usuario a join tus_tipo_usuario b on a.tus_id = b.tus_id where b.tus_id = 1 order by a.usu_nome;'
+		);
+
+		return results;
+	}
+
 	// Select para exibir informações de Perfil
 	static async findOneUser(data) {
 		const [results] = await this.sequelize.query(
