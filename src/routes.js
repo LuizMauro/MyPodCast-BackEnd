@@ -65,7 +65,7 @@ routes.get('/getdate', (req, resp) => {
 	return resp.json({ data: date(Date.now()).currentDateTime });
 });
 
-routes.get('/pdf', GeneratePDF.index);
+routes.post('/pdf', GeneratePDF.index);
 
 routes.get('/hoursbetween', (req, resp) => {
 	// ano, mes, dia, hora, minuto
@@ -108,6 +108,7 @@ routes.get(
 );
 
 routes.get('/pesquisarnome/:nome', PodcastCategoria.indexPodcastByNome);
+//routes.post('/podcastctg', PodcastCategoria.store);
 //routes.post('/podcastctg', PodcastCategoria.store);
 routes.get('/endereco', Endereco.index);
 //routes.post('/endereco', Endereco.store);

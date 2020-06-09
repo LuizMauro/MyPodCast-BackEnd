@@ -40,12 +40,14 @@ module.exports = {
 		const { cmt_conteudo } = req.body;
 		const { pod_id, tag_id, id_comentario_pai } = req.params;
 		const { userId } = req;
+		const now = new Date();
+		now.setHours(now.getHours() + 3);
 
 		console.log('conteudo', cmt_conteudo);
 
 		const data = [
 			cmt_conteudo,
-			date(Date.now()).currentDateTime,
+			now,
 			1,
 			id_comentario_pai ? 1 : 0,
 			userId,
