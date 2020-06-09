@@ -1,14 +1,100 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Relatorio</title>
-</head>
-<body>
+    <style>
+      body {
+        margin: auto;
+        padding: auto;
+        font-family: Roboto, sans-serif !important;
+        font-size: 24px;
+        color: #151734;
+      }
+    </style>
+  </head>
+  <body>
+    <container>
+      <h2>Podcasts</h2>
+      Podcasts cadastrados: <%= data.qtd_podcast %> <br />
+      <br />
+      Solicitaçóes de cadastro: <%= data.qtd_solicitacao %> <br />
+      <br />
 
-    Quantidade de podcasts : <%= data.qtd_podcast %> <br> <br>
-      
-    
-</body>
+      <h2>Usuários</h2>
+      Usuários cadastrados: <%= data.qtd_usuario %> <br />
+      <br />
+      Moderadores do sistema: <%= data.qtd_moderador %> <br />
+      <br />
+      Podcasters: <%= data.qtd_podcaster %> <br />
+      <br />
+      Podcasters premium: <%= data.qtd_premium %> <br />
+      <br />
+
+      <h2>Visualizações</h2>
+      Visualições no sistema: <%= data.totalview %> <br />
+      <br />
+      Na última semana: <%= data.viewweek %> <br />
+      <br />
+      No último mês: <%= data.viewmonth %> <br />
+      <br />
+
+      <h2>Assinaturas</h2>
+      Total de assinaturas premium: <%= data.ass_qtd_total_total %> <br />
+      <br />
+      Assinantes do plano mensal: <%= data.ass_qtd_total_mensal %>
+      <br />
+      <br />
+      Assinantes do plano anual: <%= data.ass_qtd_total_anual %> <br />
+      <br />
+      Assinaturas premium do último mês: <%= data.ass_qtd_mensal_total %>
+      <br />
+      <br />
+      Plano mensal: <%= data.ass_qtd_mensal_mensal %> <br />
+      <br />
+      Plano anual: <%= data.ass_qtd_mensal_anual %> <br />
+      <br />
+      Assinaturas premium do último ano: <%= data.ass_qtd_anual_total %>
+      <br />
+      <br />
+      Plano mensal: <%= data.ass_qtd_anual_mensal %> <br />
+      <br />
+      Plano anual: <%= data.ass_qtd_anual_anual %> <br />
+      <br />
+
+      <h2>Ganhos</h2>
+      Ganho total: <%= data.ass_valor_total_total %> <br />
+      <br />
+      Com assinantes mensais: <%= data.ass_valor_total_anual %> <br />
+      <br />
+      Valor total obtido com assinaturas premium deste mês: <%=
+      data.ass_valor_mensal_total %> <br />
+      <br />
+      Com assinantes anuais: <%= data.ass_valor_total_mensal %> <br />
+      <br />
+
+      Ganho total no último mês: <%= data.ass_valor_mensal_total %> <br />
+      <br />
+      Com assinantes mensais: <%= data.ass_valor_mensal_mensal %> <br />
+      <br />
+      Com assinantes anuais: <%= data.ass_valor_mensal_anual %> <br />
+      <br />
+
+      Ganho total no último ano: <%= data.ass_valor_anual_total %> <br />
+      <br />
+      Com assinantes mensais: <%= data.ass_valor_anual_mensal %> <br />
+      <br />
+      Com assinantes anuais: <%= data.ass_valor_anual_anual %> <br />
+      <br />
+
+      <h2>Outros</h2>
+      Categorias cadastradas: <%= data.qtd_categoria %> <br />
+      <br />
+      Comentários publicados: <%= data.qtd_comentario %> <br />
+      <br />
+      Publicidades cadastradas: <%= data.qtd_publicidade %> <br />
+      <br />
+    </container>
+  </body>
 </html>
