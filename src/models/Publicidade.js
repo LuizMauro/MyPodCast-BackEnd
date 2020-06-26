@@ -35,6 +35,14 @@ class Publicidade extends Model {
 		}
 	}
 
+	static async find() {
+		const [results] = await this.sequelize.query(
+			'Select * from pub_publicidade where pub_status = 1 ORDER BY RAND() limit 9'
+		);
+
+		return results;
+	}
+
 	static async findAll() {
 		const [results] = await this.sequelize.query(
 			'Select * from pub_publicidade where pub_status = 1'

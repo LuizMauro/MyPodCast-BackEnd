@@ -363,6 +363,7 @@ routes.put(
 	PublicidadeController.delete
 );
 routes.get('/publicidades', authMiddlewareStaff, PublicidadeController.index);
+routes.get('/pubs', PublicidadeController.show);
 
 //APENAS ADM
 routes.post(

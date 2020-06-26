@@ -8,6 +8,12 @@ module.exports = {
 		return resp.json(publicidade);
 	},
 
+	async show(req, resp) {
+		const publicidade = await Publicidade.find();
+
+		return resp.json(publicidade);
+	},
+
 	async store(req, res) {
 		const { pub_descricao, pub_data_fim, pub_link } = req.body;
 
