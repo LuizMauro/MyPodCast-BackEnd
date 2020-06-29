@@ -1,5 +1,6 @@
 const PodCast = require('../models/PodCast');
 const Pod = require('../models/PodcastCategoria');
+const User = require('../models/User');
 
 module.exports = {
 	//Procedure de Cadastro
@@ -10,14 +11,22 @@ module.exports = {
 			pod_criador,
 			pod_anocriacao,
 			pod_duracao,
+			pod_destaque,
 			pod_permissao,
 			end_link1,
 			end_link2,
 			end_link3,
-			list_of_categoria
+			list_of_categoria,
 		} = req.body;
 
 		const { userId } = req;
+
+		let destaque = 0;
+		const checkUser = await User.findOneUser(userId);
+
+		if (checkUser.tus_id === 2 && checkUser.usu_premium === 1) {
+			destaque = 1;
+		}
 
 		if (req.file.length == 0) {
 			return resp.json({ mensagem: 'Por favor escolha uma imagem' });
@@ -59,7 +68,9 @@ module.exports = {
 		}
 		//final regras de negocio
 
-		console.log("LISTA DE CATEGORIAS -> ", list_of_categoria);
+		console.log('vc é', checkUser.tus_id, checkUser.usu_premium, destaque);
+
+		console.log('LISTA DE CATEGORIAS -> ', list_of_categoria);
 		const id = await PodCast.callInsertProcedure(
 			pod_nome,
 			pod_descricao,
@@ -69,7 +80,7 @@ module.exports = {
 			filename,
 			1,
 			pod_permissao,
-			0,
+			destaque ? destaque : pod_destaque,
 			userId,
 			link1 ? link1 : end_link1,
 			link2 ? link2 : end_link2,
@@ -79,12 +90,12 @@ module.exports = {
 
 		if (!id) {
 			return resp.json({
-				_id: id
+				_id: id,
 			});
 		}
 		return resp.json({
 			podCreated: true,
-			_id: id
+			_id: id,
 		});
 	},
 
@@ -102,10 +113,18 @@ module.exports = {
 			end_link1,
 			end_link2,
 			end_link3,
-			list_of_categoria
+			list_of_categoria,
 		} = req.body;
 
 		const { pod_id } = req.params;
+		const { userId } = req;
+
+		let destaque = 0;
+		const checkUser = await User.findOneUser(userId);
+
+		if (checkUser.tus_id === 2 && checkUser.usu_premium === 1) {
+			destaque = 1;
+		}
 
 		let link1 = null;
 		let link2 = null;
@@ -128,11 +147,11 @@ module.exports = {
 				return resp.json({ mensagem: 'Por favor escolha uma imagem' });
 			}
 			const { originalname, filename } = req.file;
-			imgfilename = filename
+			imgfilename = filename;
 		}
 
 		const atual = await Pod.findPodcastsByID(pod_id);
-		
+
 		//regras de negocio
 		const verificaNome = await Pod.validaPodcastNomeEdit(pod_id, pod_nome);
 
@@ -140,13 +159,21 @@ module.exports = {
 			return resp.json({ nomeExists: true });
 		}
 
-		const verificaDescricao = await Pod.validaPodcastDescricaoEdit(pod_id, pod_descricao);
+		const verificaDescricao = await Pod.validaPodcastDescricaoEdit(
+			pod_id,
+			pod_descricao
+		);
 
 		if (verificaDescricao) {
 			return resp.json({ descricaoExists: true });
 		}
 
-		const verificaLink = await Pod.validaPodcastLinkEdit(pod_id, end_link1, end_link2, end_link3);
+		const verificaLink = await Pod.validaPodcastLinkEdit(
+			pod_id,
+			end_link1,
+			end_link2,
+			end_link3
+		);
 
 		if (verificaLink) {
 			return resp.json({ linkExists: true });
@@ -174,7 +201,7 @@ module.exports = {
 			req.file ? imgfilename : atual.pod_endereco_img,
 			pod_status,
 			pod_permissao,
-			pod_destaque,
+			destaque ? destaque : pod_destaque,
 			link1 ? link1 : end_link1,
 			link2 ? link2 : end_link2,
 			link3 ? link3 : end_link3,
@@ -184,13 +211,13 @@ module.exports = {
 		if (!id) {
 			return resp.json({
 				mensagem: 'Podcast NÃO FOI Editado!',
-				_id: id
+				_id: id,
 			});
 		}
 		return resp.json({
 			podEdited: true,
 			mensagem: 'Podcast editado',
-			_id: id
+			_id: id,
 		});
-	}
+	},
 };
