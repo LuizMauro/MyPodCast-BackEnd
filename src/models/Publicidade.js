@@ -74,16 +74,17 @@ class Publicidade extends Model {
 		return results;
 	}
 
-	static async update(pubid, pubdescricao, pubdatafim, pubenderecoimg) {
+	static async update(pubid, pubdescricao, pubdatafim, pubenderecoimg, publink) {
 		try {
 			const [result] = await this.sequelize.query(
-				'update pub_publicidade set pub_descricao = :pub_descricao, pub_data_fim = :pub_data_fim, pub_endereco_img = :pub_endereco_img where pub_id = :pub_id',
+				'update pub_publicidade set pub_descricao = :pub_descricao, pub_link = :pub_link, pub_data_fim = :pub_data_fim, pub_endereco_img = :pub_endereco_img where pub_id = :pub_id',
 				{
 					replacements: {
 						pub_id: pubid,
 						pub_descricao: pubdescricao,
 						pub_data_fim: pubdatafim,
 						pub_endereco_img: pubenderecoimg,
+						pub_link:publink
 					},
 					type: QueryTypes.UPDATE,
 					nest: true,

@@ -68,7 +68,8 @@ module.exports = {
 		}
 		console.log('nome', imgfilename);
     //final regras de negocio
-    
+		
+	console.log('o link',pub_link)
 
 		const id = await Publicidade.update(
 			pub_id,   
