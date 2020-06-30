@@ -94,6 +94,7 @@ routes.post("/sendmail",PaymentController.sendEmail)
 routes.post('/sessions', SessionController.store);
 routes.get('/categoria', Categoria.index);
 routes.get('/podcasts', PodCast.index);
+routes.get('/ultimospods', PodCast.ultimosPods);
 routes.get('/allpodcasts', PodcastCategoria.indexAllPodcast);
 routes.get('/podcastctg/:pod_id', PodcastCategoria.indexCtgByPodcastID);
 
@@ -123,6 +124,8 @@ routes.post(
 
 routes.post('/podview/:pod_id/:vie_ip', PodViewController.create);
 routes.post('/view/:vie_ip/', ViewController.create);
+
+routes.get('/topweek', EstatisticaPremiumController.getTopWeek);
 //FIM GERAL
 
 //USUÁRIO LOGADO

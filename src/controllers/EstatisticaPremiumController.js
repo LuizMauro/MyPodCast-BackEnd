@@ -27,6 +27,13 @@ module.exports = {
 		});
 	},
 
+	async getTopWeek(req, resp){
+		const topWeek = await View.countTopWeek();
+
+		return resp.json(topWeek)
+
+	},
+
 	async showView(req, res) {
 		const { pod_id } = req.params;
 

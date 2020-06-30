@@ -8,6 +8,13 @@ module.exports = {
 		return resp.json(podcasts);
 	},
 
+	async ultimosPods(req, resp){
+		const podcasts = await PodCast.findAll({limit:10 ,order:[ ['id', 'ASC'] ]});
+
+		return resp.json(podcasts);
+
+	},
+
 	//UPDATE
 	async updatePodcastStatus(req, res) {
 		const { pod_id, pod_status } = req.params;

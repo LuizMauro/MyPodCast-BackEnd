@@ -203,7 +203,7 @@ class View extends Model {
 
 	static async countTopWeek() {
 		const results = await this.sequelize.query(
-			'select a.pod_id as id, b.pod_nome, (select count(vie_id) from vie_view where pod_id = id) as qtd_viewtotal from vie_view a join pod_podcast b on a.pod_id = b.pod_id where vie_tipo = 0 and a.vie_data between date_sub(now(),INTERVAL 1 MONTH) and now() group by a.pod_id order by qtd_viewtotal desc limit 5'
+			'select a.pod_id as id, b.pod_nome, b.pod_endereco_img, (select count(vie_id) from vie_view where pod_id = id) as qtd_viewtotal from vie_view a join pod_podcast b on a.pod_id = b.pod_id where vie_tipo = 0 and a.vie_data between date_sub(now(),INTERVAL 1 MONTH) and now() group by a.pod_id order by qtd_viewtotal desc limit 5'
 		);
 		return results;
 	}
