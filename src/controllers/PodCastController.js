@@ -9,10 +9,9 @@ module.exports = {
 	},
 
 	async ultimosPods(req, resp){
-		const podcasts = await PodCast.findAll({limit:10 , order:[ ['pod_id', 'ASC'] ]});
+		const podcasts = await PodCast.findLast6();
 
 		return resp.json(podcasts);
-
 	},
 
 	//UPDATE

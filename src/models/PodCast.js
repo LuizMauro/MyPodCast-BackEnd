@@ -147,6 +147,15 @@ class PodCast extends Model {
     return results;
   }
 
+  //Seleciona todos podcasts ativados/com permissão
+  static async findLast6() {
+    const [results] = await this.sequelize.query(
+      "Select * from pod_podcast where pod_status = true and pod_permissao = 1 order by pod_id desc limit 6"
+    );
+
+    return results;
+  }
+
   //Update Status (Excluir Podcast)
   static async updatePodcastStatus(podid, podstatus) {
     try {
