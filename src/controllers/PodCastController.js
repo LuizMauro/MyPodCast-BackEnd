@@ -9,7 +9,7 @@ module.exports = {
 	},
 
 	async ultimosPods(req, resp){
-		const podcasts = await PodCast.findAll({limit:10 ,order:[ ['id', 'ASC'] ]});
+		const podcasts = await PodCast.findAll({limit:10 , order:[ ['pod_id', 'ASC'] ]});
 
 		return resp.json(podcasts);
 
